@@ -1,0 +1,65 @@
+prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://NeosRulez.Shop/Private/Fusion/Component/Cart/Cart.html'
+    cart = NeosRulez.Shop:Fusion.Cart
+    coupons = NeosRulez.Shop:Fusion.Coupons
+    summary = NeosRulez.Shop:Fusion.Summary
+    checkout = NeosRulez.Shop:Fusion.Checkout
+    countries = NeosRulez.Shop:Fusion.Countries
+    shippings = NeosRulez.Shop:Fusion.Shippings
+    order = NeosRulez.Shop:Fusion.Order
+    payments = NeosRulez.Shop:Fusion.Payments
+    cart_variables = NeosRulez.Shop:Fusion.CartVariables {
+        recipient_mail = ${q(documentNode).property('recipient_mail')}
+        order_subject = ${q(documentNode).property('order_subject')}
+        mail_logo = ${q(documentNode).property('mail_logo')}
+    }
+    max_quantity = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
+    return_page = ${q(node).property('return_page')}
+    allow_coupons = ${Configuration.setting('NeosRulez.Shop.coupons')}
+    newsletter = ${Configuration.setting('NeosRulez.Shop.newsletter')}
+    privacy_page = ${q(documentNode).property('privacy_page')}
+    terms_page = ${q(documentNode).property('terms_page')}
+    @cache {
+        mode = 'uncached'
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+    }
+}
+
+prototype(NeosRulez.Shop:Fusion.Cart) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CartImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.CartVariables) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CartVariablesImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Coupons) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CouponImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Summary) {
+    @class = 'NeosRulez\\Shop\\Fusion\\SummaryImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Checkout) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CheckoutImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Countries) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CountryImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Shippings) {
+    @class = 'NeosRulez\\Shop\\Fusion\\ShippingImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Order) {
+    @class = 'NeosRulez\\Shop\\Fusion\\OrderImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Payments) {
+    @class = 'NeosRulez\\Shop\\Fusion\\PaymentImplementation'
+}

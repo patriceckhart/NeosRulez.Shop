@@ -1,0 +1,67 @@
+'NeosRulez.Shop:Document.Cart':
+  superTypes:
+    'NeosRulez.Shop:Document.AbstractPage': true
+  ui:
+    label: 'Warenkorb'
+    icon: 'icon-shopping-basket'
+    position: 1
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        neosrulez_shop_cart:
+          label: 'Warenkorb'
+          icon: 'icon-shopping-cart'
+  properties:
+    recipient_mail:
+      type: string
+      ui:
+        label: 'Empfänger E-Mail Adresse'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 1
+    order_subject:
+      type: string
+      ui:
+        label: 'E-Mail Betreff'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 2
+    mail_logo:
+      type: 'Neos\Media\Domain\Model\ImageInterface'
+      ui:
+        label: 'E-Mail Logo'
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 3
+    return_page:
+      type: 'reference'
+      ui:
+        reloadIfChanged: true
+        label: 'Zielseite (Weiter einkaufen)'
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 4
+    privacy_page:
+      type: 'reference'
+      ui:
+        reloadIfChanged: true
+        label: 'Zielseite (Datenschutz)'
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 5
+    terms_page:
+      type: 'reference'
+      ui:
+        reloadIfChanged: true
+        label: 'Zielseite (AGB)'
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 6
+  constraints:
+    nodeTypes:
+      'NeosRulez.Shop:Document.Shipping': true

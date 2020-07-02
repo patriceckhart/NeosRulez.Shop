@@ -1,0 +1,16 @@
+prototype(Neos.Neos:PrimaryContent).cart {
+    condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Cart]')}
+    type = 'NeosRulez.Shop:Component.Cart'
+}
+prototype(Neos.Neos:PrimaryContent).product {
+    condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Product]')}
+    type = 'NeosRulez.Shop:Component.Product'
+}
+prototype(Neos.Neos:PrimaryContent).payment_success {
+    condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Payment.Success]')}
+    type = 'NeosRulez.Shop:Component.Finisher'
+}
+prototype(Neos.Neos:PrimaryContent).payment_failure {
+    condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Payment.Failure]')}
+    type = 'NeosRulez.Shop:Component.Finisher'
+}

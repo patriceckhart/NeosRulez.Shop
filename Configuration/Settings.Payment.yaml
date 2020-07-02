@@ -1,0 +1,47 @@
+NeosRulez:
+  Shop:
+    Payment:
+      paypal:
+        class: NeosRulez\Shop\Service\Payment\PayPal
+        props:
+          label: 'PayPal'
+          icon: 'fab fa-paypal'
+          success_page: 'e6a1431e-d9a3-44ca-bbc7-65a9e13e6cfd'
+          failure_page: '00c2ec7f-7a07-4389-91c2-90ed99b27599'
+          payment_status: 1
+        args:
+          paypal_account: 'your@paypalaccount.tld'
+      prepayment:
+        class: NeosRulez\Shop\Service\Payment\Prepayment
+        props:
+          label: 'Vorauskassa'
+          icon: 'fas fa-money-bill-alt'
+          success_page: '455a33ab-4b1b-4871-9e77-9210692d05f3'
+          failure_page: '90c7a6e1-8ca6-4403-ae46-c9f5cc93d5b6'
+          payment_status: 0
+#       creditcard:
+#         class: NeosRulez\Shop\Service\Payment\Stripe
+#         render_redirect: true
+#         method: 'card' #card, ideal, fpx, bacs_debit, bancontact, giropay, p24, or eps
+#         props:
+#           label: 'Kreditkarte'
+#           icon: 'fas fa-credit-card'
+#           success_page: 'e6a1431e-d9a3-44ca-bbc7-65a9e13e6cfd'
+#           failure_page: '00c2ec7f-7a07-4389-91c2-90ed99b27599'
+#           payment_status: 1
+#         args:
+#           stripe_public_key: 'pk_test_nz7x6b7aEPrD1r2s5xbwED1300pN5lwbk2'
+#           stripe_secret_key: 'sk_test_Pi6WZZzBShLrZ7tnK5uvYzOn00sfxpt1Tx'
+#       giropay:
+#         class: NeosRulez\Shop\Service\Payment\Stripe
+#         render_redirect: true
+#         method: 'giropay'
+#         props:
+#           label: 'Giropay'
+#           icon: 'fab fa-stripe'
+#           success_page: 'e6a1431e-d9a3-44ca-bbc7-65a9e13e6cfd'
+#           failure_page: '00c2ec7f-7a07-4389-91c2-90ed99b27599'
+#           payment_status: 1
+#         args:
+#           stripe_public_key: 'pk_test_nz7x6b7aEPrD1r2s5xbwED1300pN5lwbk2'
+#           stripe_secret_key: 'sk_test_Pi6WZZzBShLrZ7tnK5uvYzOn00sfxpt1Tx'

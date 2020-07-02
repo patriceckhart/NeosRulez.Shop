@@ -1,0 +1,163 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
+{namespace media=Neos\Media\ViewHelpers}
+
+<div class="product_detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product_image">
+                    <f:render section="product_image" arguments="{_all}" />
+                </div>
+                <div class="product_images">
+                    <f:render section="product_images" arguments="{_all}" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product_content">
+                    <f:render section="product_content" arguments="{_all}" />
+                    <f:render section="add_to_form" arguments="{_all}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main_content">
+    {main_content -> f:format.raw()}
+</div>
+
+<f:section name="product_image">
+    <f:if condition="{images}">
+        <div class="image lightbox">
+            <a href="{media:uri.image(image: images.0, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}">
+                <media:image class="img-fluid" image="{images.0}" width="550c" height="450c" allowCropping="TRUE" allowUpScaling="TRUE" alt="{node.properties.title}" />
+            </a>
+        </div>
+    </f:if>
+</f:section>
+
+<f:section name="product_images">
+    <f:if condition="{images -> f:count()}>1">
+        <div class="images">
+            <div class="row">
+                <f:for each="{images}" as="asset" iteration="iterator">
+                    <f:if condition="{iterator.index}!=1">
+                        <div class="col-md-3 col-6">
+                            <div class="image lightbox">
+                                <a href="{media:uri.image(image: asset, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}"><media:image image="{asset}" width="150c" height="150c" allowCropping="TRUE" allowUpScaling="TRUE" alt="" class="img-fluid" /></a>
+                            </div>
+                        </div>
+                    </f:if>
+                </f:for>
+            </div>
+        </div>
+    </f:if>
+</f:section>
+
+<f:section name="product_content">
+    <div class="row">
+        <div class="col-md-8 col-6">
+            <h1>{neos:contentElement.editable(property: 'title')}</h1>
+            <small class="article_number">Art. Nr.: {article_number}</small>
+        </div>
+        <div class="col-md-4 col-6">
+            <div class="d-block price">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{price}</f:format.currency>
+            </div>
+            <small class="d-block">inkl. {tax} % Mwst.</small>
+            <f:if condition="{old_price}">
+                <div class="d-block mt-2 old_price">
+                    statt <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{old_price}</f:format.currency>
+                </div>
+            </f:if>
+        </div>
+    </div>
+    <div class="my-3 description">
+        {neos:contentElement.editable(property: 'description')}
+    </div>
+</f:section>
+
+<f:section name="quantity">
+    <select class="form-control quantity" name="item[quantity]">
+        <f:for each="{max_quantity}" as="quantity">
+            <f:if condition="{quantity}!=0">
+                <option value="{quantity}">{quantity}</option>
+            </f:if>
+        </f:for>
+    </select>
+    <f:comment>
+        <f:form.select options="{max_quantity}" value="1" property="quantity" class="form-control quantity" />
+    </f:comment>
+</f:section>
+
+<f:section name="add_to_form">
+    <f:form action="add" controller="Cart" objectName="item" package="NeosRulez.Shop" id="product_form">
+        <f:if condition="{sub_products}">
+            <f:render section="sub_products" arguments="{_all}" />
+        </f:if>
+        <f:if condition="{options_groups}">
+            <f:render section="options" arguments="{_all}" />
+        </f:if>
+        <div class="row align-items-center add_to_cart">
+            <div class="col-md-4">
+                <f:render section="quantity" arguments="{_all}" />
+            </div>
+            <div class="col-md-8">
+                <button type="submit" class="btn btn-primary btn-block">In den Warenkorb</button>
+            </div>
+        </div>
+        <f:form.hidden name="item[nodeUri]" value="{node -> neos:uri.node()}" />
+        <f:form.hidden name="item[node]" value="{node.identifier}" />
+    </f:form>
+</f:section>
+
+<f:section name="options">
+    <f:for each="{options_groups}" as="options_group">
+        <div class="row mb-3">
+            <div class="col-12">
+                <label>{options_group.properties.title}</label>
+                <select class="form-control" name="item[options][]">
+                    <f:for each="{options}" as="option">
+                        <f:if condition="{option.parent.identifier}=={options_group.identifier}">
+                            <option value="{option.properties.title}">{option.properties.title}</option>
+                        </f:if>
+                    </f:for>
+                </select>
+            </div>
+        </div>
+    </f:for>
+</f:section>
+
+<f:section name="sub_products">
+    <div class="row mb-3">
+        <div class="col-12">
+            <label>Weitere Varianten</label>
+            <div class="form-control sub_products">
+                <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
+                <div class="sub_products_dropdown">
+                    <f:for each="{sub_products}" as="sub_product">
+                        <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
+                            <neos:link.node node="{sub_product}" class="d-block subproduct_link">
+                                <f:render section="sub_product" arguments="{_all}" />
+                            </neos:link.node>
+                        </div>
+                    </f:for>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="sub_product">
+    <div class="row align-items-center my-2">
+        <f:if condition="{sub_product.properties.images}">
+            <div class="col-2">
+                <media:image class="img-fluid" image="{sub_product.properties.images.0}" width="100c" height="100c" allowCropping="TRUE" allowUpScaling="TRUE" alt="{sub_product.properties.title}" />
+            </div>
+        </f:if>
+        <div class="{f:if(condition: '{sub_product.properties.images}', then: 'col-10', else: 'col-12')}">
+            {sub_product.properties.title},
+            <small class="d-block mt-2">Art. Nr.: {sub_product.properties.article_number} <strong class="ml-2"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{sub_product.properties.price}</f:format.currency></strong></small>
+        </div>
+    </div>
+</f:section>

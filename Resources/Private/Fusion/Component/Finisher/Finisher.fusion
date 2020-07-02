@@ -1,0 +1,15 @@
+prototype(NeosRulez.Shop:Component.Finisher) < prototype(Neos.Neos:Plugin) {
+    package = 'NeosRulez.Shop'
+    controller = 'Cart'
+    action = 'finish'
+    main_content = Neos.Neos:ContentCollection {
+        nodePath = 'main'
+    }
+    @cache {
+        mode = 'uncached'
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+    }
+}

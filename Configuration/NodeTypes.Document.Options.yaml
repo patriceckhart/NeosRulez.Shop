@@ -1,0 +1,16 @@
+'NeosRulez.Shop:Document.Options':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+  ui:
+    label: 'Options'
+    icon: 'fas fa-dice'
+    position: 3
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        document:
+          label: 'Options'
+          icon: 'fas fa-dice'
+  constraints:
+    nodeTypes:
+      'NeosRulez.Shop:Document.Option': true

@@ -1,0 +1,30 @@
+'NeosRulez.Shop:Document.AbstractPayment':
+  abstract: true
+  superTypes:
+    'NeosRulez.Shop:Document.AbstractPage': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+  properties:
+    faicon:
+      ui: ~
+      onlyicon:
+        ui: ~
+    _hiddenInIndex:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~
+    metaRobotsNoindex:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~
+    metaRobotsNofollow:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~

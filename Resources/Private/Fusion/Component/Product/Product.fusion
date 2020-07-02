@@ -1,0 +1,25 @@
+prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://NeosRulez.Shop/Private/Fusion/Component/Product/Product.html'
+
+    title = ${q(node).property('title')}
+    article_number = ${q(node).property('article_number')}
+    price = ${String.toFloat(String.replace(q(node).property('price'), ',', '.'))}
+    old_price = ${String.toFloat(String.replace(q(node).property('old_price'), ',', '.'))}
+    tax = ${String.toFloat(String.replace(q(node).property('tax'), ',', '.'))}
+    stock = ${q(node).property('stock')}
+    images = ${q(node).property('images')}
+    description = ${q(node).property('description')}
+
+    max_quantity = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
+
+    options_groups = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').get()}
+    options = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').children('[instanceof NeosRulez.Shop:Document.Option]').get()}
+
+    node = ${node}
+    parent_product = ${q(documentNode).parent('[instanceof NeosRulez.Shop:Document.Product]').get()}
+    sub_products = ${this.parent_product ? q(this.parent_product).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get() : q(documentNode).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get()}
+
+    main_content = Neos.Neos:ContentCollection {
+        nodePath = 'main'
+    }
+}

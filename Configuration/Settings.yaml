@@ -1,0 +1,10 @@
+Neos:
+  Neos:
+    nodeTypes:
+      groups:
+        neosrulez_shop:
+          position: 'end'
+          label: 'Shop'
+    fusion:
+      autoInclude:
+        NeosRulez.Shop: true

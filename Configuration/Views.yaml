@@ -1,0 +1,4 @@
+-
+  requestFilter: 'isPackage("NeosRulez.Shop") && isController("Cart") && isAction("finish")'
+  options:
+    templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Fusion/Component/Finisher/Finisher.html'

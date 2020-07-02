@@ -1,0 +1,11 @@
+prototype(NeosRulez.Shop:Helper.CartCountHelper) {
+    #@class = 'NeosRulez\\CookieOptIn\\Fusion\\CookieHelperImplementation'
+    #isInBackend = ${site.context.inBackend ? true : false}
+    #@cache {
+    #    mode = 'uncached'
+    #    context {
+    #        1 = 'node'
+    #        2 = 'documentNode'
+    #    }
+    #}
+}

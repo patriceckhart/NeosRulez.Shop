@@ -1,0 +1,83 @@
+'NeosRulez.Shop:Document.Coupon':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+    'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
+  ui:
+    label: 'Coupon'
+    icon: 'fas fa-bookmark'
+    position: 4
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        document:
+          label: 'Coupon'
+          icon: 'fas fa-bookmark'
+  properties:
+    code:
+      type: string
+      ui:
+        label: 'Gutscheincode'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 1
+    percentual:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Prozentueller Wert'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 2
+    value:
+      type: string
+      ui:
+        label: 'Wert'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 3
+    min_cart_value:
+      type: string
+      defaultValue: '0'
+      ui:
+        label: 'Warenkorb Wert'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 4
+    quantity_restriction:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Anzahl beschränken'
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 5
+    quantity:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Anzahl'
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.quantity_restriction ? false : true'
+          group: 'document'
+          position: 6
+    redeemed:
+      type: string
+      defaultValue: '0'
+      ui:
+        label: 'Eingelöst'
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 7
+          editorOptions:
+            disabled: true

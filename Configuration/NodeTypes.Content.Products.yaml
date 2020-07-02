@@ -1,0 +1,40 @@
+'NeosRulez.Shop:Content.Products':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Produkte (Menü)'
+    group: 'neosrulez_shop'
+    icon: 'icon-shopping-cart'
+    inspector:
+      groups:
+        neosrulez_shop_products:
+          label: 'Produkte (Menü)'
+          icon: 'icon-shopping-cart'
+  properties:
+    selection:
+      type: references
+      ui:
+        label: 'Produkte auswählen'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: 'neosrulez_shop_products'
+          editorOptions:
+            nodeTypes: ['NeosRulez.Shop:Document.Product']
+    startingPoint:
+      type: reference
+      ui:
+        label: 'Starting point'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: 'neosrulez_shop_products'
+    show_addto:
+      type: boolean
+      defaultValue: false
+      ui: ~
+#         label: 'In den Warenkorb anzeigen'
+#         showInCreationDialog: true
+#         reloadIfChanged: true
+#         inspector:
+#           group: 'neosrulez_shop_products'

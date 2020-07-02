@@ -1,0 +1,5 @@
+'NeosRulez.Shop:Document.AbstractPage':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Document': true
+    'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true

@@ -1,0 +1,13 @@
+'NeosRulez.Shop:Document.Option':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+  ui:
+    label: 'Option'
+    icon: 'fas fa-dice-five'
+    position: 3
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        document:
+          label: 'Option'
+          icon: 'fas fa-dice-five'

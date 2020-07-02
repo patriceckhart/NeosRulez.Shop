@@ -1,0 +1,44 @@
+'NeosRulez.Shop:Document.Shipping':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+  ui:
+    label: 'Versandart'
+    icon: 'fas fa-truck-loading'
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        document:
+          label: 'Versandart'
+          icon: 'fas fa-truck-loading'
+  properties:
+    price:
+      type: string
+      ui:
+        label: 'Preis'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 2
+    tax:
+      type: string
+      defaultValue: '20'
+      ui:
+        label: 'Steuer'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 3
+    countries:
+      type: array
+      ui:
+        label: 'Länder'
+        showInCreationDialog: true
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'document'
+          position: 4
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            dataSourceIdentifier: neosrulez-shop-countries

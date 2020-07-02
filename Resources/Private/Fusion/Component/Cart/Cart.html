@@ -1,0 +1,500 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
+{namespace media=Neos\Media\ViewHelpers}
+
+<div class="cart">
+    <div class="container">
+        <f:if condition="{checkout}">
+            <f:then>
+                <h1>Checkout</h1>
+                <f:form id="updateOrder" action="updateOrder" controller="Cart" package="NeosRulez.Shop">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="billing_form">
+                                <f:render section="billing_form" arguments="{_all}" />
+                            </div>
+                            <div class="shipping_form pt-4{f:if(condition='{order.alternative_shipping_address}', then:' d-block')}">
+                                <f:render section="shipping_form" arguments="{_all}" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-block p-3 checkout_sidebar">
+                                <f:comment>
+                                <f:render section="items" arguments="{_all}" />
+                                </f:comment>
+                                <div class="d-block mb-3">
+                                    <f:render section="shipping" arguments="{_all}" />
+                                </div>
+                                <div class="d-block my-3">
+                                    <f:render section="summary" arguments="{_all}" />
+                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}'}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4"><i class="fas fa-pen"></i> Bestellung bearbeiten</f:link.action>
+                                </div>
+                                <div class="d-block my-3">
+                                    <f:render section="payment" arguments="{_all}" />
+                                </div>
+                                <f:render section="checkout" arguments="{_all}" />
+                            </div>
+                        </div>
+                    </div>
+                    <f:form.hidden name="return" value="{node -> neos:uri.node()}" />
+                    <f:form.hidden id="selected_country" name="selected_country" value="{order.selected_country}" />
+                    <f:form.hidden name="cart_variables[recipient_mail]" value="{cart_variables.0.recipient_mail}" />
+                    <f:form.hidden name="cart_variables[order_subject]" value="{cart_variables.0.order_subject}" />
+                    <f:form.hidden name="cart_variables[mail_logo]" value="{media:uri.image(image: cart_variables.0.mail_logo, maximumWidth: 200, maximumHeight: 200, allowCropping:FALSE, allowUpScaling:TRUE)}" />
+                </f:form>
+            </f:then>
+            <f:else>
+                <h1>Warenkorb</h1>
+                <f:if condition="{cart -> f:count()}==0">
+                    <f:then>
+                        Ihr Warenkorb ist leer.
+                    </f:then>
+                    <f:else>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <f:render section="items" arguments="{_all}" />
+                                <f:render section="cart_links" arguments="{_all}" />
+                            </div>
+                            <div class="col-md-4">
+                                <f:render section="summary" arguments="{_all}" />
+                            </div>
+                        </div>
+                    </f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+    </div>
+</div>
+
+<f:section name="items">
+    <div class="py-2 border-bottom-strong d-none d-md-block d-lg-block">
+        <div class="row align-items-center items_header">
+            <div class="col-md-5 font-weight-bold">
+                Product
+            </div>
+            <div class="col-md-2 font-weight-bold">
+                Price
+            </div>
+            <div class="col-md-2 font-weight-bold">
+                Quantity
+            </div>
+            <div class="col-md-2 text-right font-weight-bold">
+                Total
+            </div>
+            <div class="col-md-1 font-weight-bold">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+    <f:for each="{cart}" as="item">
+        <f:render section="item" arguments="{_all}" />
+    </f:for>
+</f:section>
+
+<f:section name="item">
+    <div class="d-block border-bottom py-2">
+        <div class="row align-items-center cart_item">
+            <div class="col-md-5 col-12">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-3 pr-3">
+                        <f:if condition="{item.images}">
+                            <media:image class="img-fluid" image="{item.images.0}" width="220" maximumHeight="200" allowCropping="TRUE" allowUpScaling="TRUE" alt="{item.title}" />
+                        </f:if>
+                    </div>
+                    <div class="col-md-9 col-4">
+                        {item.title}
+                        <f:if condition="{item.options}">
+                            <small class="d-block">
+                                <f:for each="{item.options}" as="option" iteration="optionIterator">
+                                    {option}{f:if(condition: optionIterator.isLast, else: ', ')}
+                                </f:for>
+                            </small>
+                        </f:if>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-4">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.price}</f:format.currency>
+                <small class="d-block">exkl. {item.tax} % MwSt.</small>
+            </div>
+            <div class="col-md-2 col-4">
+                <f:form action="update" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                    <select class="form-control quantity" name="quantity">
+                        <f:for each="{max_quantity}" as="quantity">
+                            <f:if condition="{quantity}!=0">
+                                <f:if condition="{item.quantity} == {quantity}">
+                                    <f:then>
+                                        <option value="{quantity}" selected>{quantity}</option>
+                                    </f:then>
+                                    <f:else>
+                                        <option value="{quantity}">{quantity}</option>
+                                    </f:else>
+                                </f:if>
+                            </f:if>
+                        </f:for>
+                    </select>
+                </f:form>
+            </div>
+            <div class="col-md-2 col-4 text-right">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.total}</f:format.currency>
+                <small class="d-block">inkl. {item.tax} % MwSt.</small>
+            </div>
+            <div class="col-md-1">
+                <f:form action="deleteItem" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                    <button type="submit" class="btn btn-danger btn-sm btn-block btn_delete_item"><i class="fas fa-trash"></i></button>
+                </f:form>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="summary">
+    <div class="d-block py-2 border-bottom-strong">
+        <div class="row align-items-center">
+            <div class="col-12 font-weight-bold">Zusammenfassung</div>
+        </div>
+    </div>
+    <div class="d-block border-bottom py-2">
+        <div class="row align-items-center no-gutters">
+            <div class="col-7">
+                Subtotal
+            </div>
+            <div class="col-5 text-right font-weight-bold">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.subtotal}</f:format.currency>
+            </div>
+        </div>
+    </div>
+    <div class="d-block border-bottom py-2 tax_summary">
+        <div class="row align-items-center no-gutters">
+            <div class="col-7">
+                Enthaltene Steuer
+            </div>
+            <div class="col-5 text-right font-weight-bold">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax}</f:format.currency>
+            </div>
+        </div>
+    </div>
+    <f:if condition="{summary.total_shipping}!=0">
+        <div class="d-block border-bottom py-2">
+            <div class="row align-items-center no-gutters">
+                <div class="col-7">
+                    Versand
+                </div>
+                <div class="col-5 text-right font-weight-bold">
+                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_shipping}</f:format.currency>
+                </div>
+            </div>
+        </div>
+    </f:if>
+    <f:if condition="{summary.tax_shipping}!=0">
+        <div class="d-block border-bottom py-2 tax_summary">
+            <div class="row align-items-center no-gutters">
+                <div class="col-7">
+                    Enthaltene Steuer (Versand)
+                </div>
+                <div class="col-5 text-right font-weight-bold">
+                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax_shipping}</f:format.currency>
+                </div>
+            </div>
+        </div>
+    </f:if>
+    <f:if condition="{summary.discount}!=0">
+        <div class="d-block border-bottom py-2">
+            <div class="row align-items-center no-gutters">
+                <div class="col-7">
+                    Gutschein
+                </div>
+                <div class="col-5 text-right font-weight-bold">
+                    - <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.discount}</f:format.currency>
+                </div>
+            </div>
+        </div>
+    </f:if>
+    <div class="d-block border-bottom py-2">
+        <div class="row align-items-center no-gutters">
+            <div class="col-7">
+                Total
+            </div>
+            <div class="col-5 text-right font-weight-bold">
+                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total}</f:format.currency>
+            </div>
+        </div>
+    </div>
+    <f:if condition="!{checkout}">
+        <div class="form-group mt-3">
+            <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> Proceed to checkout</button>
+            </f:form>
+        </div>
+        <f:if condition="{allow_coupons}">
+            <f:render section="coupon" arguments="{_all}" />
+        </f:if>
+    </f:if>
+</f:section>
+
+<f:section name="coupon">
+    <f:if condition="{coupons}">
+        <f:then>
+            <f:if condition="{coupons.0.name}=='NaN'">
+                <f:then>
+                    <div class="alert alert-danger" role="alert">
+                        Dieser Gutscheincode ist nicht gültig!
+                    </div>
+                    <f:render section="coupon_form" arguments="{_all}" />
+                </f:then>
+                <f:else>
+                    <f:if condition="{coupons.0.name}=='NaN_'">
+                        <f:then>
+                            <div class="alert alert-danger" role="alert">
+                                Ihr Warenkorb-Wert muss mindestens <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{coupons.0.value}</f:format.currency> betragen.
+                            </div>
+                            <f:render section="coupon_form" arguments="{_all}" />
+                        </f:then>
+                        <f:else>
+                            <f:form action="deleteCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                                <div class="d-block mt-3 coupon">
+                                    <div class="form-group">
+                                        <i class="fas fa-bookmark mr-2"></i> {coupons.0.name} im Wert von
+                                        <f:if condition="{coupons.0.percentual}">
+                                            <f:then>
+                                                {coupons.0.value} %
+                                            </f:then>
+                                            <f:else>
+                                                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{coupons.0.value}</f:format.currency>
+                                            </f:else>
+                                        </f:if>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-times mr-2"></i> Remove coupon</button>
+                                    </div>
+                                </div>
+                            </f:form>
+                        </f:else>
+                    </f:if>
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>
+            <f:render section="coupon_form" arguments="{_all}" />
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="coupon_form">
+    <f:form action="validateCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+        <div class="d-block mt-3 coupon">
+            <div class="form-group">
+                <div class="d-block py-2 mb-2 border-bottom-strong font-weight-bold">
+                    <i class="fas fa-bookmark mr-2"></i> Gutschein
+                </div>
+                <f:form.textfield name="code" class="form-control" placeholder="Couponcode" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-light btn-block"><i class="fas fa-check mr-2"></i> Apply coupon</button>
+            </div>
+        </div>
+    </f:form>
+</f:section>
+
+<f:section name="cart_links">
+    <div class="row align-items-center mt-4">
+        <div class="col-md-6">
+            <div class="form-group">
+                <f:if condition="{return_page}">
+                    <neos:link.node class="btn btn-outline-primary btn-block" node="{return_page}">Weiter einkaufen</neos:link.node>
+                </f:if>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <f:form action="deleteCart" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-trash mr-2"></i> Warenkorb leeren</button>
+                </div>
+            </f:form>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="billing_form">
+    <div class="d-block py-2 mb-3 border-bottom-strong font-weight-bold">
+        Billing details
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="firstname">Vorname</label>
+                <f:form.textfield id="firstname" name="firstname" class="form-control" placeholder="Vorname" required="true" value="{order.firstname}" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lastname">Nachname</label>
+                <f:form.textfield id="lastname" name="lastname" class="form-control" placeholder="Nachname" required="true" value="{order.lastname}" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="company">Firma (optional)</label>
+        <f:form.textfield id="company" name="company" class="form-control" placeholder="Firma" value="{order.company}" />
+    </div>
+    <div class="form-group">
+        <label for="country">Land</label>
+        <select id="country" name="country" class="form-control" required>
+            <f:if condition="!{order.country} || {order.country}==''">
+                <option disabled selected>Bitte auswählen</option>
+            </f:if>
+            <f:for each="{countries}" as="country">
+                <option value="{country.value}"{f:if(condition='{order.country}=={country.value}', then:' selected')}>{country.label}</option>
+            </f:for>
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="address">Adresse</label>
+                <f:form.textfield id="address" name="address" class="form-control" placeholder="Adresse" required="true" value="{order.address}" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="zip">Postleitzahl</label>
+                <f:form.textfield id="zip" name="zip" class="form-control" placeholder="Postleitzahl" required="true" value="{order.zip}" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="city">Ort</label>
+                <f:form.textfield id="city" name="city" class="form-control" placeholder="Ort" required="true" value="{order.city}" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="phone">Telefonnummer</label>
+                <f:form.textfield id="phone" name="phone" class="form-control" placeholder="Telefonnummer" required="true" value="{order.phone}" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">E-Mail Adresse</label>
+                <f:form.textfield id="email" name="email" class="form-control" placeholder="E-Mail Adresse" required="true" value="{order.email}" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="notes">Anmerkungen zur Bestellung (optional)</label>
+        <f:form.textarea id="notes" name="notes" class="form-control" placeholder="Anmerkungen zur Bestellung" value="{order.notes}" />
+    </div>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="shipping_address" name="alternative_shipping_address" value="1" {f:if(condition='{order.alternative_shipping_address}', then:' checked="checked"')}>
+        <label class="custom-control-label" for="shipping_address">Abweichende Lieferadresse</label>
+    </div>
+</f:section>
+
+<f:section name="shipping_form">
+    <div class="d-block py-2 mb-3 border-bottom-strong font-weight-bold">
+        Shipping details
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="shipping_firstname">Vorname</label>
+                <f:form.textfield id="shipping_firstname" name="shipping_firstname" class="form-control" placeholder="Vorname" required="true" value="{order.shipping_firstname}" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="shipping_lastname">Nachname</label>
+                <f:form.textfield id="shipping_lastname" name="shipping_lastname" class="form-control" placeholder="Nachname" required="true" value="{order.shipping_lastname}" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="shipping_company">Firma (optional)</label>
+        <f:form.textfield id="shipping_company" name="shipping_company" class="form-control" placeholder="Firma" value="{order.shipping_company}" />
+    </div>
+    <div class="form-group">
+        <label for="shipping_country">Land</label>
+        <select id="shipping_country" name="shipping_country" class="form-control" required>
+            <f:if condition="!{order.shipping_country} || {order.shipping_country}==''">
+                <option disabled selected>Bitte auswählen</option>
+            </f:if>
+            <f:for each="{countries}" as="country">
+                <option value="{country.value}"{f:if(condition='{order.shipping_country}=={country.value}', then:' selected')}>{country.label}</option>
+            </f:for>
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="shipping_address">Adresse</label>
+                <f:form.textfield id="shipping_address" name="shipping_address" class="form-control" placeholder="Adresse" required="true" value="{order.shipping_address}" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="shipping_zip">Postleitzahl</label>
+                <f:form.textfield id="shipping_zip" name="shipping_zip" class="form-control" placeholder="Postleitzahl" required="true" value="{order.shipping_zip}" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="shipping_city">Ort</label>
+                <f:form.textfield id="shipping_city" name="shipping_city" class="form-control" placeholder="Ort" required="true" value="{order.shipping_city}" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="shipping_notes">Anmerkungen zur Lieferung (optional)</label>
+        <f:form.textarea id="shipping_notes" name="shipping_notes" class="form-control" placeholder="Anmerkungen zur Lieferung" value="{order.shipping_notes}" />
+    </div>
+</f:section>
+
+<f:section name="payment">
+    <div class="d-block py-2 border-bottom-strong font-weight-bold mb-3">
+        Zahlungsart
+    </div>
+    <div class="d-block">
+        <f:for each="{payments}" as="payment" iteration="iterator">
+            <div class="custom-control custom-radio py-2 payment_{payment.identifier}">
+                <input type="radio" id="payment_{iterator.index}" name="payment" class="custom-control-input" value="{payment.identifier}" required="required"{f:if(condition='{order.payment}=={payment.identifier}', then:' checked="checked"')}>
+                <label class="custom-control-label" for="payment_{iterator.index}">{payment.label} <i class="{payment.icon} ml-2"></i></label>
+            </div>
+            <f:form.hidden name="{payment.identifier}_success" value="{neos:uri.node(node: payment.success_page, absolute: true)}" />
+            <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: payment.failure_page, absolute: true)}" />
+        </f:for>
+    </div>
+</f:section>
+
+<f:section name="shipping">
+    <div class="d-block pb-2 border-bottom-strong font-weight-bold mb-3">
+        Versandart wählen
+    </div>
+    <select id="shipping" name="shipping" class="form-control" required>
+        <f:if condition="!{order.shipping} || {order.shipping}==''">
+            <option disabled selected>Bitte auswählen</option>
+        </f:if>
+        <f:for each="{shippings.0.available_shippings}" as="available_shipping">
+            <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></option>
+        </f:for>
+    </select>
+</f:section>
+
+<f:section name="checkout">
+    <f:if condition="{newsletter}">
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="newsletter" name="newsletter">
+            <label class="custom-control-label" for="newsletter">Ja, ich möchte den Newsletter erhalten.</label>
+        </div>
+    </f:if>
+    <div class="custom-control custom-checkbox my-3">
+        <input type="checkbox" class="custom-control-input" id="accept_privacy" name="accept_privacy" required="true">
+        <label class="custom-control-label" for="accept_privacy">Ja, ich akzeptiere die Verarbeitung und Speicherung der oben angegebenen Daten zum Zweck der Abwicklung des Auftrages gemäß der <neos:link.node node="{privacy_page}">Datenschutzrichtlinien</neos:link.node>.</label>
+    </div>
+    <div class="custom-control custom-checkbox my-3">
+        <input type="checkbox" class="custom-control-input" id="accept_terms" name="accept_terms" required="true">
+        <label class="custom-control-label" for="accept_terms">Ja, ich akzeptiere die <neos:link.node node="{terms_page}">Allgemeine Geschäftsbedingungen.</neos:link.node></label>
+    </div>
+    <button type="submit" id="submit_btn" class="btn btn-primary btn-lg btn-block mt-3">Bestellung abschließen</button>
+</f:section>

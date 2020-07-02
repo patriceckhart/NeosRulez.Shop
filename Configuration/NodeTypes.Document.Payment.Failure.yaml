@@ -1,0 +1,8 @@
+'NeosRulez.Shop:Document.Payment.Failure':
+  superTypes:
+    'NeosRulez.Shop:Document.AbstractPayment': true
+  ui:
+    label: 'Zahlung fehlgeschlagen'
+    icon: 'far fa-thumbs-down'
+    position: 'end'
+    group: 'neosrulez_shop'

@@ -1,0 +1,40 @@
+'NeosRulez.Shop:Document.GenericPage':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Shortcut': true
+    'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
+  properties:
+    faicon:
+      ui: ~
+    onlyicon:
+      ui: ~
+    uriPathSegment:
+      defaultValue: ''
+      ui: ~
+    _hiddenInIndex:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~
+    metaRobotsNoindex:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~
+    metaRobotsNofollow:
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        inspector:
+          group: ~
+    targetMode:
+      type: string
+      defaultValue: FALSE
+      ui:
+        inspector:
+          group: ~
+#   constraints:
+#     nodeTypes:
+#       'Neos.Neos:Document': false

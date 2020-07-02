@@ -1,0 +1,117 @@
+'NeosRulez.Shop:Document.Product':
+  superTypes:
+    'NeosRulez.Shop:Document.AbstractPage': true
+    'NeosRulez.Category:Mixin.Abstract.Categories': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+  ui:
+    label: 'Produkt'
+    icon: 'icon-shopping-cart'
+    position: 1
+    group: 'neosrulez_shop'
+    inspector:
+      groups:
+        neosrulez_shop_product:
+          label: 'Produkt'
+          icon: 'icon-shopping-cart'
+  properties:
+    article_number:
+      type: string
+      ui:
+        label: 'Artikelnummer'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 1
+    price:
+      type: string
+      ui:
+        label: 'Preis'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 2
+    old_price:
+      type: string
+      ui:
+        label: 'Alter Preis'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 3
+    tax:
+      type: string
+      defaultValue: '20'
+      ui:
+        label: 'Steuer'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 4
+    stock:
+      type: boolean
+      defaultValue: true
+      ui:
+        label: 'Auf Lager'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 5
+    images:
+      type: array<Neos\Media\Domain\Model\Asset>
+      ui:
+        label: 'Bilder'
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 6
+        reloadIfChanged: true
+    description:
+      type: string
+      ui:
+        inlineEditable: true
+        reloadIfChanged: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter Description here'
+            autoparagraph: true
+            linking:
+              anchor: true
+              title: true
+              relNofollow: true
+              targetBlank: true
+            formatting:
+              strong: true
+              em: true
+              u: false
+              sub: true
+              sup: true
+              del: false
+              p: false
+              h1: false
+              h2: false
+              h3: true
+              h4: true
+              h5: true
+              h6: true
+              pre: false
+              underline: true
+              strikethrough: false
+              removeFormat: false
+              left: false
+              right: false
+              center: false
+              justify: false
+              table: true
+              ol: true
+              ul: true
+              a: true
+  constraints:
+    nodeTypes:
+      'NeosRulez.Shop:Document.Options': true
+      'NeosRulez.Shop:Document.Product': true

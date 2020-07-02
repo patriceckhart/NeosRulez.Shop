@@ -1,0 +1,72 @@
+-
+  name: 'Add item to cart'
+  uriPattern: 'add'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'add'
+  appendExceedingArguments: 'true'
+-
+  name: 'Update cart item'
+  uriPattern: 'update'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'update'
+  appendExceedingArguments: 'true'
+-
+  name: 'Delete cart'
+  uriPattern: 'deletecart'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'deleteCart'
+  appendExceedingArguments: 'true'
+-
+  name: 'Delete item'
+  uriPattern: 'deleteitem'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'deleteItem'
+  appendExceedingArguments: 'true'
+-
+  name: 'Validate coupon'
+  uriPattern: 'validate'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'validateCoupon'
+  appendExceedingArguments: 'true'
+-
+  name: 'Delete coupon'
+  uriPattern: 'deletecoupon'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'deleteCoupon'
+  appendExceedingArguments: 'true'
+-
+  name: 'Checkout'
+  uriPattern: 'checkout'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'checkout'
+  appendExceedingArguments: 'true'
+-
+  name: 'Update order'
+  uriPattern: 'updateorder'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'updateOrder'
+  appendExceedingArguments: 'true'
+-
+  name: 'Show cart'
+  uriPattern: 'showcart'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'showCart'
+  appendExceedingArguments: 'true'
