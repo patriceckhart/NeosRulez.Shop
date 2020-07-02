@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="cart" xml:space="preserve">
+				<source>Warenkorb</source>
+			</trans-unit>
+            <trans-unit id="cart_empty" xml:space="preserve">
+				<source>Ihr Warenkorb ist leer</source>
+			</trans-unit>
+            <trans-unit id="checkout" xml:space="preserve">
+				<source>Bestellung abschließen</source>
+			</trans-unit>
+            <trans-unit id="product" xml:space="preserve">
+				<source>Produkt</source>
+			</trans-unit>
+            <trans-unit id="price" xml:space="preserve">
+				<source>Preis</source>
+			</trans-unit>
+            <trans-unit id="quantity" xml:space="preserve">
+				<source>Anzahl</source>
+			</trans-unit>
+            <trans-unit id="total" xml:space="preserve">
+				<source>Gesamt</source>
+			</trans-unit>
+            <trans-unit id="excl" xml:space="preserve">
+				<source>exkl.</source>
+			</trans-unit>
+            <trans-unit id="incl" xml:space="preserve">
+				<source>inkl.</source>
+			</trans-unit>
+            <trans-unit id="tax_short" xml:space="preserve">
+				<source>MwSt.</source>
+			</trans-unit>
+            <trans-unit id="summary" xml:space="preserve">
+				<source>Zusammenfassung</source>
+			</trans-unit>
+            <trans-unit id="subtotal" xml:space="preserve">
+				<source>Zwischensumme</source>
+			</trans-unit>
+            <trans-unit id="incl_tax" xml:space="preserve">
+				<source>Enthaltene Steuer</source>
+			</trans-unit>
+            <trans-unit id="shipping" xml:space="preserve">
+				<source>Versand</source>
+			</trans-unit>
+            <trans-unit id="coupon" xml:space="preserve">
+				<source>Gutschein</source>
+			</trans-unit>
+            <trans-unit id="proceed_to_checkout" xml:space="preserve">
+				<source>Zur Kasse</source>
+			</trans-unit>
+            <trans-unit id="coupon_invalid" xml:space="preserve">
+				<source>Dieser Gutscheincode ist nicht gültig</source>
+			</trans-unit>
+            <trans-unit id="cart_min1" xml:space="preserve">
+				<source>Ihr Warenkorb-Wert muss mindestens</source>
+			</trans-unit>
+            <trans-unit id="cart_min2" xml:space="preserve">
+				<source>betragen</source>
+			</trans-unit>
+            <trans-unit id="in_the_value_of" xml:space="preserve">
+				<source>im Wert von</source>
+			</trans-unit>
+            <trans-unit id="remove_coupon" xml:space="preserve">
+				<source>Gutschein entfernen</source>
+			</trans-unit>
+            <trans-unit id="apply_coupon" xml:space="preserve">
+				<source>Gutschein einlösen</source>
+			</trans-unit>
+            <trans-unit id="coupon_code" xml:space="preserve">
+				<source>Gutscheincode eingeben</source>
+			</trans-unit>
+            <trans-unit id="continue_shopping" xml:space="preserve">
+				<source>Weiter einkaufen</source>
+			</trans-unit>
+            <trans-unit id="empty_cart" xml:space="preserve">
+				<source>Warenkorb leeren</source>
+			</trans-unit>
+            <trans-unit id="billing_details" xml:space="preserve">
+				<source>Informationen zur Rechnung</source>
+			</trans-unit>
+			<trans-unit id="firstname" xml:space="preserve">
+				<source>Vorname</source>
+			</trans-unit>
+			<trans-unit id="lastname" xml:space="preserve">
+				<source>Nachname</source>
+			</trans-unit>
+			<trans-unit id="company" xml:space="preserve">
+				<source>Firma</source>
+			</trans-unit>
+			<trans-unit id="country" xml:space="preserve">
+				<source>Land</source>
+			</trans-unit>
+			<trans-unit id="please_select" xml:space="preserve">
+				<source>Bitte auswählen</source>
+			</trans-unit>
+			<trans-unit id="address" xml:space="preserve">
+				<source>Adresse</source>
+			</trans-unit>
+			<trans-unit id="zip" xml:space="preserve">
+				<source>Postleitzahl</source>
+			</trans-unit>
+			<trans-unit id="city" xml:space="preserve">
+				<source>Ort</source>
+			</trans-unit>
+			<trans-unit id="phone" xml:space="preserve">
+				<source>Telefonnummer</source>
+			</trans-unit>
+			<trans-unit id="email" xml:space="preserve">
+				<source>E-Mail Adresse</source>
+			</trans-unit>
+			<trans-unit id="order_notes" xml:space="preserve">
+				<source>Anmerkungen zur Bestellung</source>
+			</trans-unit>
+			<trans-unit id="differing_shipping_address" xml:space="preserve">
+				<source>Abweichende Lieferadresse</source>
+			</trans-unit>
+			<trans-unit id="optional" xml:space="preserve">
+				<source>optional</source>
+			</trans-unit>
+			<trans-unit id="shipping_details" xml:space="preserve">
+				<source>Informationen zur Lieferung</source>
+			</trans-unit>
+			<trans-unit id="shipping_notes" xml:space="preserve">
+				<source>Anmerkungen zur Lieferung</source>
+			</trans-unit>
+			<trans-unit id="payment_method" xml:space="preserve">
+				<source>Zahlungsmethode</source>
+			</trans-unit>
+			<trans-unit id="shipping_method" xml:space="preserve">
+				<source>Liefermethode</source>
+			</trans-unit>
+			<trans-unit id="newsletter" xml:space="preserve">
+				<source>Ja, ich möchte den Newsletter erhalten</source>
+			</trans-unit>
+			<trans-unit id="accept_privacy1" xml:space="preserve">
+				<source>Ja, ich akzeptiere die Verarbeitung und Speicherung der oben angegebenen Daten zum Zweck der Abwicklung des Auftrages gemäß der</source>
+			</trans-unit>
+			<trans-unit id="accept_privacy2" xml:space="preserve">
+				<source>Datenschutzrichtlinien</source>
+			</trans-unit>
+			<trans-unit id="accept_terms1" xml:space="preserve">
+				<source>Ja, ich akzeptiere die</source>
+			</trans-unit>
+			<trans-unit id="accept_terms2" xml:space="preserve">
+				<source>Allgemeine Geschäftsbedingungen</source>
+			</trans-unit>
+			<trans-unit id="complete_order" xml:space="preserve">
+				<source>Bestellung abschließen</source>
+			</trans-unit>
+			<trans-unit id="edit_order" xml:space="preserve">
+				<source>Bestellung bearbeiten</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

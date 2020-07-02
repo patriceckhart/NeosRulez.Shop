@@ -2,19 +2,19 @@
   superTypes:
     'NeosRulez.Shop:Document.GenericPage': true
   ui:
-    label: 'Versandart'
+    label: i18n
     icon: 'fas fa-truck-loading'
     group: 'neosrulez_shop'
     inspector:
       groups:
         document:
-          label: 'Versandart'
+          label: i18n
           icon: 'fas fa-truck-loading'
   properties:
     price:
       type: string
       ui:
-        label: 'Preis'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -24,7 +24,7 @@
       type: string
       defaultValue: '20'
       ui:
-        label: 'Steuer'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -33,7 +33,7 @@
     countries:
       type: array
       ui:
-        label: 'Länder'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: TRUE
         inspector:

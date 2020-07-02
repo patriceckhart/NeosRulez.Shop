@@ -2,19 +2,19 @@
   superTypes:
     'Neos.Neos:Content': true
   ui:
-    label: 'Produkte (Menü)'
+    label: i18n
     group: 'neosrulez_shop'
     icon: 'icon-shopping-cart'
     inspector:
       groups:
         neosrulez_shop_products:
-          label: 'Produkte (Menü)'
+          label: i18n
           icon: 'icon-shopping-cart'
   properties:
     selection:
       type: references
       ui:
-        label: 'Produkte auswählen'
+        label: i18n
         reloadIfChanged: true
         showInCreationDialog: true
         inspector:
@@ -24,7 +24,7 @@
     startingPoint:
       type: reference
       ui:
-        label: 'Starting point'
+        label: i18n
         reloadIfChanged: true
         showInCreationDialog: true
         inspector:

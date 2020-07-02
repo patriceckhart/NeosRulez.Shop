@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Warenkorb</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart" xml:space="preserve">
+                <source>Warenkorb</source>
+            </trans-unit>
+            <trans-unit id="properties.recipient_mail" xml:space="preserve">
+                <source>Empfänger E-Mail Adresse</source>
+            </trans-unit>
+            <trans-unit id="properties.order_subject" xml:space="preserve">
+                <source>E-Mail Betreff</source>
+            </trans-unit>
+            <trans-unit id="properties.mail_logo" xml:space="preserve">
+                <source>E-Mail Logo</source>
+            </trans-unit>
+            <trans-unit id="properties.return_page" xml:space="preserve">
+                <source>Zielseite "Weiter einkaufen"</source>
+            </trans-unit>
+            <trans-unit id="properties.privacy_page" xml:space="preserve">
+                <source>Zielseite "Datenschutz"</source>
+            </trans-unit>
+            <trans-unit id="properties.terms_page" xml:space="preserve">
+                <source>Zielseite "AGB"</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Product</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_product" xml:space="preserve">
+                <source>Product</source>
+            </trans-unit>
+            <trans-unit id="properties.article_number" xml:space="preserve">
+                <source>Articlenumber</source>
+            </trans-unit>
+            <trans-unit id="properties.price" xml:space="preserve">
+                <source>Price</source>
+            </trans-unit>
+            <trans-unit id="properties.old_price" xml:space="preserve">
+                <source>Old price</source>
+            </trans-unit>
+            <trans-unit id="properties.tax" xml:space="preserve">
+                <source>Tax</source>
+            </trans-unit>
+            <trans-unit id="properties.stock" xml:space="preserve">
+                <source>In stock</source>
+            </trans-unit>
+            <trans-unit id="properties.images" xml:space="preserve">
+                <source>Product images</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

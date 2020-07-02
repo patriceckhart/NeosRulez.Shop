@@ -2,7 +2,7 @@
   superTypes:
     'NeosRulez.Shop:Document.AbstractPayment': true
   ui:
-    label: 'Zahlung fehlgeschlagen'
+    label: i18n
     icon: 'far fa-thumbs-down'
     position: 'end'
     group: 'neosrulez_shop'

@@ -58,16 +58,16 @@
     <div class="row">
         <div class="col-md-8 col-6">
             <h1>{neos:contentElement.editable(property: 'title')}</h1>
-            <small class="article_number">Art. Nr.: {article_number}</small>
+            <small class="article_number">{f:translate(id: 'article_number', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} {article_number}</small>
         </div>
         <div class="col-md-4 col-6">
             <div class="d-block price">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{price}</f:format.currency>
             </div>
-            <small class="d-block">inkl. {tax} % Mwst.</small>
+            <small class="d-block">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
             <f:if condition="{old_price}">
                 <div class="d-block mt-2 old_price">
-                    statt <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{old_price}</f:format.currency>
+                    {f:translate(id: 'instead_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{old_price}</f:format.currency>
                 </div>
             </f:if>
         </div>
@@ -103,7 +103,7 @@
                 <f:render section="quantity" arguments="{_all}" />
             </div>
             <div class="col-md-8">
-                <button type="submit" class="btn btn-primary btn-block">In den Warenkorb</button>
+                <button type="submit" class="btn btn-primary btn-block">{f:translate(id: 'add_to_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</button>
             </div>
         </div>
         <f:form.hidden name="item[nodeUri]" value="{node -> neos:uri.node()}" />
@@ -131,7 +131,7 @@
 <f:section name="sub_products">
     <div class="row mb-3">
         <div class="col-12">
-            <label>Weitere Varianten</label>
+            <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
             <div class="form-control sub_products">
                 <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
                 <div class="sub_products_dropdown">
@@ -157,7 +157,7 @@
         </f:if>
         <div class="{f:if(condition: '{sub_product.properties.images}', then: 'col-10', else: 'col-12')}">
             {sub_product.properties.title},
-            <small class="d-block mt-2">Art. Nr.: {sub_product.properties.article_number} <strong class="ml-2"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{sub_product.properties.price}</f:format.currency></strong></small>
+            <small class="d-block mt-2">{f:translate(id: 'article_number', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} {sub_product.properties.article_number} <strong class="ml-2"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{sub_product.properties.price}</f:format.currency></strong></small>
         </div>
     </div>
 </f:section>

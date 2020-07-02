@@ -2,20 +2,20 @@
   superTypes:
     'NeosRulez.Shop:Document.AbstractPage': true
   ui:
-    label: 'Warenkorb'
+    label: i18n
     icon: 'icon-shopping-basket'
     position: 1
     group: 'neosrulez_shop'
     inspector:
       groups:
         neosrulez_shop_cart:
-          label: 'Warenkorb'
+          label: i18n
           icon: 'icon-shopping-cart'
   properties:
     recipient_mail:
       type: string
       ui:
-        label: 'Empfänger E-Mail Adresse'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -24,7 +24,7 @@
     order_subject:
       type: string
       ui:
-        label: 'E-Mail Betreff'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -33,7 +33,7 @@
     mail_logo:
       type: 'Neos\Media\Domain\Model\ImageInterface'
       ui:
-        label: 'E-Mail Logo'
+        label: i18n
         reloadIfChanged: true
         inspector:
           group: 'neosrulez_shop_cart'
@@ -42,7 +42,7 @@
       type: 'reference'
       ui:
         reloadIfChanged: true
-        label: 'Zielseite (Weiter einkaufen)'
+        label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
           position: 4
@@ -50,7 +50,7 @@
       type: 'reference'
       ui:
         reloadIfChanged: true
-        label: 'Zielseite (Datenschutz)'
+        label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
           position: 5
@@ -58,7 +58,7 @@
       type: 'reference'
       ui:
         reloadIfChanged: true
-        label: 'Zielseite (AGB)'
+        label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
           position: 6

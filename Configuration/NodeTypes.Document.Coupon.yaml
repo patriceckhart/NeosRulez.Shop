@@ -3,20 +3,20 @@
     'NeosRulez.Shop:Document.GenericPage': true
     'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
   ui:
-    label: 'Coupon'
+    label: i18n
     icon: 'fas fa-bookmark'
     position: 4
     group: 'neosrulez_shop'
     inspector:
       groups:
         document:
-          label: 'Coupon'
+          label: i18n
           icon: 'fas fa-bookmark'
   properties:
     code:
       type: string
       ui:
-        label: 'Gutscheincode'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -26,7 +26,7 @@
       type: boolean
       defaultValue: false
       ui:
-        label: 'Prozentueller Wert'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -35,7 +35,7 @@
     value:
       type: string
       ui:
-        label: 'Wert'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -45,7 +45,7 @@
       type: string
       defaultValue: '0'
       ui:
-        label: 'Warenkorb Wert'
+        label: i18n
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
@@ -55,7 +55,7 @@
       type: boolean
       defaultValue: false
       ui:
-        label: 'Anzahl beschränken'
+        label: i18n
         reloadIfChanged: true
         inspector:
           group: 'document'
@@ -64,7 +64,7 @@
       type: string
       defaultValue: ''
       ui:
-        label: 'Anzahl'
+        label: i18n
         reloadIfChanged: true
         inspector:
           hidden: 'ClientEval:node.properties.quantity_restriction ? false : true'
@@ -74,7 +74,7 @@
       type: string
       defaultValue: '0'
       ui:
-        label: 'Eingelöst'
+        label: i18n
         reloadIfChanged: true
         inspector:
           group: 'document'

@@ -2,7 +2,7 @@
   superTypes:
     'NeosRulez.Shop:Document.AbstractPayment': true
   ui:
-    label: 'Zahlung erfolgreich'
+    label: i18n
     icon: 'far fa-thumbs-up'
     position: 'end'
     group: 'neosrulez_shop'

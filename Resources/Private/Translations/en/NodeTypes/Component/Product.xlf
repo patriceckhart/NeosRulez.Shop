@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="article_number" xml:space="preserve">
+				<source>Article number:</source>
+			</trans-unit>
+			<trans-unit id="instead_of" xml:space="preserve">
+				<source>instead of</source>
+			</trans-unit>
+			<trans-unit id="add_to_cart" xml:space="preserve">
+				<source>Add to cart</source>
+			</trans-unit>
+			<trans-unit id="variants" xml:space="preserve">
+				<source>Variants</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

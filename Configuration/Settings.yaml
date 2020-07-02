@@ -8,3 +8,10 @@ Neos:
     fusion:
       autoInclude:
         NeosRulez.Shop: true
+    userInterface:
+      translation:
+        autoInclude:
+          NeosRulez.Shop:
+            - 'NodeTypes/*'
+            - 'NodeTypes/Content/*'
+            - 'NodeTypes/Document/*'

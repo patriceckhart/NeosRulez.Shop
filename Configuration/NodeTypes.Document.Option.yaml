@@ -2,12 +2,12 @@
   superTypes:
     'NeosRulez.Shop:Document.GenericPage': true
   ui:
-    label: 'Option'
+    label: i18n
     icon: 'fas fa-dice-five'
     position: 3
     group: 'neosrulez_shop'
     inspector:
       groups:
         document:
-          label: 'Option'
+          label: i18n
           icon: 'fas fa-dice-five'
