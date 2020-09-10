@@ -1,4 +1,14 @@
 .body-hide { opacity:0.4 !important; pointer-events: none !important; }
+.product_detail {
+  .btn-white { border: 1px solid #ced4da; text-align:left;
+    &:after { float:right; margin-top:0.6em; }
+  }
+  .dropdown-menu { width:100%;
+    .active {
+      .dropdown-item { background:#f8f9fa; }
+    }
+  }
+}
 .sub_products { position: relative; height:auto; cursor: pointer;
   .sub_products_dropdown { display:none; position: absolute; left:0; top:0; width:100%; z-index:+2; background:#FFF; padding-left:1em; padding-right:1em; border:1px solid #ced4da;
     .subproduct_link {

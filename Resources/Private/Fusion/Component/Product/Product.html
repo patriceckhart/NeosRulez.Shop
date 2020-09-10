@@ -132,6 +132,45 @@
     <div class="row mb-3">
         <div class="col-12">
             <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
+
+            <div class="d-block">
+                <div class="btn-group d-block">
+                    <button type="button" class="btn btn-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <f:for each="{sub_products}" as="sub_product_active" iteration="subIterator">
+                            <f:if condition="{sub_product_active.properties.article_number} == {node.properties.article_number}">
+                                <f:then>
+                                    {sub_product_active.properties.title}
+                                </f:then>
+                            </f:if>
+                        </f:for>
+                    </button>
+                    <div class="dropdown-menu">
+                        <f:for each="{sub_products}" as="sub_product">
+                            <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
+                                <neos:link.node node="{sub_product}" class="dropdown-item">
+                                    <f:render section="sub_product" arguments="{_all}" />
+                                </neos:link.node>
+                            </div>
+                        </f:for>
+                        <f:comment>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                        </f:comment>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</f:section>
+
+<f:section name="2sub_products">
+    <div class="row mb-3">
+        <div class="col-12">
+            <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
             <div class="form-control sub_products">
                 <f:comment>
                     <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
@@ -168,28 +207,6 @@
     </div>
 </f:section>
 
-<f:comment>
-    <f:section name="sub_products">
-        <div class="row mb-3">
-            <div class="col-12">
-                <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
-                <div class="form-control sub_products">
-                    <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
-                    <div class="sub_products_dropdown">
-                        <f:for each="{sub_products}" as="sub_product">
-                            <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
-                                <neos:link.node node="{sub_product}" class="d-block subproduct_link">
-                                    <f:render section="sub_product" arguments="{_all}" />
-                                </neos:link.node>
-                            </div>
-                        </f:for>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </f:section>
-</f:comment>
-
 <f:section name="sub_product">
     <div class="row align-items-center my-2">
         <f:if condition="{sub_product.properties.images}">
@@ -198,7 +215,7 @@
             </div>
         </f:if>
         <div class="{f:if(condition: '{sub_product.properties.images}', then: 'col-10', else: 'col-12')}">
-            {sub_product.properties.title},
+            {sub_product.properties.title}
             <small class="d-block mt-2">{f:translate(id: 'article_number', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} {sub_product.properties.article_number} <strong class="ml-2"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{sub_product.properties.price}</f:format.currency></strong></small>
         </div>
     </div>

@@ -16,6 +16,10 @@ $(document).ready(function(){
         $(this).parent().parent().parent().submit();
     });
 
+    $('.product_detail .dropdown-item').click(function() {
+        $('body').toggleClass('body-hide');
+    });
+
     if($('.shipping_form').is(':visible')) {
         required_change = 1;
         $('.shipping_form').find('.form-control').attr('required', 'required');
