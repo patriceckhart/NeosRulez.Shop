@@ -62,6 +62,17 @@ class Cart {
         $item['price_gross'] = floatval(str_replace(',', '.', $product_node->getProperty('price')));
         $item['tax'] = floatval(str_replace(',', '.', $product_node->getProperty('tax')));
 
+        $min_quantity = $product_node->getProperty('min_quantity');
+        $max_quantity = $product_node->getProperty('max_quantity');
+
+        if($min_quantity) {
+            $item['min_quantity'] = $min_quantity;
+        }
+
+        if($max_quantity) {
+            $item['max_quantity'] = $max_quantity;
+        }
+
         $item['images'] = $product_node->getProperty('images');
 
         $item['tax_value_price'] = $item['price_gross']/100*$item['tax'];

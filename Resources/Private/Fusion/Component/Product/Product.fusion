@@ -10,7 +10,12 @@ prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
     images = ${q(node).property('images')}
     description = ${q(node).property('description')}
 
-    max_quantity = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
+    product_min_quantity = ${q(node).property('min_quantity')}
+    product_max_quantity = ${q(node).property('max_quantity')}
+
+    array_min_quantity = ${this.product_min_quantity ? String.toInteger(this.product_min_quantity) : 0}
+
+    max_quantity = ${this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
 
     options_groups = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').get()}
     options = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').children('[instanceof NeosRulez.Shop:Document.Option]').get()}

@@ -111,6 +111,24 @@
               ol: true
               ul: true
               a: true
+    min_quantity:
+      type: string
+      defaultValue: ''
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 7
+    max_quantity:
+      type: string
+      defaultValue: ''
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_product'
+          position: 8
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.Options': true

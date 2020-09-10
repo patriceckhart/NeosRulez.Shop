@@ -41,7 +41,7 @@
         <div class="images">
             <div class="row">
                 <f:for each="{images}" as="asset" iteration="iterator">
-                    <f:if condition="{iterator.index}!=1">
+                    <f:if condition="{iterator.index}!=0">
                         <div class="col-md-3 col-6">
                             <div class="image lightbox">
                                 <a href="{media:uri.image(image: asset, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}"><media:image image="{asset}" width="150c" height="150c" allowCropping="TRUE" allowUpScaling="TRUE" alt="" class="img-fluid" /></a>
@@ -133,7 +133,27 @@
         <div class="col-12">
             <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
             <div class="form-control sub_products">
-                <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
+                <f:comment>
+                    <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
+                </f:comment>
+
+                <f:if condition="{sub_products}">
+                    <div class="first-sub-product">
+                        <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
+                    </div>
+                </f:if>
+
+                <f:for each="{sub_products}" as="sub_product_active" iteration="subIterator">
+                    <f:if condition="{sub_product_active.properties.article_number} == {node.properties.article_number}">
+                        <f:then>
+                            <div class="d-block">
+                                <f:render section="sub_product" arguments="{sub_product: sub_product_active}" />
+                                <style>.first-sub-product { display:none !important; }</style>
+                            </div>
+                        </f:then>
+                    </f:if>
+                </f:for>
+
                 <div class="sub_products_dropdown">
                     <f:for each="{sub_products}" as="sub_product">
                         <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
@@ -147,6 +167,28 @@
         </div>
     </div>
 </f:section>
+
+<f:comment>
+    <f:section name="sub_products">
+        <div class="row mb-3">
+            <div class="col-12">
+                <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
+                <div class="form-control sub_products">
+                    <f:render section="sub_product" arguments="{sub_product: sub_products.0}" />
+                    <div class="sub_products_dropdown">
+                        <f:for each="{sub_products}" as="sub_product">
+                            <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
+                                <neos:link.node node="{sub_product}" class="d-block subproduct_link">
+                                    <f:render section="sub_product" arguments="{_all}" />
+                                </neos:link.node>
+                            </div>
+                        </f:for>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:section>
+</f:comment>
 
 <f:section name="sub_product">
     <div class="row align-items-center my-2">

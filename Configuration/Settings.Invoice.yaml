@@ -1,0 +1,4 @@
+NeosRulez:
+  Shop:
+    Invoice:
+      templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Pdf/Invoice.html'

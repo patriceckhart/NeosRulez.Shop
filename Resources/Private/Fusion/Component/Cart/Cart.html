@@ -41,6 +41,12 @@
                     <f:form.hidden name="cart_variables[recipient_mail]" value="{cart_variables.0.recipient_mail}" />
                     <f:form.hidden name="cart_variables[order_subject]" value="{cart_variables.0.order_subject}" />
                     <f:form.hidden name="cart_variables[mail_logo]" value="{media:uri.image(image: cart_variables.0.mail_logo, maximumWidth: 200, maximumHeight: 200, allowCropping:FALSE, allowUpScaling:TRUE)}" />
+                    <f:form.hidden name="cart_variables[invoice]" value="{cart_variables.0.invoice}" />
+                    <f:form.hidden name="cart_variables[invoice_background]" value="{media:uri.image(image: cart_variables.0.invoice_background, width: 2000, height: 2829, allowCropping:FALSE, allowUpScaling:TRUE)}" />
+                    <f:form.hidden name="cart_variables[invoice_number]" value="{cart_variables.0.invoice_number}" />
+                    <f:form.hidden name="cart_variables[invoice_number_prefix]" value="{cart_variables.0.invoice_number_prefix}" />
+                    <f:form.hidden name="cart_variables[invoice_info_prepayment]" value="{cart_variables.0.invoice_info_prepayment}" />
+                    <f:form.hidden name="cart_variables[invoice_address]" value="{cart_variables.0.invoice_address}" />
                 </f:form>
             </f:then>
             <f:else>
@@ -120,18 +126,26 @@
             <div class="col-md-2 col-4">
                 <f:form action="update" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
                     <select class="form-control quantity" name="quantity">
-                        <f:for each="{max_quantity}" as="quantity">
-                            <f:if condition="{quantity}!=0">
-                                <f:if condition="{item.quantity} == {quantity}">
-                                    <f:then>
-                                        <option value="{quantity}" selected>{quantity}</option>
-                                    </f:then>
-                                    <f:else>
-                                        <option value="{quantity}">{quantity}</option>
-                                    </f:else>
-                                </f:if>
-                            </f:if>
-                        </f:for>
+                        <f:if condition="{item.max_quantity}">
+                            <f:then>
+                                <f:for each="{full_quantity}" as="quantity">
+                                    <f:if condition="{quantity}!=0">
+                                        <f:if condition="{quantity}>={item.min_quantity}">
+                                            <f:if condition="{quantity}<={item.max_quantity}">
+                                                <f:render section="quantity" arguments="{_all}" />
+                                            </f:if>
+                                        </f:if>
+                                    </f:if>
+                                </f:for>
+                            </f:then>
+                            <f:else>
+                                <f:for each="{max_quantity}" as="quantity">
+                                    <f:if condition="{quantity}!=0">
+                                        <f:render section="quantity" arguments="{_all}" />
+                                    </f:if>
+                                </f:for>
+                            </f:else>
+                        </f:if>
                     </select>
                 </f:form>
             </div>
@@ -146,6 +160,17 @@
             </div>
         </div>
     </div>
+</f:section>
+
+<f:section name="quantity">
+    <f:if condition="{item.quantity} == {quantity}">
+        <f:then>
+            <option value="{quantity}" selected>{quantity}</option>
+        </f:then>
+        <f:else>
+            <option value="{quantity}">{quantity}</option>
+        </f:else>
+    </f:if>
 </f:section>
 
 <f:section name="summary">
@@ -221,13 +246,29 @@
         </div>
     </div>
     <f:if condition="!{checkout}">
-        <div class="form-group mt-3">
-            <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
-                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
-            </f:form>
-        </div>
-        <f:if condition="{allow_coupons}">
-            <f:render section="coupon" arguments="{_all}" />
+        <f:if condition="{cart_min_quantity} && {cart_count}<{cart_min_quantity}">
+            <f:then>
+                <div class="alert alert-danger mt-5" role="alert">
+                    <f:if condition="{cart_min_quantity}!=1">
+                        <f:then>
+                            {f:translate(id: 'min_quantity12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity22', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                        </f:then>
+                        <f:else>
+                            {f:translate(id: 'min_quantity11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity21', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                        </f:else>
+                    </f:if>
+                </div>
+            </f:then>
+            <f:else>
+                <div class="form-group mt-3">
+                    <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                    </f:form>
+                </div>
+                <f:if condition="{allow_coupons}">
+                    <f:render section="coupon" arguments="{_all}" />
+                </f:if>
+            </f:else>
         </f:if>
     </f:if>
 </f:section>
@@ -471,7 +512,7 @@
     <div class="d-block pb-2 border-bottom-strong font-weight-bold mb-3">
         {f:translate(id: 'shipping_method', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
     </div>
-    <select id="shipping" name="shipping" class="form-control" required>
+    <select id="shipping" name="shipping" class="form-control" {f:if(condition='!{shippings.0.selected_country}', then:' disabled')} required>
         <f:if condition="!{order.shipping} || {order.shipping}==''">
             <option disabled selected>{f:translate(id: 'please_select', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</option>
         </f:if>
@@ -479,6 +520,9 @@
             <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></option>
         </f:for>
     </select>
+    <f:if condition="!{shippings.0.selected_country}">
+        <small class="d-block text-danger mt-2">{f:translate(id: 'select_country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+    </f:if>
 </f:section>
 
 <f:section name="checkout">

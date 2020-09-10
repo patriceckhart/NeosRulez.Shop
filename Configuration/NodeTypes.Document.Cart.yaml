@@ -7,11 +7,29 @@
     position: 1
     group: 'neosrulez_shop'
     inspector:
+      tabs:
+        neosrulez_shop_cart:
+          label: i18n
+          icon: 'fas fa-file-invoice-dollar'
+          position: 12
       groups:
         neosrulez_shop_cart:
           label: i18n
           icon: 'icon-shopping-cart'
+        neosrulez_shop_cart_invoice:
+          label: i18n
+          icon: 'fas fa-file-invoice-dollar'
+          tab: 'neosrulez_shop_cart'
   properties:
+    min_quantity:
+      type: string
+      defaultValue: ''
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_cart'
+          position: 1
     recipient_mail:
       type: string
       ui:
@@ -20,7 +38,7 @@
         reloadIfChanged: true
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 1
+          position: 2
     order_subject:
       type: string
       ui:
@@ -29,7 +47,7 @@
         reloadIfChanged: true
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 2
+          position: 3
     mail_logo:
       type: 'Neos\Media\Domain\Model\ImageInterface'
       ui:
@@ -37,7 +55,12 @@
         reloadIfChanged: true
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 3
+          position: 4
+          editorOptions:
+            features:
+              mediaBrowser: true
+              crop: true
+              resize: false
     return_page:
       type: 'reference'
       ui:
@@ -45,7 +68,7 @@
         label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 4
+          position: 5
     privacy_page:
       type: 'reference'
       ui:
@@ -53,7 +76,7 @@
         label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 5
+          position: 6
     terms_page:
       type: 'reference'
       ui:
@@ -61,7 +84,134 @@
         label: i18n
         inspector:
           group: 'neosrulez_shop_cart'
-          position: 6
+          position: 7
+    invoice:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_cart_invoice'
+          position: 1
+    invoice_background:
+      type: 'Neos\Media\Domain\Model\ImageInterface'
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: 'neosrulez_shop_cart_invoice'
+          position: 2
+          editorOptions:
+            features:
+              mediaBrowser: false
+              crop: false
+              resize: false
+    invoice_number:
+      type: string
+      defaultValue: '1'
+      ui:
+        label: i18n
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: 'neosrulez_shop_cart_invoice'
+          position: 3
+    invoice_number_prefix:
+      type: string
+      ui:
+        label: i18n
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: 'neosrulez_shop_cart_invoice'
+          position: 4
+    invoice_address:
+      type: string
+      ui:
+        label: i18n
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: 'neosrulez_shop_cart_invoice'
+          position: 5
+          editor: 'Neos.Neos/Inspector/Editors/RichTextEditor'
+          editorOptions:
+            placeholder: ''
+            autoparagraph: false
+            linking: false
+            formatting:
+              strong: true
+              em: false
+              u: false
+              sub: false
+              sup: false
+              del: false
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              h4: false
+              h5: false
+              h6: false
+              pre: false
+              underline: false
+              strikethrough: false
+              removeFormat: false
+              left: false
+              right: false
+              center: false
+              justify: false
+              table: false
+              ol: false
+              ul: false
+              a: false
+    invoice_info_prepayment:
+      type: string
+      ui:
+        label: i18n
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: 'neosrulez_shop_cart_invoice'
+          position: 5
+          editor: 'Neos.Neos/Inspector/Editors/RichTextEditor'
+          editorOptions:
+            placeholder: ''
+            autoparagraph: false
+            linking: false
+            formatting:
+              strong: true
+              em: false
+              u: false
+              sub: false
+              sup: false
+              del: false
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              h4: false
+              h5: false
+              h6: false
+              pre: false
+              underline: false
+              strikethrough: false
+              removeFormat: false
+              left: false
+              right: false
+              center: false
+              justify: false
+              table: false
+              ol: false
+              ul: false
+              a: false
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.Shipping': true

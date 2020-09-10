@@ -1,0 +1,4 @@
+body { font-size:12px; }
+.page-break-inside { float:left; page-break-inside: avoid; }
+.print-page-break-before { float:left; page-break-before: right; }
+small { font-size:9px; }

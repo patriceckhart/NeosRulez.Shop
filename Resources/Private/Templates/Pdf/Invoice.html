@@ -1,0 +1,161 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
+{namespace media=Neos\Media\ViewHelpers}
+<div style="float:left; width:100%; position: absolute; left:0; top:0; ">
+    <img src="{args.cart_variables.invoice_background}" style="width:100%; height:auto;" />
+</div>
+<div style="float:left; position:absolute; margin:0 auto; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em;">
+
+    <div style="width: 100%; min-width: 800px; margin:0 auto;">
+
+        <div style="float:left; width:100%; margin-bottom:50px;">
+            <div style="float:left; width:50%;">
+                <f:format.raw>{args.cart_variables.invoice_address}</f:format.raw>
+            </div>
+        </div>
+
+        <div style="float:left; width:100%; margin-top:70px;">
+            <div style="float:left; width:50%;">
+                <f:render section="invoiceAddress" arguments="{_all}" /><br />
+            </div>
+        </div>
+
+        <div style="float:left; width:100%; margin-top:60px; margin-bottom:60px;">
+            <div style="float:left; width:50%;">
+                <strong>Rechnung: {invoice_number}</strong>
+            </div>
+            <div style="float:left; width:50%; text-align:right;">
+                <f:format.date format="d.m.Y">{invoice_date}</f:format.date>
+            </div>
+        </div>
+
+        <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+            <div style="float:left; width:50%;">
+                Produkt
+            </div>
+            <div style="float:left; width:15%; text-align:right;">
+                Preis
+            </div>
+            <div style="float:left; width:10%; text-align:right;">
+                Steuer
+            </div>
+            <div style="float:left; width:10%; text-align:center;">
+                Anzahl
+            </div>
+            <div style="float:left; width:15%; text-align:right;">
+                Gesamt
+            </div>
+        </div>
+
+        <div style="float:left; width:100%; margin-top:0; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+            <f:for each="{items}" as="item">
+                <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                    <div style="float:left; width:50%;">
+                        <strong>{item.title}</strong><br />
+                        <f:if condition="{item.options}">
+                                <span class="d-block">
+                                    <f:for each="{item.options}" as="option" iteration="optionIterator">
+                                        {option}{f:if(condition: optionIterator.isLast, else: ', ')}
+                                    </f:for>
+                                </span><br />
+                        </f:if>
+                        <small style="display:block;">Art. Nr.: {item.article_number}</small>
+                    </div>
+                    <div style="float:left; width:15%; text-align:right;">
+                        {item.price -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}<br />
+                        <small style="display:block;">exkl. {item.tax} % MwSt.</small>
+                    </div>
+                    <div style="float:left; width:10%; text-align:right;">
+                        {item.tax} %
+                    </div>
+                    <div style="float:left; width:10%; text-align:center;">
+                        {item.quantity}
+                    </div>
+                    <div style="float:left; width:15%; text-align:right;">
+                        {item.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}<br />
+                        <small style="display:block;">inkl. {item.tax} % MwSt.</small>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+
+        <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+            <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px;">
+                <div style="float:left; width:20%; text-align:right; float:right;">
+                    {args.summary.subtotal -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                </div>
+                <div style="float:left; width:30%; text-align:right; float:right;">
+                    Zwischensumme:
+                </div>
+            </div>
+
+            <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:20%; text-align:right; float:right;">
+                    {args.summary.tax -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                </div>
+                <div style="float:left; width:30%; text-align:right; float:right;">
+                    Enthaltene Steuer:
+                </div>
+            </div>
+
+            <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:20%; text-align:right; float:right;">
+                    {args.summary.total_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                </div>
+                <div style="float:left; width:30%; text-align:right; float:right;">
+                    Versandkosten:
+                </div>
+            </div>
+
+            <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:20%; text-align:right; float:right;">
+                    {args.summary.tax_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                </div>
+                <div style="float:left; width:30%; text-align:right; float:right;">
+                    Enthaltene Steuer (Versand):
+                </div>
+            </div>
+
+            <f:if condition="{args.summary.discount}">
+                <div style="float:left; width:100%; margin-bottom:10px;">
+                    <div style="float:left; width:20%; text-align:right; float:right;">
+                        - {args.summary.discount -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                    </div>
+                    <div style="float:left; width:30%; text-align:right; float:right;">
+                        Gutschein:
+                    </div>
+                </div>
+            </f:if>
+
+            <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:20%; text-align:right; float:right;">
+                    <strong>{args.summary.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}</strong>
+                </div>
+                <div style="float:left; width:30%; text-align:right; float:right;">
+                    <strong>Gesamt:</strong>
+                </div>
+            </div>
+        </div>
+
+        <f:if condition="{args.payment_url}">
+            <div style="float:left; width:100%; margin-bottom:20px;">
+                <f:if condition="{args.payment}=='prepayment'">
+                    <div style="float:left; width:100%; margin-top:40px;">
+                        <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
+                    </div>
+                </f:if>
+            </div>
+        </f:if>
+
+    </div>
+
+</div>
+
+<f:section name="invoiceAddress">
+    <f:if condition="{args.company}">
+        {args.company}<br />
+    </f:if>
+    {args.firstname} {args.lastname}<br />
+    {args.address}<br />
+    {args.zip} {args.city}, {args.country}
+</f:section>

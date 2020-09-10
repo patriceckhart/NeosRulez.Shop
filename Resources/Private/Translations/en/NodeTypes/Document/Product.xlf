@@ -26,6 +26,12 @@
             <trans-unit id="properties.images" xml:space="preserve">
                 <source>Product images</source>
             </trans-unit>
+            <trans-unit id="properties.min_quantity" xml:space="preserve">
+                <source>Min. quantity</source>
+            </trans-unit>
+            <trans-unit id="properties.max_quantity" xml:space="preserve">
+                <source>Max. quantity</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

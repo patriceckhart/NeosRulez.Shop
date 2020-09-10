@@ -32,6 +32,12 @@ class CartController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\InvoiceService
+     */
+    protected $invoiceService;
+
+    /**
+     * @Flow\Inject
      * @var \NeosRulez\Shop\Domain\Repository\OrderRepository
      */
     protected $orderRepository;
@@ -206,7 +212,6 @@ class CartController extends ActionController
      * @return void
      */
     public function placeOrderAction($args) {
-
         $orders = $this->orderRepository->findAll();
         $oder_number = count($orders)+1;
         $args['order_number'] = $oder_number;
@@ -236,6 +241,9 @@ class CartController extends ActionController
         $payment_data = $this->paymentService->getPaymentByIdentifier($args['payment']);
         $payment_url = $this->paymentService->initPayment($args);
         $args['payment_url'] = $payment_url;
+
+//        var_dump($args);
+
         if($this->settings['Mail']['debugMode']) {
             return $this->mailService->execute($args);
         } else {
@@ -252,6 +260,7 @@ class CartController extends ActionController
                 $this->redirectToUri($payment_url);
             }
         }
+
     }
 
 }

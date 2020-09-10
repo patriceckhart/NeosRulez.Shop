@@ -8,6 +8,12 @@
             <trans-unit id="groups.neosrulez_shop_cart" xml:space="preserve">
                 <source>Warenkorb</source>
             </trans-unit>
+            <trans-unit id="tabs.neosrulez_shop_cart" xml:space="preserve">
+                <source>Rechnung</source>
+            </trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart_invoice" xml:space="preserve">
+                <source>Rechnung</source>
+            </trans-unit>
             <trans-unit id="properties.recipient_mail" xml:space="preserve">
                 <source>Empfänger E-Mail Adresse</source>
             </trans-unit>
@@ -25,6 +31,27 @@
             </trans-unit>
             <trans-unit id="properties.terms_page" xml:space="preserve">
                 <source>Zielseite "AGB"</source>
+            </trans-unit>
+            <trans-unit id="properties.min_quantity" xml:space="preserve">
+                <source>Min. Anzahl</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_background" xml:space="preserve">
+                <source>Briefpapier (Format: DIN A4)</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number" xml:space="preserve">
+                <source>Rechnungsnummer Start</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number_prefix" xml:space="preserve">
+                <source>Rechnungsnummer Prefix</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice" xml:space="preserve">
+                <source>Rechnung versenden</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_address" xml:space="preserve">
+                <source>Firmenanschrift</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_info_prepayment" xml:space="preserve">
+                <source>Informationstext Vorauskasse</source>
             </trans-unit>
         </body>
     </file>

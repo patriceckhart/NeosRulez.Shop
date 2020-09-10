@@ -152,6 +152,21 @@
 			<trans-unit id="edit_order" xml:space="preserve">
 				<source>Edit order</source>
 			</trans-unit>
+			<trans-unit id="min_quantity11" xml:space="preserve">
+				<source>It has to be at least</source>
+			</trans-unit>
+			<trans-unit id="min_quantity12" xml:space="preserve">
+				<source>It must be at least</source>
+			</trans-unit>
+			<trans-unit id="min_quantity21" xml:space="preserve">
+				<source>Product in the shopping cart.</source>
+			</trans-unit>
+			<trans-unit id="min_quantity22" xml:space="preserve">
+				<source>Products are in the shopping cart.</source>
+			</trans-unit>
+			<trans-unit id="select_country" xml:space="preserve">
+				<source>Please select a country</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

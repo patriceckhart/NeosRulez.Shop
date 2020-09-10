@@ -152,6 +152,21 @@
 			<trans-unit id="edit_order" xml:space="preserve">
 				<source>Bestellung bearbeiten</source>
 			</trans-unit>
+			<trans-unit id="min_quantity11" xml:space="preserve">
+				<source>Es muss sich mindestens</source>
+			</trans-unit>
+			<trans-unit id="min_quantity12" xml:space="preserve">
+				<source>Es müssen sich mindestens</source>
+			</trans-unit>
+			<trans-unit id="min_quantity21" xml:space="preserve">
+				<source>Produkt im Warenkorb befinden.</source>
+			</trans-unit>
+			<trans-unit id="min_quantity22" xml:space="preserve">
+				<source>Produkte im Warenkorb befinden.</source>
+			</trans-unit>
+			<trans-unit id="select_country" xml:space="preserve">
+				<source>Bitte ein Land auswählen</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

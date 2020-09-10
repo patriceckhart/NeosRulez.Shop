@@ -7,6 +7,7 @@ use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations;
 
 /**
+ * Class Payment
  *
  * @Flow\Scope("singleton")
  */
