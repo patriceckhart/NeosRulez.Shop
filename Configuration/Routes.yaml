@@ -70,3 +70,19 @@
     '@package': 'NeosRulez.Shop'
     '@action': 'showCart'
   appendExceedingArguments: 'true'
+-
+  name: 'Payment success'
+  uriPattern: 'payment-success'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'paymentSuccess'
+  appendExceedingArguments: 'true'
+-
+  name: 'Payment failure'
+  uriPattern: 'payment-failure'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'paymentFailure'
+  appendExceedingArguments: 'true'

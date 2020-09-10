@@ -263,4 +263,18 @@ class CartController extends ActionController
 
     }
 
+    /**
+     * @return string
+     */
+    public function paymentSuccessAction() {
+        return 'success';
+    }
+
+    /**
+     * @return string
+     */
+    public function paymentFailureAction() {
+        return 'failure';
+    }
+
 }
