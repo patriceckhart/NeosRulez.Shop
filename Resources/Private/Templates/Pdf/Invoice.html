@@ -1,9 +1,11 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
-<div style="float:left; width:100%; position: absolute; left:0; top:0; ">
-    <img src="{args.cart_variables.invoice_background}" style="width:100%; height:auto;" />
-</div>
+<f:if condition="{args.cart_variables.invoice_background}">
+    <div style="float:left; width:100%; position: absolute; left:0; top:0; ">
+        <img src="{args.cart_variables.invoice_background}" style="width:100%; height:auto;" />
+    </div>
+</f:if>
 <div style="float:left; position:absolute; margin:0 auto; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em;">
 
     <div style="width: 100%; min-width: 800px; margin:0 auto;">
