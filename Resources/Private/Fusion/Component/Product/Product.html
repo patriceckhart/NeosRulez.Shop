@@ -78,7 +78,7 @@
 </f:section>
 
 <f:section name="quantity">
-    <select class="form-control quantity" name="item[quantity]">
+    <select class="form-control product-quantity" name="item[quantity]">
         <f:for each="{max_quantity}" as="quantity">
             <f:if condition="{quantity}!=0">
                 <option value="{quantity}">{quantity}</option>
@@ -103,7 +103,7 @@
                 <f:render section="quantity" arguments="{_all}" />
             </div>
             <div class="col-md-8">
-                <button type="submit" class="btn btn-primary btn-block">{f:translate(id: 'add_to_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</button>
+                <button type="submit" class="btn btn-primary btn-block add-to-cart">{f:translate(id: 'add_to_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</button>
             </div>
         </div>
         <f:form.hidden name="item[nodeUri]" value="{node -> neos:uri.node()}" />

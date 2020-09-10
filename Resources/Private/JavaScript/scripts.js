@@ -7,7 +7,13 @@ $(document).ready(function(){
     });
 
     $('.quantity').change(function() {
+        $('body').toggleClass('body-hide');
         $(this).parent().submit();
+    });
+
+    $('.add-to-cart').click(function() {
+        $('body').toggleClass('body-hide');
+        $(this).parent().parent().parent().submit();
     });
 
     if($('.shipping_form').is(':visible')) {
@@ -35,6 +41,7 @@ $(document).ready(function(){
     });
 
     $('#shipping').change(function() {
+        $('body').toggleClass('body-hide');
         $('#updateOrder').submit();
     });
 
@@ -43,6 +50,7 @@ $(document).ready(function(){
             country = $(this).val();
             console.log(country);
             $('#selected_country').val(country);
+            $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
         });
     } else {
@@ -51,6 +59,7 @@ $(document).ready(function(){
             console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
+            $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
         });
     }
@@ -63,6 +72,7 @@ $(document).ready(function(){
             console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
+            $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
         }
     });
@@ -72,6 +82,7 @@ $(document).ready(function(){
             country = $(this).val();
             console.log(country);
             $('#selected_country').val(country);
+            $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
         }
     });
