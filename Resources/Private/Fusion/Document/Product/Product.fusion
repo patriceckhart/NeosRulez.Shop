@@ -15,13 +15,13 @@ prototype(NeosRulez.Shop:Document.Product) < prototype(Neos.NodeTypes:Page) {
         inline = FALSE
         outputFolder = 'resource://NeosRulez.Shop/Public/JavaScript/'
     }
-    shopAjaxJs = NeosRulez.JsMinifier:JsFile
-    shopAjaxJs {
-        @position = 'end'
-        source = 'resource://NeosRulez.Shop/Private/JavaScript/ajax.js'
-        inline = FALSE
-        outputFolder = 'resource://NeosRulez.Shop/Public/JavaScript/'
-    }
+//    shopAjaxJs = NeosRulez.JsMinifier:JsFile
+//    shopAjaxJs {
+//        @position = 'end'
+//        source = 'resource://NeosRulez.Shop/Private/JavaScript/ajax.js'
+//        inline = FALSE
+//        outputFolder = 'resource://NeosRulez.Shop/Public/JavaScript/'
+//    }
     shopAjaxJs.@if.render = ${Configuration.setting('NeosRulez.Shop.ajax')}
 }
 
