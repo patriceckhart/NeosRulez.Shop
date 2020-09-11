@@ -2,3 +2,5 @@ NeosRulez:
   Shop:
     Invoice:
       templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Pdf/Invoice.html'
+      Mail:
+        templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Mail/Invoice.html'

@@ -182,7 +182,14 @@ class Cart {
             $total_coupon = $total_coupon + $shipping[0]['price'];
             $total_shipping = $shipping[0]['price'];
         }
-        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon];
+        $cart_count = 0;
+        if($summary) {
+            foreach ($summary as $summaryitem) {
+                $summaryquantity = intval($summaryitem['quantity']);
+                $cart_count = $cart_count+$summaryquantity;
+            }
+        }
+        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count)];
         return $result;
     }
 

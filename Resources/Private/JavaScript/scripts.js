@@ -52,7 +52,7 @@ $(document).ready(function(){
     if($('.shipping_form').is(':visible')) {
         $('#shipping_country').change(function() {
             country = $(this).val();
-            console.log(country);
+            // console.log(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
@@ -60,7 +60,7 @@ $(document).ready(function(){
     } else {
         $('#country').change(function() {
             country = $(this).val();
-            console.log(country);
+            // console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
@@ -69,11 +69,12 @@ $(document).ready(function(){
     }
 
     $('#country').change(function() {
+        $('body').toggleClass('body-hide');
         if($('.shipping_form').is(':visible')) {
 
         } else {
             country = $(this).val();
-            console.log(country);
+            // console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
@@ -84,7 +85,7 @@ $(document).ready(function(){
     $('#shipping_country').change(function() {
         if($('.shipping_form').is(':visible')) {
             country = $(this).val();
-            console.log(country);
+            // console.log(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();

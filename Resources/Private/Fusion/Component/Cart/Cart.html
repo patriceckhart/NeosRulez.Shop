@@ -246,7 +246,7 @@
         </div>
     </div>
     <f:if condition="!{checkout}">
-        <f:if condition="{cart_min_quantity} && {cart_count}<{cart_min_quantity}">
+        <f:if condition="{cart_min_quantity} && {summary.cartcount}<{cart_min_quantity}">
             <f:then>
                 <div class="alert alert-danger mt-5" role="alert">
                     <f:if condition="{cart_min_quantity}!=1">

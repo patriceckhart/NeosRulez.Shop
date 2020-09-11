@@ -28,7 +28,6 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     newsletter = ${Configuration.setting('NeosRulez.Shop.newsletter')}
     privacy_page = ${q(documentNode).property('privacy_page')}
     terms_page = ${q(documentNode).property('terms_page')}
-    cart_count = NeosRulez.Shop:Helper.CartCountHelper
     @cache {
         mode = 'uncached'
         context {

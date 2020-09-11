@@ -64,7 +64,7 @@
             <div class="d-block price">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{price}</f:format.currency>
             </div>
-            <small class="d-block">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+            <small class="d-block tax">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
             <f:if condition="{old_price}">
                 <div class="d-block mt-2 old_price">
                     {f:translate(id: 'instead_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{old_price}</f:format.currency>
@@ -132,19 +132,29 @@
     <div class="row mb-3">
         <div class="col-12">
             <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
-
             <div class="d-block">
-                <div class="btn-group d-block">
+                <span class="btn-group d-block">
                     <button type="button" class="btn btn-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <f:if condition="{sub_products}">
+                            <span class="first-sub-product">{sub_products.0.properties.title}</span>
+                        </f:if>
                         <f:for each="{sub_products}" as="sub_product_active" iteration="subIterator">
                             <f:if condition="{sub_product_active.properties.article_number} == {node.properties.article_number}">
                                 <f:then>
                                     {sub_product_active.properties.title}
+                                    <style>.first-sub-product { display:none !important; }</style>
                                 </f:then>
                             </f:if>
                         </f:for>
                     </button>
                     <div class="dropdown-menu">
+                        <f:if condition="{parent_product}">
+                            <div>
+                                <neos:link.node node="{parent_product.0}" class="dropdown-item">
+                                    <f:render section="sub_product" arguments="{sub_product: parent_product.0}" />
+                                </neos:link.node>
+                            </div>
+                        </f:if>
                         <f:for each="{sub_products}" as="sub_product">
                             <div class="{f:if(condition: '{sub_product}=={node}', then: 'active', else: 'current')}">
                                 <neos:link.node node="{sub_product}" class="dropdown-item">
@@ -152,17 +162,9 @@
                                 </neos:link.node>
                             </div>
                         </f:for>
-                        <f:comment>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                        </f:comment>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </f:section>

@@ -3,4 +3,4 @@ NeosRulez:
     Mail:
       debugMode: false
       senderMail: 'postmaster@domain.tld'
-      templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Mail/Mail.html'
+      templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Mail/Invoice.html'
