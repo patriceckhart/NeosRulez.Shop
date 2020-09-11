@@ -153,7 +153,8 @@ class Cart {
         $tax_shipping = 0;
         $discount = 0;
         $total_shipping = 0;
-        $shipping = false;
+        $shipping = [];
+        $free_from = 9999999999999;
         $weight = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
@@ -164,8 +165,12 @@ class Cart {
             $subtotal = $subtotal+$item['price']*$item['quantity'];
             $total = $total+$item['total'];
             $total_coupon = $total_coupon+$item['total'];
-            if($shipping[0]['price_kg']) {
-                $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+            if (array_key_exists(0, $shipping)) {
+                if (array_key_exists('price_kg', $shipping[0])) {
+                    if($shipping[0]['price_kg']) {
+                        $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+                    }
+                }
             }
         }
         if($coupons) {
@@ -184,10 +189,9 @@ class Cart {
             }
         }
         if($shipping) {
-            $free_from = false;
             if (array_key_exists('free_from', $shipping[0])) {
                 if($shipping[0]['free_from'] == '') {
-                    $free_from = false;
+                    $free_from = 9999999999999;
                 } else {
                     $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
                 }
@@ -195,13 +199,13 @@ class Cart {
             if($weight>0) {
                 $shipping_weight = $shipping[0]['price'] * $weight;
                 $tax_shipping = $shipping_weight / 100 * $shipping[0]['tax'];
-                if($free_from && $total_coupon<$free_from) {
+                if($total_coupon<$free_from) {
                     $total_coupon = $total_coupon + $shipping_weight;
                 }
                 $total_shipping = $shipping_weight;
             } else {
                 $tax_shipping = $shipping[0]['price'] / 100 * $shipping[0]['tax'];
-                if($free_from && $total_coupon<$free_from) {
+                if($total_coupon<$free_from) {
                     $total_coupon = $total_coupon + $shipping[0]['price'];
                 }
                 $total_shipping = $shipping[0]['price'];

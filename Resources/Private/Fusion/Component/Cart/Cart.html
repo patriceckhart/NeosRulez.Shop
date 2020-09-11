@@ -245,7 +245,7 @@
             </div>
         </div>
     </div>
-    <f:if condition="{summary.free_from}">
+    <f:if condition="{summary.free_from}!=9999999999999">
         <div class="alert alert-success my-2 text-center" role="alert">
             {f:translate(id: 'free_from', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.free_from}</f:format.currency>
         </div>
