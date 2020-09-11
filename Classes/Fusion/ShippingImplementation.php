@@ -39,7 +39,7 @@ class ShippingImplementation extends AbstractFusionObject {
                 $countries = $shipping->getProperty('countries');
                 foreach ($countries as $country) {
                     if($country == $selected_country) {
-                        $available_shippings[] = ['shipping' => $shipping, 'float_price' => floatval(str_replace(',', '.', $shipping->getProperty('price'))), 'price_kg' => $shipping->getProperty('price_kg')];
+                        $available_shippings[] = ['shipping' => $shipping, 'float_price' => floatval(str_replace(',', '.', $shipping->getProperty('price'))), 'price_kg' => $shipping->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping->getProperty('free_from')))];
                     }
                 }
             }

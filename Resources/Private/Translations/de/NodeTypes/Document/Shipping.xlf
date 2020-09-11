@@ -20,6 +20,9 @@
             <trans-unit id="properties.price_kg" xml:space="preserve">
                 <source>Preis per Kilogramm</source>
             </trans-unit>
+            <trans-unit id="properties.free_from" xml:space="preserve">
+                <source>Versandkostenfrei ab</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

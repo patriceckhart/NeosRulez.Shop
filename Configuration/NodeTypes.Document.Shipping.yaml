@@ -22,13 +22,20 @@
           position: 2
     price_kg:
       type: boolean
-      defaultValue: false
       ui:
         label: i18n
         reloadIfChanged: true
         inspector:
           group: 'document'
           position: 3
+    free_from:
+      type: string
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 4
     tax:
       type: string
       defaultValue: '20'
@@ -38,7 +45,7 @@
         reloadIfChanged: true
         inspector:
           group: 'document'
-          position: 4
+          position: 5
     countries:
       type: array
       ui:
@@ -47,7 +54,7 @@
         reloadIfChanged: TRUE
         inspector:
           group: 'document'
-          position: 5
+          position: 6
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             dataSourceIdentifier: neosrulez-shop-countries

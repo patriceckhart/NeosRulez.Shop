@@ -170,6 +170,9 @@
 			<trans-unit id="per_kg" xml:space="preserve">
 				<source>per kg</source>
 			</trans-unit>
+			<trans-unit id="free_from" xml:space="preserve">
+				<source>Versandkostenfrei ab</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

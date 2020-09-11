@@ -164,7 +164,9 @@ class Cart {
             $subtotal = $subtotal+$item['price']*$item['quantity'];
             $total = $total+$item['total'];
             $total_coupon = $total_coupon+$item['total'];
-            $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+            if($shipping[0]['price_kg']) {
+                $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+            }
         }
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
@@ -182,15 +184,31 @@ class Cart {
             }
         }
         if($shipping) {
+            $free_from = false;
+            if (array_key_exists('free_from', $shipping[0])) {
+                if($shipping[0]['free_from'] == '') {
+                    $free_from = false;
+                } else {
+                    $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
+                }
+            }
             if($weight>0) {
                 $shipping_weight = $shipping[0]['price'] * $weight;
                 $tax_shipping = $shipping_weight / 100 * $shipping[0]['tax'];
-                $total_coupon = $total_coupon + $shipping_weight;
+                if($free_from && $total_coupon<$free_from) {
+                    $total_coupon = $total_coupon + $shipping_weight;
+                }
                 $total_shipping = $shipping_weight;
             } else {
                 $tax_shipping = $shipping[0]['price'] / 100 * $shipping[0]['tax'];
-                $total_coupon = $total_coupon + $shipping[0]['price'];
+                if($free_from && $total_coupon<$free_from) {
+                    $total_coupon = $total_coupon + $shipping[0]['price'];
+                }
                 $total_shipping = $shipping[0]['price'];
+            }
+            if($free_from && $total_coupon>=$free_from) {
+                $total_shipping = 0;
+                $tax_shipping = 0;
             }
         }
         $cart_count = 0;
@@ -200,7 +218,7 @@ class Cart {
                 $cart_count = $cart_count+$summaryquantity;
             }
         }
-        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count)];
+        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'free_from' => $free_from];
         return $result;
     }
 
@@ -332,7 +350,7 @@ class Cart {
     public function findShipping($identifier) {
         $context = $this->contextFactory->create();
         $shipping_node = $context->getNodeByIdentifier($identifier);
-        $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg')];
+        $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
         return $result;
     }
 
