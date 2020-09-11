@@ -65,6 +65,8 @@ class Cart {
         $min_quantity = $product_node->getProperty('min_quantity');
         $max_quantity = $product_node->getProperty('max_quantity');
 
+        $item['weight'] = $product_node->getProperty('weight');
+
         if($min_quantity) {
             $item['min_quantity'] = $min_quantity;
         }
@@ -152,6 +154,7 @@ class Cart {
         $discount = 0;
         $total_shipping = 0;
         $shipping = false;
+        $weight = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -161,6 +164,7 @@ class Cart {
             $subtotal = $subtotal+$item['price']*$item['quantity'];
             $total = $total+$item['total'];
             $total_coupon = $total_coupon+$item['total'];
+            $weight = $weight + intval($item['weight']) * intval($item['quantity']);
         }
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
@@ -178,9 +182,16 @@ class Cart {
             }
         }
         if($shipping) {
-            $tax_shipping = $shipping[0]['price'] / 100 * $shipping[0]['tax'];
-            $total_coupon = $total_coupon + $shipping[0]['price'];
-            $total_shipping = $shipping[0]['price'];
+            if($weight>0) {
+                $shipping_weight = $shipping[0]['price'] * $weight;
+                $tax_shipping = $shipping_weight / 100 * $shipping[0]['tax'];
+                $total_coupon = $total_coupon + $shipping_weight;
+                $total_shipping = $shipping_weight;
+            } else {
+                $tax_shipping = $shipping[0]['price'] / 100 * $shipping[0]['tax'];
+                $total_coupon = $total_coupon + $shipping[0]['price'];
+                $total_shipping = $shipping[0]['price'];
+            }
         }
         $cart_count = 0;
         if($summary) {
@@ -308,7 +319,7 @@ class Cart {
     }
 
     /**
-     * @return array
+     * @return void
      */
     public function unsetShipping() {
         unset($this->order[0]['shipping']);
@@ -321,7 +332,7 @@ class Cart {
     public function findShipping($identifier) {
         $context = $this->contextFactory->create();
         $shipping_node = $context->getNodeByIdentifier($identifier);
-        $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax')))];
+        $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg')];
         return $result;
     }
 

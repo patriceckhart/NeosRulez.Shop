@@ -17,6 +17,9 @@
             <trans-unit id="properties.countries" xml:space="preserve">
                 <source>Länder</source>
             </trans-unit>
+            <trans-unit id="properties.price_kg" xml:space="preserve">
+                <source>Preis per Kilogramm</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

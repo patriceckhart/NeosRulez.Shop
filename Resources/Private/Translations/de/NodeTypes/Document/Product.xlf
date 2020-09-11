@@ -32,6 +32,9 @@
             <trans-unit id="properties.max_quantity" xml:space="preserve">
                 <source>Max. Anzahl</source>
             </trans-unit>
+            <trans-unit id="properties.weight" xml:space="preserve">
+                <source>Gewicht in Kilogramm</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

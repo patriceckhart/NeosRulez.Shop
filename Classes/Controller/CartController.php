@@ -234,16 +234,11 @@ class CartController extends ActionController
         } else {
             $failure_page = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]".$args[$args['payment'].'_failure'];
         }
-        // $args['success_uri'] = $args[$args['payment'].'_success'];
-        // $args['failure_uri'] = $args[$args['payment'].'_failure'];
         $args['success_uri'] = $success_page;
         $args['failure_uri'] = $failure_page;
         $payment_data = $this->paymentService->getPaymentByIdentifier($args['payment']);
         $payment_url = $this->paymentService->initPayment($args);
         $args['payment_url'] = $payment_url;
-
-//        var_dump($args);
-
         if($this->settings['Mail']['debugMode']) {
             return $this->mailService->execute($args);
         } else {
