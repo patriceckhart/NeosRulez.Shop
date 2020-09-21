@@ -86,10 +86,26 @@ class Cart {
 
         $key = array_search($item['article_number'], array_column($cart, 'article_number'));
 
+        $additional_price_gross = 0;
+        $additional_tax_value_price = 0;
+
         $option_key = false;
         if (array_key_exists('options', $item)) {
             $option_key = array_search($item['options'], array_column($cart, 'options'));
+            $combined_options = [];
+            foreach ($item['options'] as $option) {
+                $option_node = $context->getNodeByIdentifier($option);
+                $option_price = floatval(str_replace(',', '.', str_replace('.', '', $option_node->getProperty('price'))));
+                $combined_options[] = ['name' => $option_node->getProperty('title'), 'price' => $option_price * $quantity];
+                $item['combined_options'] = $combined_options;
+                $additional_price_gross = $additional_price_gross + $option_price;
+                $additional_tax_value_price = $additional_price_gross/100*$item['tax'];
+            }
         }
+
+        $item['price'] = $item['price'] + $additional_price_gross - $additional_tax_value_price;
+        $item['total'] = $item['total'] + $additional_price_gross;
+        $item['price_gross'] = $item['price_gross'] + $additional_price_gross;
 
         if ($key === false) {
             $this->items[] = $item;
@@ -138,6 +154,18 @@ class Cart {
     public function checkout() {
         $checkout = $this->checkout;
         return $checkout;
+    }
+
+    /**
+     * @return float
+     */
+    public function weight() {
+        $weight = 0;
+        $summary = $this->items;
+        foreach ($summary as $item) {
+            $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+        }
+        return $weight;
     }
 
     /**

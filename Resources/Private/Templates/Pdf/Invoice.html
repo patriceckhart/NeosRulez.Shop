@@ -54,10 +54,10 @@
                 <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
                     <div style="float:left; width:50%;">
                         <strong>{item.title}</strong><br />
-                        <f:if condition="{item.options}">
+                        <f:if condition="{item.combined_options}">
                                 <span class="d-block">
-                                    <f:for each="{item.options}" as="option" iteration="optionIterator">
-                                        {option}{f:if(condition: optionIterator.isLast, else: ', ')}
+                                    <f:for each="{item.combined_options}" as="option" iteration="optionIterator">
+                                        {option.name}<f:if condition="{option.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{option.price}</f:format.currency> {f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</f:if>{f:if(condition: optionIterator.isLast, else: ', ')}
                                     </f:for>
                                 </span><br />
                         </f:if>

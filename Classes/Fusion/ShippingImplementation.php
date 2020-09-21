@@ -34,12 +34,19 @@ class ShippingImplementation extends AbstractFusionObject {
         $context = $this->contextFactory->create();
         $shippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
         $available_shippings = array();
+        $full_shipping_price = 0;
         if($shippings) {
             foreach ($shippings as $shipping) {
                 $countries = $shipping->getProperty('countries');
                 foreach ($countries as $country) {
                     if($country == $selected_country) {
-                        $available_shippings[] = ['shipping' => $shipping, 'float_price' => floatval(str_replace(',', '.', $shipping->getProperty('price'))), 'price_kg' => $shipping->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping->getProperty('free_from')))];
+                        $price_per_kg = $shipping->getProperty('price_kg');
+                        if($price_per_kg) {
+                            $float_price = floatval(str_replace(',', '.', $shipping->getProperty('price')));
+                            $weight = $this->cart->weight();
+                            $full_shipping_price = $float_price * $weight;
+                        }
+                        $available_shippings[] = ['shipping' => $shipping, 'float_price' => floatval(str_replace(',', '.', $shipping->getProperty('price'))), 'price_kg' => $shipping->getProperty('price_kg'), 'full_shipping_price' => $full_shipping_price, 'free_from' => floatval(str_replace(',', '.', $shipping->getProperty('free_from')))];
                     }
                 }
             }

@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="summary" arguments="{_all}" />
-                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}'}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
+                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}'}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4 btn-edit-order"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="payment" arguments="{_all}" />
@@ -109,10 +109,10 @@
                     </div>
                     <div class="col-md-9 col-4">
                         {item.title}
-                        <f:if condition="{item.options}">
+                        <f:if condition="{item.combined_options}">
                             <small class="d-block">
-                                <f:for each="{item.options}" as="option" iteration="optionIterator">
-                                    {option}{f:if(condition: optionIterator.isLast, else: ', ')}
+                                <f:for each="{item.combined_options}" as="option" iteration="optionIterator">
+                                    {option.name}<f:if condition="{option.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{option.price}</f:format.currency> {f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</f:if>{f:if(condition: optionIterator.isLast, else: ', ')}
                                 </f:for>
                             </small>
                         </f:if>
@@ -522,7 +522,17 @@
             <option disabled selected>{f:translate(id: 'please_select', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</option>
         </f:if>
         <f:for each="{shippings.0.available_shippings}" as="available_shipping">
-            <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency><f:if condition="{available_shipping.price_kg}"> {f:translate(id: 'per_kg', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:if> </option>
+            <f:if condition="{available_shipping.full_shipping_price}">
+                <f:then>
+                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.full_shipping_price}</f:format.currency></option>
+                </f:then>
+                <f:else>
+                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></option>
+                </f:else>
+            </f:if>
+            <f:comment>
+                <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency><f:if condition="{available_shipping.price_kg}"> {f:translate(id: 'per_kg', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:if> </option>
+            </f:comment>
         </f:for>
     </select>
     <f:if condition="!{shippings.0.selected_country}">

@@ -1,6 +1,7 @@
 NeosRulez:
   Shop:
     Invoice:
+      debugMode: false
       templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Pdf/Invoice.html'
       Mail:
         templatePathAndFilename: 'resource://NeosRulez.Shop/Private/Templates/Mail/Invoice.html'

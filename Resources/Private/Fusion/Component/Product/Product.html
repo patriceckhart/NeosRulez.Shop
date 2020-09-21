@@ -1,6 +1,7 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
+{namespace nrshop=NeosRulez\Shop\ViewHelpers}
 
 <div class="product_detail">
     <div class="container">
@@ -119,7 +120,7 @@
                 <select class="form-control" name="item[options][]">
                     <f:for each="{options}" as="option">
                         <f:if condition="{option.parent.identifier}=={options_group.identifier}">
-                            <option value="{option.properties.title}">{option.properties.title}</option>
+                            <option value="{option.identifier}">{option.properties.title}<f:if condition="{option.properties.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{nrshop:strtofloat(string: option.properties.price)}</f:format.currency>)</f:if></option>
                         </f:if>
                     </f:for>
                 </select>
