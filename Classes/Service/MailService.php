@@ -99,6 +99,7 @@ class MailService {
     }
 
     public function send($variables, $subject, $sender, $recipient, $args) {
+        $variables['taxcart'] = $this->settings['tax'];
         $view = new \Neos\FluidAdaptor\View\StandaloneView();
         $view->setTemplatePathAndFilename($this->settings['Mail']['templatePathAndFilename']);
         $view->assignMultiple($variables);

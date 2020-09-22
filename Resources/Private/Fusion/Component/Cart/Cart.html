@@ -19,15 +19,12 @@
                         </div>
                         <div class="col-md-4">
                             <div class="d-block p-3 checkout_sidebar">
-                                <f:comment>
-                                <f:render section="items" arguments="{_all}" />
-                                </f:comment>
                                 <div class="d-block mb-3">
                                     <f:render section="shipping" arguments="{_all}" />
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="summary" arguments="{_all}" />
-                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}'}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4 btn-edit-order"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
+                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}', update: true}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4 btn-edit-order"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="payment" arguments="{_all}" />
@@ -112,7 +109,7 @@
                         <f:if condition="{item.combined_options}">
                             <small class="d-block">
                                 <f:for each="{item.combined_options}" as="option" iteration="optionIterator">
-                                    {option.name}<f:if condition="{option.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{option.price}</f:format.currency> {f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</f:if>{f:if(condition: optionIterator.isLast, else: ', ')}
+                                    {option.name}<f:if condition="{option.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{option.price}</f:format.currency><f:if condition="{taxcart}"> {f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</f:if></f:if>{f:if(condition: optionIterator.isLast, else: ', ')}
                                 </f:for>
                             </small>
                         </f:if>
@@ -121,10 +118,12 @@
             </div>
             <div class="col-md-2 col-4">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.price}</f:format.currency>
-                <small class="d-block">{f:translate(id: 'excl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+                <f:if condition="{taxcart}">
+                    <small class="d-block">{f:translate(id: 'excl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+                </f:if>
             </div>
             <div class="col-md-2 col-4">
-                <f:form action="update" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                <f:form action="update" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                     <select class="form-control quantity" name="quantity">
                         <f:if condition="{item.max_quantity}">
                             <f:then>
@@ -151,10 +150,12 @@
             </div>
             <div class="col-md-2 col-4 text-right">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.total}</f:format.currency>
-                <small class="d-block">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+                <f:if condition="{taxcart}">
+                    <small class="d-block">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+                </f:if>
             </div>
             <div class="col-md-1">
-                <f:form action="deleteItem" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                <f:form action="deleteItem" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                     <button type="submit" class="btn btn-danger btn-sm btn-block btn_delete_item"><i class="fas fa-trash"></i></button>
                 </f:form>
             </div>
@@ -189,16 +190,18 @@
             </div>
         </div>
     </div>
-    <div class="d-block border-bottom py-2 tax_summary">
-        <div class="row align-items-center no-gutters">
-            <div class="col-7">
-                {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
-            </div>
-            <div class="col-5 text-right font-weight-bold">
-                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax}</f:format.currency>
+    <f:if condition="{taxcart}">
+        <div class="d-block border-bottom py-2 tax_summary">
+            <div class="row align-items-center no-gutters">
+                <div class="col-7">
+                    {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                </div>
+                <div class="col-5 text-right font-weight-bold">
+                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax}</f:format.currency>
+                </div>
             </div>
         </div>
-    </div>
+    </f:if>
     <f:if condition="{summary.total_shipping}!=0">
         <div class="d-block border-bottom py-2">
             <div class="row align-items-center no-gutters">
@@ -211,17 +214,19 @@
             </div>
         </div>
     </f:if>
-    <f:if condition="{summary.tax_shipping}!=0">
-        <div class="d-block border-bottom py-2 tax_summary">
-            <div class="row align-items-center no-gutters">
-                <div class="col-7">
-                    {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'shipping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})
-                </div>
-                <div class="col-5 text-right font-weight-bold">
-                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax_shipping}</f:format.currency>
+    <f:if condition="{taxcart}">
+        <f:if condition="{summary.tax_shipping}!=0">
+            <div class="d-block border-bottom py-2 tax_summary">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-7">
+                        {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'shipping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})
+                    </div>
+                    <div class="col-5 text-right font-weight-bold">
+                        <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax_shipping}</f:format.currency>
+                    </div>
                 </div>
             </div>
-        </div>
+        </f:if>
     </f:if>
     <f:if condition="{summary.discount}!=0">
         <div class="d-block border-bottom py-2">
@@ -297,7 +302,7 @@
                             <f:render section="coupon_form" arguments="{_all}" />
                         </f:then>
                         <f:else>
-                            <f:form action="deleteCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                            <f:form action="deleteCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                                 <div class="d-block mt-3 coupon">
                                     <div class="form-group">
                                         <i class="fas fa-bookmark mr-2"></i> {coupons.0.name} {f:translate(id: 'in_the_value_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
@@ -327,7 +332,7 @@
 </f:section>
 
 <f:section name="coupon_form">
-    <f:form action="validateCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+    <f:form action="validateCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
         <div class="d-block mt-3 coupon">
             <div class="form-group">
                 <div class="d-block py-2 mb-2 border-bottom-strong font-weight-bold">
@@ -352,7 +357,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <f:form action="deleteCart" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+            <f:form action="deleteCart" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                 <div class="form-group">
                     <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-trash mr-2"></i> {f:translate(id: 'empty_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                 </div>
@@ -530,9 +535,6 @@
                     <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></option>
                 </f:else>
             </f:if>
-            <f:comment>
-                <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency><f:if condition="{available_shipping.price_kg}"> {f:translate(id: 'per_kg', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:if> </option>
-            </f:comment>
         </f:for>
     </select>
     <f:if condition="!{shippings.0.selected_country}">

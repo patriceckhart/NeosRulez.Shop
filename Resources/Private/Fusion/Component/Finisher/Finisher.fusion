@@ -5,11 +5,11 @@ prototype(NeosRulez.Shop:Component.Finisher) < prototype(Neos.Neos:Plugin) {
     main_content = Neos.Neos:ContentCollection {
         nodePath = 'main'
     }
-    @cache {
-        mode = 'uncached'
-        context {
-            1 = 'node'
-            2 = 'documentNode'
-        }
-    }
+//    @cache {
+//        mode = 'uncached'
+//        context {
+//            1 = 'node'
+//            2 = 'documentNode'
+//        }
+//    }
 }

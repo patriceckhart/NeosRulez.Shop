@@ -65,7 +65,9 @@
             <div class="d-block price">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{price}</f:format.currency>
             </div>
-            <small class="d-block tax">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+            <f:if condition="{taxcart}">
+                <small class="d-block tax">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
+            </f:if>
             <f:if condition="{old_price}">
                 <div class="d-block mt-2 old_price">
                     {f:translate(id: 'instead_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{old_price}</f:format.currency>

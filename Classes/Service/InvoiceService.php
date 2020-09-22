@@ -56,6 +56,7 @@ class InvoiceService {
     }
 
     public function createInvoice($variables, $create) {
+        $variables['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
         if(!$start) {

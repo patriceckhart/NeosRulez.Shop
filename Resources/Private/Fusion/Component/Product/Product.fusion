@@ -24,6 +24,8 @@ prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
     parent_product = ${q(documentNode).parent('[instanceof NeosRulez.Shop:Document.Product]').get()}
     sub_products = ${this.parent_product ? q(this.parent_product).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get() : q(documentNode).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get()}
 
+    taxcart = ${Configuration.setting('NeosRulez.Shop.tax')}
+
     main_content = Neos.Neos:ContentCollection {
         nodePath = 'main'
     }

@@ -1,7 +1,6 @@
 NeosRulez:
   Shop:
-    tax: true # the shop always shows taxes at the moment
+    tax: true
     coupons: true
-    ajax: false # ajax is not working currently
     newsletter: false
     debugMode: false

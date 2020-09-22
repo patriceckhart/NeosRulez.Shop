@@ -28,11 +28,19 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     newsletter = ${Configuration.setting('NeosRulez.Shop.newsletter')}
     privacy_page = ${q(documentNode).property('privacy_page')}
     terms_page = ${q(documentNode).property('terms_page')}
+    taxcart = ${Configuration.setting('NeosRulez.Shop.tax')}
     @cache {
-        mode = 'uncached'
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryDiscriminator = ${request.arguments.update}
         context {
             1 = 'node'
             2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
         }
     }
 }
