@@ -270,13 +270,22 @@
                 </div>
             </f:then>
             <f:else>
-                <div class="form-group mt-3">
-                    <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
-                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
-                    </f:form>
-                </div>
-                <f:if condition="{allow_coupons}">
-                    <f:render section="coupon" arguments="{_all}" />
+                <f:if condition="{cart_min_weight} && {summary.weight}<{cart_min_weight}">
+                    <f:then>
+                        <div class="alert alert-danger mt-5" role="alert">
+                            {f:translate(id: 'min_weight11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {summary.weight} {f:translate(id: 'min_weight12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_weight} {f:translate(id: 'min_weight13', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.
+                        </div>
+                    </f:then>
+                    <f:else>
+                        <div class="form-group mt-3">
+                            <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                            </f:form>
+                        </div>
+                        <f:if condition="{allow_coupons}">
+                            <f:render section="coupon" arguments="{_all}" />
+                        </f:if>
+                    </f:else>
                 </f:if>
             </f:else>
         </f:if>

@@ -184,6 +184,7 @@ class Cart {
         $shipping = [];
         $free_from = 9999999999999;
         $weight = 0;
+        $itemweight = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -200,6 +201,8 @@ class Cart {
                     }
                 }
             }
+            $itemweight = $itemweight + intval($item['weight']);
+            $itemweight = $itemweight * intval($item['quantity']);
         }
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
@@ -250,7 +253,7 @@ class Cart {
                 $cart_count = $cart_count+$summaryquantity;
             }
         }
-        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'free_from' => $free_from];
+        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
         return $result;
     }
 

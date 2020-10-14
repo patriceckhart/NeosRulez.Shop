@@ -173,6 +173,15 @@
 			<trans-unit id="free_from" xml:space="preserve">
 				<source>Versandkostenfrei ab</source>
 			</trans-unit>
+			<trans-unit id="min_weight11" xml:space="preserve">
+				<source>Sie haben</source>
+			</trans-unit>
+			<trans-unit id="min_weight12" xml:space="preserve">
+				<source>kg in Ihrem Warenkorb. Sie benötigen mindestens</source>
+			</trans-unit>
+			<trans-unit id="min_weight13" xml:space="preserve">
+				<source>kg</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

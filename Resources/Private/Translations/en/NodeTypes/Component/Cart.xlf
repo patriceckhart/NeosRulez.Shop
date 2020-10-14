@@ -173,6 +173,15 @@
 			<trans-unit id="free_from" xml:space="preserve">
 				<source>Free shipping from</source>
 			</trans-unit>
+			<trans-unit id="min_weight11" xml:space="preserve">
+				<source>You have</source>
+			</trans-unit>
+			<trans-unit id="min_weight12" xml:space="preserve">
+				<source>kg in your shopping cart. You need at least</source>
+			</trans-unit>
+			<trans-unit id="min_weight13" xml:space="preserve">
+				<source>kg</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

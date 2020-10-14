@@ -23,6 +23,7 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     max_quantity = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
     full_quantity = ${Array.range(0, 999, 1)}
     cart_min_quantity = ${q(documentNode).property('min_quantity')}
+    cart_min_weight = ${q(documentNode).property('min_weight')}
     return_page = ${q(node).property('return_page')}
     allow_coupons = ${Configuration.setting('NeosRulez.Shop.coupons')}
     newsletter = ${Configuration.setting('NeosRulez.Shop.newsletter')}

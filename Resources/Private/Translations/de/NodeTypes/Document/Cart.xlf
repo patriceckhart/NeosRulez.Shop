@@ -35,6 +35,9 @@
             <trans-unit id="properties.min_quantity" xml:space="preserve">
                 <source>Min. Anzahl</source>
             </trans-unit>
+            <trans-unit id="properties.min_weight" xml:space="preserve">
+                <source>Min. Gewicht</source>
+            </trans-unit>
             <trans-unit id="properties.invoice_background" xml:space="preserve">
                 <source>Briefpapier (Format: DIN A4)</source>
             </trans-unit>
