@@ -59,6 +59,15 @@ class CartController extends ActionController
 
     /**
      * @param array $item
+     * @return void
+     */
+    public function addCustomAction($item) {
+        $this->cart->addCustom($item);
+        $this->redirectToUri($item['nodeUri']);
+    }
+
+    /**
+     * @param array $item
      * @param integer $quantity
      * @param string $return
      * @return void

@@ -86,3 +86,11 @@
     '@package': 'NeosRulez.Shop'
     '@action': 'paymentFailure'
   appendExceedingArguments: 'true'
+-
+  name: 'Add custom product'
+  uriPattern: 'addcustom'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'addCustom'
+  appendExceedingArguments: 'true'

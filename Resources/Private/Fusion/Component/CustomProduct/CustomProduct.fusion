@@ -1,0 +1,51 @@
+prototype(NeosRulez.Shop:Content.CustomProduct) < prototype(Neos.Neos:ContentComponent) {
+
+    nodeuri = Neos.Neos:NodeUri {
+        node = ${documentNode}
+        absolute = true
+    }
+
+    renderer = afx`
+        <NeosRulez.Shop:Content.AbstractContent>
+            <Neos.Fusion.Form:Form form.target.action="addCustom" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
+                <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" attributes.value={props.nodeuri} />
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <Neos.Fusion.Form:Input attributes.id="quantity" attributes.class="form-control" field.name="item[quantity]" attributes.required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="article_number">Article number</label>
+                    <Neos.Fusion.Form:Input attributes.id="article_number" attributes.class="form-control" field.name="item[article_number]" attributes.required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <Neos.Fusion.Form:Input attributes.id="title" attributes.class="form-control" field.name="item[title]" attributes.required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="price_gross">Price</label>
+                    <Neos.Fusion.Form:Input attributes.id="price_gross" attributes.class="form-control" field.name="item[price_gross]" attributes.required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="tax">Tax</label>
+                    <Neos.Fusion.Form:Input attributes.id="tax" attributes.class="form-control" field.name="item[tax]" attributes.value="20" attributes.required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="min_quantity">Min. quantity</label>
+                    <Neos.Fusion.Form:Input attributes.id="min_quantity" attributes.class="form-control" field.name="item[min_quantity]" />
+                </div>
+                <div class="form-group">
+                    <label for="min_quantity">Max. quantity</label>
+                    <Neos.Fusion.Form:Input attributes.id="max_quantity" attributes.class="form-control" field.name="item[max_quantity]" />
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight</label>
+                    <Neos.Fusion.Form:Input attributes.id="weight" attributes.class="form-control" field.name="item[weight]" />
+                </div>
+                <div class="form-group">
+                    <Neos.Fusion.Form:Button attributes.class="btn btn-primary" >Add to cart</Neos.Fusion.Form:Button>
+                </div>
+                <!-- + images array -->
+            </Neos.Fusion.Form:Form>
+        </NeosRulez.Shop:Content.AbstractContent>
+    `
+}

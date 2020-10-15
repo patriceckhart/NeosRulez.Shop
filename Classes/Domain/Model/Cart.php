@@ -121,6 +121,50 @@ class Cart {
 
     /**
      * @param array $item
+     * @return void
+     * @Flow\Session(autoStart = TRUE)
+     */
+    public function addCustom($item) {
+        $cart = $this->items;
+
+        $quantity = intval($item['quantity']);
+
+        $item['tstamp'] = time();
+        $item['price_gross'] = floatval(str_replace(',', '.', $item['price_gross']));
+        $item['tax'] = floatval(str_replace(',', '.', $item['tax']));
+
+        $item['tax_value_price'] = $item['price_gross']/100*$item['tax'];
+
+        $item['price'] = $item['price_gross']-$item['tax_value_price'];
+
+        $item['total'] = $item['price_gross']*$quantity;
+        $item['tax_value_total'] = $item['total']/100*$item['tax'];
+
+        $key = array_search($item['article_number'], array_column($cart, 'article_number'));
+
+        $additional_price_gross = 0;
+        $additional_tax_value_price = 0;
+
+        $option_key = false;
+
+        $item['price'] = $item['price'] + $additional_price_gross - $additional_tax_value_price;
+        $item['total'] = $item['total'] + $additional_price_gross;
+        $item['price_gross'] = $item['price_gross'] + $additional_price_gross;
+
+        if ($key === false) {
+            $this->items[] = $item;
+        } else {
+            if ($option_key === false) {
+                $this->items[] = $item;
+            } else {
+                $this->items[$key] = $item;
+            }
+        }
+
+    }
+
+    /**
+     * @param array $item
      * @param integer $quantity
      * @return void
      */
