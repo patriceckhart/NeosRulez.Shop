@@ -1,12 +1,12 @@
 'NeosRulez.Shop:Content.CustomProduct':
   superTypes:
     'Neos.Neos:Content': true
-  ui:
-    label: 'Custom Product'
-    group: 'neosrulez_shop'
-    icon: 'icon-shopping-cart'
-    inspector:
-      groups:
-        neosrulez_shop_custom_product:
-          label: 'Custom Product'
-          icon: 'icon-shopping-cart'
+  ui: ~
+#    label: 'Custom Product'
+#    group: 'neosrulez_shop'
+#    icon: 'icon-shopping-cart'
+#    inspector:
+#      groups:
+#        neosrulez_shop_custom_product:
+#          label: 'Custom Product'
+#          icon: 'icon-shopping-cart'
