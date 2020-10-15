@@ -42,6 +42,16 @@ prototype(NeosRulez.Shop:Content.CustomProduct) < prototype(Neos.Neos:ContentCom
                     <Neos.Fusion.Form:Input attributes.id="weight" attributes.class="form-control" field.name="item[weight]" />
                 </div>
                 <div class="form-group">
+                    <label for="option1name">Option</label>
+                    <Neos.Fusion.Form:Input attributes.id="option1name" attributes.class="form-control" field.name="item[options][0][name]" />
+                    <Neos.Fusion.Form:Input attributes.id="option1price" attributes.class="form-control" field.name="item[options][0][price]" />
+                </div>
+                <div class="form-group">
+                    <label for="option2name">Option</label>
+                    <Neos.Fusion.Form:Input attributes.id="option2name" attributes.class="form-control" field.name="item[options][1][name]" />
+                    <Neos.Fusion.Form:Input attributes.id="option2price" attributes.class="form-control" field.name="item[options][1][price]" />
+                </div>
+                <div class="form-group">
                     <Neos.Fusion.Form:Button attributes.class="btn btn-primary" >Add to cart</Neos.Fusion.Form:Button>
                 </div>
                 <!-- + images array -->

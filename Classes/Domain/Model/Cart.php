@@ -146,6 +146,16 @@ class Cart {
         $additional_tax_value_price = 0;
 
         $option_key = false;
+        if (array_key_exists('options', $item)) {
+            $option_key = array_search($item['options'], array_column($cart, 'options'));
+            $combined_options = [];
+            foreach ($item['options'] as $option) {
+                $combined_options[] = ['name' => $option['name'], 'price' => floatval(str_replace(',', '.', $option['price'])) * $quantity];
+                $item['combined_options'] = $combined_options;
+                $additional_price_gross = $additional_price_gross + floatval(str_replace(',', '.', $option['price']));
+                $additional_tax_value_price = $additional_price_gross/100*$item['tax'];
+            }
+        }
 
         $item['price'] = $item['price'] + $additional_price_gross - $additional_tax_value_price;
         $item['total'] = $item['total'] + $additional_price_gross;
