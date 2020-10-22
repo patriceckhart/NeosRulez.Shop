@@ -77,12 +77,13 @@ class Cart {
 
         $item['images'] = $product_node->getProperty('images');
 
-        $item['tax_value_price'] = $item['price_gross']/100*$item['tax'];
+        $factor = floatval($item['tax'] / 100 + 1);
+        $item['tax_value_price'] = $item['price_gross'] - ($item['price_gross'] / $factor);
 
         $item['price'] = $item['price_gross']-$item['tax_value_price'];
 
         $item['total'] = $item['price_gross']*$quantity;
-        $item['tax_value_total'] = $item['total']/100*$item['tax'];
+        $item['tax_value_total'] = $item['total'] / $factor;
 
         $key = array_search($item['article_number'], array_column($cart, 'article_number'));
 
@@ -99,7 +100,7 @@ class Cart {
                 $combined_options[] = ['name' => $option_node->getProperty('title'), 'price' => $option_price * $quantity];
                 $item['combined_options'] = $combined_options;
                 $additional_price_gross = $additional_price_gross + $option_price;
-                $additional_tax_value_price = $additional_price_gross/100*$item['tax'];
+                $additional_tax_value_price = $additional_price_gross / $factor;
             }
         }
 
@@ -133,12 +134,13 @@ class Cart {
         $item['price_gross'] = floatval(str_replace(',', '.', $item['price_gross']));
         $item['tax'] = floatval(str_replace(',', '.', $item['tax']));
 
-        $item['tax_value_price'] = $item['price_gross']/100*$item['tax'];
+        $factor = floatval($item['tax'] / 100 + 1);
+        $item['tax_value_price'] = $item['price_gross'] - ($item['price_gross'] / $factor);
 
         $item['price'] = $item['price_gross']-$item['tax_value_price'];
 
         $item['total'] = $item['price_gross']*$quantity;
-        $item['tax_value_total'] = $item['total']/100*$item['tax'];
+        $item['tax_value_total'] = $item['total'] / $factor;
 
         $key = array_search($item['article_number'], array_column($cart, 'article_number'));
 
@@ -153,7 +155,7 @@ class Cart {
                 $combined_options[] = ['name' => $option['name'], 'price' => floatval(str_replace(',', '.', $option['price'])) * $quantity];
                 $item['combined_options'] = $combined_options;
                 $additional_price_gross = $additional_price_gross + floatval(str_replace(',', '.', $option['price']));
-                $additional_tax_value_price = $additional_price_gross/100*$item['tax'];
+                $additional_tax_value_price = $additional_price_gross / $factor;
             }
         }
 
