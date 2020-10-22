@@ -285,13 +285,19 @@ class Cart {
             }
             if($weight>0) {
                 $shipping_weight = $shipping[0]['price'] * $weight;
-                $tax_shipping = $shipping_weight / 100 * $shipping[0]['tax'];
+
+                $factor = floatval($shipping[0]['tax'] / 100 + 1);
+                $tax_shipping = $shipping_weight - ($shipping_weight / $factor);
+
                 if($total_coupon<$free_from) {
                     $total_coupon = $total_coupon + $shipping_weight;
                 }
                 $total_shipping = $shipping_weight;
             } else {
-                $tax_shipping = $shipping[0]['price'] / 100 * $shipping[0]['tax'];
+
+                $factor = floatval($shipping[0]['tax'] / 100 + 1);
+                $tax_shipping = $shipping[0]['price'] - ($shipping[0]['price'] / $factor);
+
                 if($total_coupon<$free_from) {
                     $total_coupon = $total_coupon + $shipping[0]['price'];
                 }
@@ -309,7 +315,7 @@ class Cart {
                 $cart_count = $cart_count+$summaryquantity;
             }
         }
-        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
+        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_tax' => $subtotal + ($total-$subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
         return $result;
     }
 
