@@ -9,8 +9,6 @@ function cartCount() {
                 response = text;
                 if (response > 0) {
                     $('#cartcount').text(response);
-                } else {
-                    $('#cartcount').remove();
                 }
             }
         });
