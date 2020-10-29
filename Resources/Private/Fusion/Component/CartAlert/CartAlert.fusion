@@ -1,0 +1,11 @@
+prototype(NeosRulez.Shop:Component.CartAlert) < prototype(Neos.Neos:ContentComponent) {
+
+    cart = ${q(site).children('[instanceof NeosRulez.Shop:Document.Cart]').sort('_index', 'ASC').get(0)}
+
+    renderer = afx`
+        <div @if.render={props.cart} class="alert alert-success mt-5 cart-alert" role="alert">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.CartAlert:message')} <Neos.Neos:NodeLink node={props.cart} >{I18n.translate('NeosRulez.Shop:NodeTypes.Component.CartAlert:btn_label')}</Neos.Neos:NodeLink>
+        </div>
+    `
+
+}

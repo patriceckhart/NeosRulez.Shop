@@ -18,6 +18,7 @@
                 <div class="product_content">
                     <f:render section="product_content" arguments="{_all}" />
                     <f:render section="add_to_form" arguments="{_all}" />
+                    {cart_alert -> f:format.raw()}
                 </div>
             </div>
         </div>

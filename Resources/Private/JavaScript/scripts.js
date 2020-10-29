@@ -11,11 +11,6 @@ $(document).ready(function(){
         $(this).parent().submit();
     });
 
-    $('.add-to-cart').click(function() {
-        $('body').toggleClass('body-hide');
-        $(this).parent().parent().parent().submit();
-    });
-
     $('.product_detail .dropdown-item').click(function() {
         $('body').toggleClass('body-hide');
     });
@@ -104,30 +99,6 @@ $(document).ready(function(){
                 }
             }
         });
-//         if($('.is-invalid').length) {
-//             $('#submit_btn').attr('disabled', true);
-//         } else {
-//             $('#submit_btn').removeAttr('disabled');
-//         }
     }, 500);
-
-    /*$(function () {
-        $('.xsubproduct_link').on('click', function (e) {
-            var link = $(this);
-            var link_url = link.attr('href');
-            var link_data = link.serialize();
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: link_url,
-                data: link_data,
-                success: function(data) {
-                    var result = $(data).find('.product_detail');
-                    $('.product_detail').html(result);
-                    console.log('success');
-                }
-            });
-        });
-    });*/
 
 });

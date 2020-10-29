@@ -29,4 +29,6 @@ prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
     main_content = Neos.Neos:ContentCollection {
         nodePath = 'main'
     }
+
+    cart_alert = NeosRulez.Shop:Component.CartAlert
 }

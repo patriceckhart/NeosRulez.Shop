@@ -94,3 +94,10 @@
     '@package': 'NeosRulez.Shop'
     '@action': 'addCustom'
   appendExceedingArguments: 'true'
+-
+  name: 'Cart count'
+  uriPattern: 'countcart'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'countcart'

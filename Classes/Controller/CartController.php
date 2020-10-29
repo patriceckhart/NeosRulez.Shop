@@ -268,6 +268,21 @@ class CartController extends ActionController
     }
 
     /**
+     * @return integer
+     */
+    public function countcartAction() {
+        $result = 0;
+        $items = $this->cart->cart();
+        if($items) {
+            foreach ($items as $item) {
+                $quantity = intval($item['quantity']);
+                $result = $result+$quantity;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * @return string
      */
     public function paymentSuccessAction() {

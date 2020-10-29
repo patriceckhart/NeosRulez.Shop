@@ -50,6 +50,8 @@
   i { opacity:0.5; }
 }
 
+.cart-alert { display:none; }
+
 @media (max-width: 992px) {
   .btn_delete_item { margin-bottom:0.5em; }
   .cart_item {

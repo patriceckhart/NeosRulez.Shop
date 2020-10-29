@@ -1,0 +1,12 @@
+prototype(NeosRulez.Shop:Plugin.CartCount) < prototype(Neos.Neos:Plugin) {
+    package = 'NeosRulez.Shop'
+    controller = 'Cart'
+    action = 'countcart'
+    @cache {
+        mode = 'uncached'
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+    }
+}
