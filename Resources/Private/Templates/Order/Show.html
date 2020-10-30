@@ -1,0 +1,196 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
+<f:if condition="{order}">
+
+    <style>
+        @media print {
+            #neos-top-bar, .neos-breadcrumb, .neos-footer { display:none !important; }
+            .neos.neos-module > .neos-module-wrap { padding:0 !important; }
+        }
+    </style>
+
+    <legend>Bestellnummer: {order.ordernumber}</legend>
+    <div class="neos-row-fluid">
+        <fieldset class="neos-span5">
+            <legend>Rechnungsadresse</legend>
+            <p>
+                <f:render section="address" arguments="{_all}" />
+            </p>
+            <f:if condition="{invoicedata.notes}">
+                <p style="margin-top:20px;">
+                    <span style="color:#666;">Info:</span> {invoicedata.notes}
+                </p>
+            </f:if>
+        </fieldset>
+        <fieldset class="neos-span5 neos-offset1" style="float: right;">
+            <legend>Lieferadresse</legend>
+            <p>
+                <f:if condition="{invoicedata.shipping_firstname}">
+                    <f:then>
+                        <f:render section="address" arguments="{invoicedata: invoicedata, customShipping: 1}" />
+                    </f:then>
+                    <f:else>
+                        <f:render section="address" arguments="{_all}" />
+                    </f:else>
+                </f:if>
+            </p>
+            <f:if condition="{invoicedata.shipping_notes}">
+                <p style="margin-top:20px;">
+                    <span style="color:#666;">Info:</span> {invoicedata.shipping_notes}
+                </p>
+            </f:if>
+        </fieldset>
+    </div>
+
+    <div class="neos-row-fluid">
+        <fieldset class="neos-span5">
+            <legend>Versandart</legend>
+            <p>
+                {shipping} (<f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{shippingcost}</f:format.currency>)
+            </p>
+        </fieldset>
+        <fieldset class="neos-span5 neos-offset1" style="float: right;">
+            <legend>Zahlung</legend>
+            <p>
+                <span style="margin-right:10px;">{payment}</span>
+                <f:if condition="{order.paid}">
+                    <f:then>
+                        <span class="neos-badge neos-badge-success">Zahlung abgeschlossen</span>
+                    </f:then>
+                    <f:else>
+                        <span class="neos-badge neos-badge-danger">Zahlung ausständig</span>
+                    </f:else>
+                </f:if>
+            </p>
+        </fieldset>
+    </div>
+
+    <f:render section="products" arguments="{_all}" />
+
+
+        <div class="neos-row-fluid">
+            <fieldset class="neos-span5">
+                <legend>Verwendete Gutscheine</legend>
+
+                <f:if condition="{coupons}">
+                    <f:then>
+                        <table class="neos-table">
+                            <thead>
+                            <tr>
+                                <td>Gutschein</td>
+                                <td>Wert</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{coupons.0.name}</td>
+                                <f:if condition="{coupons.0.percentual}">
+                                    <f:then>
+                                        <td>- {coupons.0.value} %</td>
+                                    </f:then>
+                                    <f:else>
+                                        <td>- <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{coupons.0.value}</f:format.currency></td>
+                                    </f:else>
+                                </f:if>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </f:then>
+                    <f:else>
+                        <p>Bei dieser Bestellung wurden keine Gutscheine verwendet.</p>
+                    </f:else>
+                </f:if>
+
+            </fieldset>
+            <fieldset class="neos-span5 neos-offset1" style="float: right;">
+
+                <f:if condition="{summary}">
+                    <f:render section="summary" arguments="{_all}" />
+                </f:if>
+
+            </fieldset>
+        </div>
+
+</f:if>
+<div class="neos-footer">
+    <f:link.action class="neos-button neos-button-primary" action="index">Zurück zur Übersicht</f:link.action>
+</div>
+
+<f:section name="address">
+    <f:if condition="{customShipping}">
+        <f:then>
+            <f:if condition="{invoicedata.company}">{invoicedata.shipping_company}<br /></f:if>
+            {invoicedata.shipping_firstname} {invoicedata.shipping_lastname}<br />
+            {invoicedata.shipping_address}<br />
+            {invoicedata.shipping_zip} {invoicedata.shipping_city}, {invoicedata.shipping_country}
+        </f:then>
+        <f:else>
+            <f:if condition="{invoicedata.company}">{invoicedata.company}<br /></f:if>
+            {invoicedata.firstname} {invoicedata.lastname}<br />
+            {invoicedata.address}<br />
+            {invoicedata.zip} {invoicedata.city}, {invoicedata.country}
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="products">
+    <table class="neos-table">
+        <thead>
+        <tr>
+            <td>Artikelnummer</td>
+            <td>Artikel</td>
+            <td style="text-align:right;">Preis</td>
+            <td style="text-align:center;">Anzahl</td>
+            <td style="text-align:right;">Steuer</td>
+        </tr>
+        </thead>
+        <tbody>
+        <f:for each="{cart}" as="item">
+            <tr>
+                <td>{item.article_number}</td>
+                <td>{item.title}</td>
+                <td style="text-align:right;">
+                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.price}</f:format.currency>
+                </td>
+                <td style="text-align:center;">{item.quantity}</td>
+                <td style="text-align:right;">{item.tax} %</td>
+            </tr>
+        </f:for>
+        </tbody>
+    </table>
+</f:section>
+
+<f:section name="summary">
+
+    <legend>Zusammenfassung</legend>
+
+    <table class="neos-table">
+        <tbody>
+        <tr>
+            <td>Zwischensumme</td>
+            <td style="text-align:right;"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_tax}</f:format.currency></td>
+        </tr>
+        <tr style="font-size: 0.9em;">
+            <td style="background:#222;">Enthaltene Steuer</td>
+            <td style="background:#222; text-align:right;"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax}</f:format.currency></td>
+        </tr>
+        <tr>
+            <td>Versand</td>
+            <td style="text-align:right;"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_shipping}</f:format.currency></td>
+        </tr>
+        <tr style="font-size: 0.9em;">
+            <td style="background:#222;">Enthaltene Steuer</td>
+            <td style="background:#222; text-align:right;"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax_shipping}</f:format.currency></td>
+        </tr>
+        <tr>
+            <td style="background:rgba(255,255,255,0.1);">Discount</td>
+            <td style="background:rgba(255,255,255,0.1); text-align:right;">- <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.discount}</f:format.currency></td>
+        </tr>
+        <tr>
+            <td style="font-weight:900;">Total</td>
+            <td style="text-align:right; font-weight: 900;"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total}</f:format.currency></td>
+        </tr>
+        </tbody>
+    </table>
+
+</f:section>

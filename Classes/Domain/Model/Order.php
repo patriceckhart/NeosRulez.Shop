@@ -101,6 +101,28 @@ class Order
     }
 
     /**
+     * @var integer
+     */
+    protected $cancelled = 0;
+
+    /**
+     * @return integer
+     */
+    public function getCancelled()
+    {
+        return $this->cancelled;
+    }
+
+    /**
+     * @param integer $cancelled
+     * @return void
+     */
+    public function setCancelled($cancelled)
+    {
+        $this->cancelled = $cancelled;
+    }
+
+    /**
      * @var string
      * @ORM\Column(type="text")
      * @ORM\Column(length=4000)
@@ -125,6 +147,54 @@ class Order
     }
 
     /**
+     * @var string
+     * @ORM\Column(type="text")
+     * @ORM\Column(length=4000)
+     */
+    protected $summary;
+
+    /**
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param string $summary
+     * @return void
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     * @ORM\Column(length=4000)
+     */
+    protected $coupons;
+
+    /**
+     * @return string
+     */
+    public function getCoupons()
+    {
+        return $this->coupons;
+    }
+
+    /**
+     * @param string $coupons
+     * @return void
+     */
+    public function setCoupons($coupons)
+    {
+        $this->coupons = $coupons;
+    }
+
+    /**
      * @var \DateTime
      */
     protected $created;
@@ -139,6 +209,29 @@ class Order
      */
     public function getCreated() {
         return $this->created;
+    }
+
+    /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    protected $user;
+
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param string $user
+     * @return void
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
 }
