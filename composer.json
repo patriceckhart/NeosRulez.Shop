@@ -13,7 +13,6 @@
     ],
     "require": {
         "neos/neos": "*",
-        "neos/swiftmailer": "^7.1",
         "neosrulez/scssparser": "*",
         "neosrulez/jsminifier": "*",
         "neos/fusion-form": "^1.0",

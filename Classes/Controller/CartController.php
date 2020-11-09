@@ -228,14 +228,8 @@ class CartController extends ActionController
         $order->setOrdernumber($oder_number);
         $order->setInvoicedata(json_encode($args, JSON_UNESCAPED_UNICODE));
         $order->setCart(json_encode($this->cart->cart(), JSON_UNESCAPED_UNICODE));
-        $order->setSummary(json_encode($this->cart->summary(), JSON_UNESCAPED_UNICODE));
-        $order->setCoupons(json_encode($this->cart->coupons(), JSON_UNESCAPED_UNICODE));
         $order->setPayment($args['payment']);
         $order->setPaid(0);
-        $user = $this->orderRepository->getUsername();
-        if($user) {
-            $order->setUser($user);
-        }
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
         $args['summary'] = $this->cart->summary();

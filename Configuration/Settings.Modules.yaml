@@ -1,19 +1,28 @@
-Neos:
-  Neos:
-    modules:
-      neosrulez_shop:
-        label: 'Shop'
-        controller: '\Neos\Neos\Controller\Module\ManagementController'
-        description: 'Shop Administration'
-        icon: 'icon-shopping-cart'
-        resource: 'Neos_Neos_Backend_Module_Management'
-        submodules:
-          order:
-            label: 'Bestellungen'
-            controller: '\NeosRulez\Shop\Controller\OrderController'
-            description: 'Verwalten Sie Ihre Bestellungen'
-            icon: 'far fa-list-alt'
-            actions:
-              index:
-                label: 'Bestellungen'
-                title: 'Verwalten Sie Ihre Bestellungen'
+#Neos:
+#  Neos:
+#    modules:
+#      neosrulez_shop:
+#        label: 'Shop'
+#        controller: '\Neos\Neos\Controller\Module\ManagementController'
+#        description: 'Shop Administration'
+#        icon: 'icon-shopping-cart'
+#        resource: 'Neos_Neos_Backend_Module_Management'
+#        submodules:
+#          order:
+#            label: 'Bestellungen'
+#            controller: '\NeosRulez\Shop\Controller\OrderController'
+#            description: 'Verwalten Sie Ihre Bestellungen'
+#            icon: 'far fa-list-alt'
+#            actions:
+#              index:
+#                label: 'Bestellungen'
+#                title: 'Verwalten Sie Ihre Bestellungen'
+#          coupon:
+#            label: 'Gutscheine'
+#            controller: '\NeosRulez\Shop\Controller\CouponController'
+#            description: 'Verwalten Sie Ihre Gutscheine'
+#            icon: 'fas fa-bookmark'
+#            actions:
+#              index:
+#                label: 'Gutscheine'
+#                title: 'Verwalten Sie Ihre Gutscheine'
