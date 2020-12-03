@@ -25,6 +25,12 @@ class OrderController extends ActionController
     protected $contextFactory;
 
     /**
+     * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\FinisherService
+     */
+    protected $finisherService;
+
+    /**
      * @var array
      */
     protected $settings;
@@ -85,6 +91,7 @@ class OrderController extends ActionController
      */
     public function paidAction($order)
     {
+        $this->finisherService->initAfterPaymentFinishers($order);
         $paid_status = $order->getPaid();
         if($paid_status == 1) {
             $order->setPaid(0);

@@ -1,0 +1,9 @@
+#NeosRulez:
+#  Shop:
+#    Finisher:
+#      afterOrder:
+#        customfinisher1:
+#          class: NeosRulez\Shop\Service\Finisher\CustomFinisher
+#      afterPayment:
+#        customfinisher2:
+#          class: NeosRulez\Shop\Service\Finisher\CustomFinisher

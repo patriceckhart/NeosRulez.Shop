@@ -32,6 +32,12 @@ class CartController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\FinisherService
+     */
+    protected $finisherService;
+
+    /**
+     * @Flow\Inject
      * @var \NeosRulez\Shop\Service\InvoiceService
      */
     protected $invoiceService;
@@ -245,6 +251,9 @@ class CartController extends ActionController
         }
         $args['success_uri'] = $success_page;
         $args['failure_uri'] = $failure_page;
+        // execute after order finishers
+        $this->finisherService->initAfterOrderFinishers($args);
+
         $payment_data = $this->paymentService->getPaymentByIdentifier($args['payment']);
         $payment_url = $this->paymentService->initPayment($args);
         $args['payment_url'] = $payment_url;
