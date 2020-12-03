@@ -19,8 +19,7 @@
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
         "stripe/stripe-php": "v7.39.0",
-        "mpdf/mpdf": "^8.0",
-        "typo3fluid/fluid": "2.6.9"
+        "mpdf/mpdf": "^8.0"
     },
     "autoload": {
         "psr-4": {
