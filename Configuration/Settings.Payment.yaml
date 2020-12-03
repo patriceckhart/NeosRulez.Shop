@@ -1,6 +1,6 @@
-NeosRulez:
-  Shop:
-    Payment:
+#NeosRulez:
+#  Shop:
+#    Payment:
 #      paypal:
 #        class: NeosRulez\Shop\Service\Payment\PayPal
 #        props:
@@ -11,14 +11,14 @@ NeosRulez:
 #          payment_status: 1
 #        args:
 #          paypal_account: 'your@paypalaccount.tld'
-      prepayment:
-        class: NeosRulez\Shop\Service\Payment\Prepayment
-        props:
-          label: 'Vorauskassa'
-          icon: 'fas fa-money-bill-alt'
-          success_page: '455a33ab-4b1b-4871-9e77-9210692d05f3'
-          failure_page: '90c7a6e1-8ca6-4403-ae46-c9f5cc93d5b6'
-          payment_status: 0
+#      prepayment:
+#        class: NeosRulez\Shop\Service\Payment\Prepayment
+#        props:
+#          label: 'Vorauskassa'
+#          icon: 'fas fa-money-bill-alt'
+#          success_page: '455a33ab-4b1b-4871-9e77-9210692d05f3'
+#          failure_page: '90c7a6e1-8ca6-4403-ae46-c9f5cc93d5b6'
+#          payment_status: 0
 #       creditcard:
 #         class: NeosRulez\Shop\Service\Payment\Stripe
 #         render_redirect: true
