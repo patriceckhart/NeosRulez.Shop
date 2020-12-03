@@ -559,11 +559,11 @@
         </div>
     </f:if>
     <div class="custom-control custom-checkbox my-3">
-        <input type="checkbox" class="custom-control-input" id="accept_privacy" name="accept_privacy" required="true">
+        <input type="checkbox" class="custom-control-input" id="accept_privacy" name="accept_privacy" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
         <label class="custom-control-label" for="accept_privacy">{f:translate(id: 'accept_privacy1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{privacy_page}">{f:translate(id: 'accept_privacy2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>.</label>
     </div>
     <div class="custom-control custom-checkbox my-3">
-        <input type="checkbox" class="custom-control-input" id="accept_terms" name="accept_terms" required="true">
+        <input type="checkbox" class="custom-control-input" id="accept_terms" name="accept_terms" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
         <label class="custom-control-label" for="accept_terms">{f:translate(id: 'accept_terms1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{terms_page}">{f:translate(id: 'accept_terms2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</neos:link.node></label>
     </div>
     <button type="submit" id="submit_btn" class="btn btn-primary btn-lg btn-block mt-3">{f:translate(id: 'complete_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
