@@ -17,8 +17,10 @@
             <div class="col-md-6">
                 <div class="product_content">
                     <f:render section="product_content" arguments="{_all}" />
-                    <f:render section="add_to_form" arguments="{_all}" />
-                    {cart_alert -> f:format.raw()}
+                    <f:if condition="{stock}">
+                        <f:render section="add_to_form" arguments="{_all}" />
+                        {cart_alert -> f:format.raw()}
+                    </f:if>
                 </div>
             </div>
         </div>
