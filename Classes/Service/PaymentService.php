@@ -43,7 +43,7 @@ class PaymentService {
 
     /**
      * @param array $args
-     * @return void
+     * @return string
      */
     public function initPayment($args) {
         $payment = $this->getPaymentByIdentifier($args['payment']);
