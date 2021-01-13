@@ -55,6 +55,19 @@ class CartController extends ActionController
     protected $contextFactory;
 
     /**
+     * @var \Neos\Flow\Security\Context
+     * @Flow\Inject
+     */
+    protected $securityContext;
+
+    /**
+     * @var \Neos\Flow\Security\Authentication\AuthenticationManagerInterface
+     * @Flow\Inject
+     */
+    protected $authenticationManager;
+
+
+    /**
      * @param array $item
      * @return void
      */
@@ -236,6 +249,11 @@ class CartController extends ActionController
         $order->setCart(json_encode($this->cart->cart(), JSON_UNESCAPED_UNICODE));
         $order->setPayment($args['payment']);
         $order->setPaid(0);
+        if ($this->authenticationManager->isAuthenticated() === TRUE) {
+            $account = $this->securityContext->getAccount();
+            $ident = $account->getAccountIdentifier();
+            $order->setUser($ident);
+        }
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
         $args['summary'] = $this->cart->summary();

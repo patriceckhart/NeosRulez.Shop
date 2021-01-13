@@ -125,6 +125,29 @@ class Order
     }
 
     /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    protected $user;
+
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param string $user
+     * @return void
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
      * @var \DateTime
      */
     protected $created;
