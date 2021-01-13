@@ -14,7 +14,7 @@ class Cart {
     /**
      * @var array
      */
-    protected $items = array();
+    public $items = array();
 
     /**
      * @var array
@@ -184,7 +184,8 @@ class Cart {
         $cart = $this->items;
         $key = array_search($item['tstamp'], array_column($cart, 'tstamp'));
         $this->items[$key]['quantity'] = $quantity;
-        $total = $this->items[$key]['price_gross']*$quantity;
+        $total = $item['price_gross']*$quantity;
+        $this->items[$key]['price'] = $item['price_gross'] - $item['tax_value_price'];
         $this->items[$key]['total'] = $total;
     }
 
