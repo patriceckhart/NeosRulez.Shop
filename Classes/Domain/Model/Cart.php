@@ -62,6 +62,8 @@ class Cart {
         $item['price_gross'] = floatval(str_replace(',', '.', $product_node->getProperty('price')));
         $item['tax'] = floatval(str_replace(',', '.', $product_node->getProperty('tax')));
 
+        $item['relay'] = $product_node->getProperty('relay');
+
         $min_quantity = $product_node->getProperty('min_quantity');
         $max_quantity = $product_node->getProperty('max_quantity');
 

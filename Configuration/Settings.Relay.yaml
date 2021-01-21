@@ -1,0 +1,11 @@
+NeosRulez:
+  Shop:
+    quantityRelays:
+#      wineBox:
+#        label: 'Producttype 1'
+#        message:
+#          1: 'Your error message'
+#        relay: 6
+#      shirtBox:
+#        label: 'Producttype 2'
+#        relay: 3

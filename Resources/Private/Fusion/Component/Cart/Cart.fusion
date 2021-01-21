@@ -30,6 +30,8 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     privacy_page = ${q(documentNode).property('privacy_page')}
     terms_page = ${q(documentNode).property('terms_page')}
     taxcart = ${Configuration.setting('NeosRulez.Shop.tax')}
+    relay = NeosRulez.Shop:Fusion.Relay
+    relayinfos = ${Configuration.setting('NeosRulez.Shop.quantityRelays')}
     @cache {
         mode = 'dynamic'
         entryIdentifier {
@@ -80,4 +82,8 @@ prototype(NeosRulez.Shop:Fusion.Order) {
 
 prototype(NeosRulez.Shop:Fusion.Payments) {
     @class = 'NeosRulez\\Shop\\Fusion\\PaymentImplementation'
+}
+
+prototype(NeosRulez.Shop:Fusion.Relay) {
+    @class = 'NeosRulez\\Shop\\Fusion\\RelayImplementation'
 }

@@ -105,7 +105,7 @@
                         </f:if>
                     </div>
                     <div class="col-md-9 col-4">
-                        {item.title}
+                        {item.title} {item.relay}
                         <f:if condition="{item.combined_options}">
                             <small class="d-block">
                                 <f:for each="{item.combined_options}" as="option" iteration="optionIterator">
@@ -256,37 +256,52 @@
         </div>
     </f:if>
     <f:if condition="!{checkout}">
-        <f:if condition="{cart_min_quantity} && {summary.cartcount}<{cart_min_quantity}">
+        <f:if condition="{relay}">
             <f:then>
-                <div class="alert alert-danger mt-5" role="alert">
-                    <f:if condition="{cart_min_quantity}!=1">
-                        <f:then>
-                            {f:translate(id: 'min_quantity12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity22', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
-                        </f:then>
-                        <f:else>
-                            {f:translate(id: 'min_quantity11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity21', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
-                        </f:else>
-                    </f:if>
-                </div>
-            </f:then>
-            <f:else>
-                <f:if condition="{cart_min_weight} && {summary.weight}<{cart_min_weight}">
+                <f:if condition="{cart_min_quantity} && {summary.cartcount}<{cart_min_quantity}">
                     <f:then>
                         <div class="alert alert-danger mt-5" role="alert">
-                            {f:translate(id: 'min_weight11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {summary.weight} {f:translate(id: 'min_weight12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_weight} {f:translate(id: 'min_weight13', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.
+                            <f:if condition="{cart_min_quantity}!=1">
+                                <f:then>
+                                    {f:translate(id: 'min_quantity12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity22', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                                </f:then>
+                                <f:else>
+                                    {f:translate(id: 'min_quantity11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_quantity} {f:translate(id: 'min_quantity21', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                                </f:else>
+                            </f:if>
                         </div>
                     </f:then>
                     <f:else>
-                        <div class="form-group mt-3">
-                            <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
-                                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
-                            </f:form>
-                        </div>
-                        <f:if condition="{allow_coupons}">
-                            <f:render section="coupon" arguments="{_all}" />
+                        <f:if condition="{cart_min_weight} && {summary.weight}<{cart_min_weight}">
+                            <f:then>
+                                <div class="alert alert-danger mt-5" role="alert">
+                                    {f:translate(id: 'min_weight11', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {summary.weight} {f:translate(id: 'min_weight12', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {cart_min_weight} {f:translate(id: 'min_weight13', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.
+                                </div>
+                            </f:then>
+                            <f:else>
+                                <div class="form-group mt-3">
+                                    <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
+                                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                                    </f:form>
+                                </div>
+                                <f:if condition="{allow_coupons}">
+                                    <f:render section="coupon" arguments="{_all}" />
+                                </f:if>
+                            </f:else>
                         </f:if>
                     </f:else>
                 </f:if>
+            </f:then>
+            <f:else>
+                <div class="alert alert-danger mt-5" role="alert">
+                    <f:if condition="{relayinfos}">
+                        <f:for each="{relayinfos}" as="relayinfo">
+                            <f:if condition="{relayinfo.message}">
+                                <p>{relayinfo.message.1}</p>
+                            </f:if>
+                        </f:for>
+                    </f:if>
+                </div>
             </f:else>
         </f:if>
     </f:if>

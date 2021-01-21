@@ -35,6 +35,9 @@
             <trans-unit id="properties.weight" xml:space="preserve">
                 <source>Weight in kilograms</source>
             </trans-unit>
+            <trans-unit id="properties.relay" xml:space="preserve">
+                <source>Single product only in a package</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
