@@ -19,6 +19,7 @@ prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
 
     options_groups = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').get()}
     options = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').children('[instanceof NeosRulez.Shop:Document.Option]').get()}
+    options2 = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.FreeStyleTextOption]').sort('_index', 'ASC').get()}
 
     node = ${node}
     parent_product = ${q(documentNode).parent('[instanceof NeosRulez.Shop:Document.Product]').get()}

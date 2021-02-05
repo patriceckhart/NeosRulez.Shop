@@ -1,199 +1,334 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<div style="float:left; width: 100%; min-width: 800px; max-width:1110px; margin:0 auto; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em; font-size:0.9em;">
+<meta name="viewport" content="width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+    @media only screen and (max-width: 620px) {
+        body{
+            background-color: #f6f6f6;
+            font-family: sans-serif;
+            -webkit-font-smoothing: antialiased;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        table[class=body] h1 {
+            font-size: 28px !important;
+            margin-bottom: 10px !important;
+        }
+        table[class=body] p,
+        table[class=body] ul,
+        table[class=body] ol,
+        table[class=body] td,
+        table[class=body] span,
+        table[class=body] a {
+            font-size: 16px !important;
+        }
+        table[class=body] .wrapper,
+        table[class=body] .article {
+            padding: 10px !important;
+        }
+        table[class=body] .content {
+            padding: 0 !important;
+        }
+        table[class=body] .container {
+            padding: 0 !important;
+            width: 100% !important;
+        }
+        table[class=body] .main {
+            border-left-width: 0 !important;
+            border-radius: 0 !important;
+            border-right-width: 0 !important;
+        }
+        table[class=body] .btn table {
+            width: 100% !important;
+        }
+        table[class=body] .btn a {
+            width: 100% !important;
+        }
+        table[class=body] .img-responsive {
+            height: auto !important;
+            max-width: 100% !important;
+            width: auto !important;
+        }
+    }
 
-    <div style="width: 100%; min-width: 800px; margin:0 auto;">
+    @media all {
+        .ExternalClass {
+            width: 100%;
+        }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+            line-height: 100%;
+        }
+        .apple-link a {
+            color: inherit !important;
+            font-family: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+            text-decoration: none !important;
+        }
+        #MessageViewBody a {
+            color: inherit;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+        .btn-primary table td:hover {
+            background-color: #34495e !important;
+        }
+        .btn-primary a:hover {
+            background-color: #34495e !important;
+            border-color: #34495e !important;
+        }
+    }
+</style>
 
-        <div style="float:left; width:100%; margin-top:30px; margin-bottom:30px;">
-            <div style="float:left; width:50%;">
-                <h1 style="margin:0; padding:0; line-height:0;">{args.cart_variables.order_subject} #{args.order_number}</h1>
-            </div>
-            <div style="float:right; width:50%; text-align:right;">
-                <img src="{args.cart_variables.mail_logo}" />
-            </div>
-        </div>
+<span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Vielen Dank für Ihre Bestellung!</span>
 
-        <div style="float:left; width:100%; margin-top:30px;">
-            <div style="float:left; width:50%;">
-                <strong>Rechnungsadresse:</strong><br />
-                <f:render section="invoiceAddress" arguments="{_all}" /><br />
-                <f:if condition="{args.phone}">Telefon: {args.phone}<br /></f:if>
-                <f:if condition="{args.email}">E-Mail: {args.email}</f:if>
-            </div>
-            <div style="float:left; width:50%;">
-                <strong>Lieferadresse:</strong><br />
-                <f:if condition="{args.shipping_firstname}">
-                    <f:then>
-                        <f:if condition="{args.shipping_company}">{args.shipping_company}<br /></f:if>
-                        <f:if condition="{args.shipping_firstname}">{args.shipping_firstname}</f:if><f:if condition="{args.shipping_lastname}"> {args.shipping_lastname} <br /></f:if>
-                        <f:if condition="{args.shipping_address}">{args.shipping_address}<br /></f:if>
-                        <f:if condition="{args.shipping_zip}">{args.shipping_zip} </f:if><f:if condition="{args.shipping_city}">{args.shipping_city},</f:if><f:if condition="{args.shipping_country}"> {args.shipping_country}</f:if>
-                    </f:then>
-                    <f:else>
-                        <f:render section="invoiceAddress" arguments="{_all}" />
-                    </f:else>
-                </f:if>
-            </div>
-        </div>
+<table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #f6f6f6;">
+    <tr>
+        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
+        <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 700px; padding: 10px; width: 700px;">
+            <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 700px; padding: 10px;">
+                <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
+                    <tr>
+                        <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+                            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
 
-        <f:if condition="{args.notes}">
-            <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
-                <strong>Anmerkungen zur Rechnung:</strong><br />
-                {args.notes}
-            </div>
-        </f:if>
+                                        <f:if condition="{args.cart_variables.mail_logo}">
+                                            <div style="width:100%; text-align:left;">
+                                                <img src="{args.cart_variables.mail_logo}" />
+                                            </div>
+                                        </f:if>
+                                       
+                                        <h1 style="font-family: sans-serif; font-weight: normal; margin: 0; margin-top:15px; margin-bottom: 15px;">Vielen Dank für Ihre Bestellung!</h1>
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Bestellnummer: #{args.order_number}</p>
 
-        <f:if condition="{args.shipping_notes}">
-            <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
-                <strong>Anmerkung zur Lieferung:</strong><br />
-                {args.shipping_notes}
-            </div>
-        </f:if>
+                                        <div style="float:left; width:100%; margin-top:30px;">
 
-        <div style="float:left; width:100%; margin-top:20px; margin-bottom:40px;">
-            <strong>Zahlungsart:</strong><br />
-            {payment_service.props.label}
-        </div>
+                                            <div style="width: 100%; margin:0 auto;">
 
-        <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
-            <div style="float:left; width:50%;">
-                Produkt
-            </div>
-            <div style="float:left; width:15%; text-align:right;">
-                Preis
-            </div>
-            <div style="float:left; width:10%; text-align:right;">
-                Steuer
-            </div>
-            <div style="float:left; width:10%; text-align:center;">
-                Anzahl
-            </div>
-            <div style="float:left; width:15%; text-align:right;">
-                Gesamt
-            </div>
-        </div>
+                                                <div style="float:left; width:100%; margin-top:30px;">
+                                                    <div style="float:left; width:50%;">
+                                                        <strong>Rechnungsadresse:</strong><br />
+                                                        <f:render section="invoiceAddress" arguments="{_all}" /><br />
+                                                        <f:if condition="{args.phone}">Telefon: {args.phone}<br /></f:if>
+                                                        <f:if condition="{args.email}">E-Mail: {args.email}</f:if>
+                                                    </div>
+                                                    <div style="float:left; width:50%;">
+                                                        <strong>Lieferadresse:</strong><br />
+                                                        <f:if condition="{args.shipping_firstname}">
+                                                            <f:then>
+                                                                <f:if condition="{args.shipping_company}">{args.shipping_company}<br /></f:if>
+                                                                <f:if condition="{args.shipping_firstname}">{args.shipping_firstname}</f:if><f:if condition="{args.shipping_lastname}"> {args.shipping_lastname} <br /></f:if>
+                                                                <f:if condition="{args.shipping_address}">{args.shipping_address}<br /></f:if>
+                                                                <f:if condition="{args.shipping_zip}">{args.shipping_zip} </f:if><f:if condition="{args.shipping_city}">{args.shipping_city},</f:if><f:if condition="{args.shipping_country}"> {args.shipping_country}</f:if>
+                                                            </f:then>
+                                                            <f:else>
+                                                                <f:render section="invoiceAddress" arguments="{_all}" />
+                                                            </f:else>
+                                                        </f:if>
+                                                    </div>
+                                                </div>
 
-        <div style="float:left; width:100%; margin-top:0; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
-            <f:for each="{items}" as="item">
-                <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
-                    <div style="float:left; width:50%;">
-                        <strong>{item.title}</strong><br />
-                        <f:if condition="{item.combined_options}">
+                                                <f:if condition="{args.notes}">
+                                                    <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                                                        <strong>Anmerkungen zur Rechnung:</strong><br />
+                                                        {args.notes}
+                                                    </div>
+                                                </f:if>
+
+                                                <f:if condition="{args.shipping_notes}">
+                                                    <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                                                        <strong>Anmerkung zur Lieferung:</strong><br />
+                                                        {args.shipping_notes}
+                                                    </div>
+                                                </f:if>
+
+                                                <div style="float:left; width:100%; margin-top:20px; margin-bottom:40px;">
+                                                    <strong>Zahlungsart:</strong><br />
+                                                    {payment_service.props.label}
+                                                </div>
+
+                                                <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+                                                    <div style="float:left; width:50%;">
+                                                        Produkt
+                                                    </div>
+                                                    <div style="float:left; width:15%; text-align:right;">
+                                                        Preis
+                                                    </div>
+                                                    <f:if condition="{args.cart_variables.taxcart}">
+                                                        <div style="float:left; width:10%; text-align:right;">
+                                                            Steuer
+                                                        </div>
+                                                    </f:if>
+                                                    <div style="float:left; width:10%; text-align:center;">
+                                                        Anzahl
+                                                    </div>
+                                                    <div style="float:left; width:15%; text-align:right;">
+                                                        Gesamt
+                                                    </div>
+                                                </div>
+
+                                                <div style="float:left; width:100%; margin-top:0; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+                                                    <f:for each="{items}" as="item">
+                                                        <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                                                            <div style="float:left; width:50%;">
+                                                                <strong>{item.title}</strong><br />
+                                                                <f:if condition="{item.combined_options}">
                             <span class="d-block">
                                 <f:for each="{item.combined_options}" as="option" iteration="optionIterator">
                                     {option.name}<f:if condition="{option.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{option.price}</f:format.currency><f:if condition="{args.cart_variables.taxcart}"> {f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</f:if></f:if>{f:if(condition: optionIterator.isLast, else: ', ')}
                                 </f:for>
                             </span>
-                        </f:if>
-                        <small style="display:block;">Art. Nr.: {item.article_number}</small>
-                    </div>
-                    <div style="float:left; width:15%; text-align:right;">
-                        {item.price -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                        <f:if condition="{args.cart_variables.taxcart}">
-                            <small style="display:block;">exkl. {item.tax} % MwSt.</small>
-                        </f:if>
-                    </div>
-                    <f:if condition="{args.cart_variables.taxcart}">
-                        <div style="float:left; width:10%; text-align:right;">
-                            {item.tax} %
-                        </div>
-                    </f:if>
-                    <div style="float:left; width:10%; text-align:center;">
-                        {item.quantity}
-                    </div>
-                    <div style="float:left; width:15%; text-align:right;">
-                        {item.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                        <f:if condition="{args.cart_variables.taxcart}">
-                            <small style="display:block;">inkl. {item.tax} % MwSt.</small>
-                        </f:if>
-                    </div>
-                </div>
-            </f:for>
-        </div>
+                                                                </f:if>
+                                                                <small style="display:block;">Art. Nr.: {item.article_number}</small>
+                                                            </div>
+                                                            <div style="float:left; width:15%; text-align:right;">
+                                                                {item.price -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                                <f:if condition="{args.cart_variables.taxcart}">
+                                                                    <small style="display:block;">exkl. {item.tax} % MwSt.</small>
+                                                                </f:if>
+                                                            </div>
+                                                            <f:if condition="{args.cart_variables.taxcart}">
+                                                                <div style="float:left; width:10%; text-align:right;">
+                                                                    {item.tax} %
+                                                                </div>
+                                                            </f:if>
+                                                            <div style="float:left; width:10%; text-align:center;">
+                                                                {item.quantity}
+                                                            </div>
+                                                            <div style="float:left; width:15%; text-align:right;">
+                                                                {item.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                                <f:if condition="{args.cart_variables.taxcart}">
+                                                                    <small style="display:block;">inkl. {item.tax} % MwSt.</small>
+                                                                </f:if>
+                                                            </div>
+                                                        </div>
+                                                    </f:for>
+                                                </div>
 
-        <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
-            <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px;">
-                <div style="float:left; width:20%; text-align:right; float:right;">
-                    {args.summary.subtotal -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                </div>
-                <div style="float:left; width:30%; text-align:right; float:right;">
-                    Zwischensumme:
-                </div>
-            </div>
-            <f:if condition="{args.cart_variables.taxcart}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
-                    <div style="float:left; width:20%; text-align:right; float:right;">
-                        {args.summary.tax -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                    </div>
-                    <div style="float:left; width:30%; text-align:right; float:right;">
-                        Enthaltene Steuer:
-                    </div>
-                </div>
-            </f:if>
+                                                <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                                                    <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px;">
+                                                        <div style="float:left; width:20%; text-align:right; float:right;">
+                                                            {args.summary.subtotal -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                        </div>
+                                                        <div style="float:left; width:30%; text-align:right; float:right;">
+                                                            Zwischensumme:
+                                                        </div>
+                                                    </div>
+                                                    <f:if condition="{args.cart_variables.taxcart}">
+                                                        <div style="float:left; width:100%; margin-bottom:10px;">
+                                                            <div style="float:left; width:20%; text-align:right; float:right;">
+                                                                {args.summary.tax -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                            </div>
+                                                            <div style="float:left; width:30%; text-align:right; float:right;">
+                                                                Enthaltene Steuer:
+                                                            </div>
+                                                        </div>
+                                                    </f:if>
 
-            <div style="float:left; width:100%; margin-bottom:10px;">
-                <div style="float:left; width:20%; text-align:right; float:right;">
-                    {args.summary.total_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                </div>
-                <div style="float:left; width:30%; text-align:right; float:right;">
-                    Versandkosten:
-                </div>
-            </div>
-            <f:if condition="{args.cart_variables.taxcart}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
-                    <div style="float:left; width:20%; text-align:right; float:right;">
-                        {args.summary.tax_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                    </div>
-                    <div style="float:left; width:30%; text-align:right; float:right;">
-                        Enthaltene Steuer (Versand):
-                    </div>
-                </div>
-            </f:if>
+                                                    <div style="float:left; width:100%; margin-bottom:10px;">
+                                                        <div style="float:left; width:20%; text-align:right; float:right;">
+                                                            {args.summary.total_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                        </div>
+                                                        <div style="float:left; width:30%; text-align:right; float:right;">
+                                                            Versandkosten:
+                                                        </div>
+                                                    </div>
+                                                    <f:if condition="{args.cart_variables.taxcart}">
+                                                        <div style="float:left; width:100%; margin-bottom:10px;">
+                                                            <div style="float:left; width:20%; text-align:right; float:right;">
+                                                                {args.summary.tax_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                            </div>
+                                                            <div style="float:left; width:30%; text-align:right; float:right;">
+                                                                Enthaltene Steuer (Versand):
+                                                            </div>
+                                                        </div>
+                                                    </f:if>
 
-            <f:if condition="{args.summary.discount}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
-                    <div style="float:left; width:20%; text-align:right; float:right;">
-                        - {args.summary.discount -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
-                    </div>
-                    <div style="float:left; width:30%; text-align:right; float:right;">
-                        Gutschein:
-                    </div>
-                </div>
-            </f:if>
+                                                    <f:if condition="{args.summary.discount}">
+                                                        <div style="float:left; width:100%; margin-bottom:10px;">
+                                                            <div style="float:left; width:20%; text-align:right; float:right;">
+                                                                - {args.summary.discount -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
+                                                            </div>
+                                                            <div style="float:left; width:30%; text-align:right; float:right;">
+                                                                Gutschein:
+                                                            </div>
+                                                        </div>
+                                                    </f:if>
 
-            <div style="float:left; width:100%; margin-bottom:10px;">
-                <div style="float:left; width:20%; text-align:right; float:right;">
-                    <strong>{args.summary.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}</strong>
-                </div>
-                <div style="float:left; width:30%; text-align:right; float:right;">
-                    <strong>Gesamt:</strong>
-                </div>
-            </div>
-        </div>
+                                                    <div style="float:left; width:100%; margin-bottom:10px;">
+                                                        <div style="float:left; width:20%; text-align:right; float:right;">
+                                                            <strong>{args.summary.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}</strong>
+                                                        </div>
+                                                        <div style="float:left; width:30%; text-align:right; float:right;">
+                                                            <strong>Gesamt:</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-        <f:if condition="{args.payment_url}">
-            <div style="float:left; width:100%; margin-bottom:20px;">
-                <f:if condition="{args.payment}=='prepayment'">
-                    <f:then>
-                        <strong>Vorauskassa:</strong> <a href="{args.payment_url}" target="_blank">Zur Bankverbindung</a>
-                    </f:then>
-                    <f:else>
-                        <strong>Zahlung fehlerhaft oder nicht abgeschlossen?</strong>
-                        <p><a href="{args.payment_url}" target="_blank">Zahlungs erneut durchführen</a></p>
-                    </f:else>
+                                                <f:if condition="{args.payment_url}">
+                                                    <div style="float:left; width:100%; margin-bottom:20px;">
+                                                        <f:if condition="{args.payment}=='prepayment'">
+                                                            <f:then>
+                                                                <strong>Vorauskassa:</strong> <a href="{args.payment_url}" target="_blank">Zur Bankverbindung</a>
+                                                            </f:then>
+                                                            <f:else>
+                                                                <strong>Zahlung fehlerhaft oder nicht abgeschlossen?</strong>
+                                                                <p><a href="{args.payment_url}" target="_blank">Zahlungs erneut durchführen</a></p>
+                                                            </f:else>
+                                                        </f:if>
+                                                    </div>
+                                                </f:if>
+
+                                                <div style="float:left; width:100%;">
+                                                    <small>-- <br />Dies ist ein automatisch generiertes E-Mail. Bitte antworten Sie nicht darauf.</small>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <f:if condition="{args.cart_variables.footer_text}">
+                    <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                            <tr>
+                                <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999;">
+                                    {args.cart_variables.footer_text -> f:format.raw()}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </f:if>
+
             </div>
-        </f:if>
-
-        <div style="float:left; width:100%;">
-            <small>-- <br />Dies ist ein automatisch generiertes E-Mail. Bitte antworten Sie nicht darauf.</small>
-        </div>
-
-    </div>
-
-</div>
+        </td>
+        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
+    </tr>
+</table>
 
 <f:section name="invoiceAddress">
     <f:if condition="{args.company}">

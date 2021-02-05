@@ -1,0 +1,40 @@
+prototype(NeosRulez.Shop:Document.GenericPage) < prototype(Neos.Fusion:Case) {
+    backend {
+        condition = ${documentNode.context.inBackend}
+        renderer = Neos.Neos:Page {
+            body = afx`
+                <div style="position:fixed; width:100%; height:100%; left:0; top:0; display:flex; align-items:center; background:#323232; color:#FFF; font-family:'Noto Sans', sans-serif; -webkit-font-smoothing:antialiased;">
+                    <div style="display:block; width:100%; text-align:center; font-size:22px; line-height:1.4;">
+                        <span style="color:#00b5ff;">
+                            {icon ? icon + ' ' : false}<Neos.Neos:Editable property="title" block={false} />
+                        </span>
+                    </div>
+                </div>
+            `
+        }
+        renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+            node = ${documentNode}
+        }
+    }
+    default = Neos.Fusion:Http.Message {
+        httpResponseHead {
+            statusCode = 404
+        }
+    }
+}
+
+prototype(NeosRulez.Shop:Document.Options) < prototype(NeosRulez.Shop:Document.GenericPage) {
+    @context.icon = ${'<svg style="width:20px; margin-left:10px; margin-right:5px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="dice" class="svg-inline--fa fa-dice fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path></svg>'}
+}
+prototype(NeosRulez.Shop:Document.Option) < prototype(NeosRulez.Shop:Document.GenericPage) {
+    @context.icon = ${'<svg style="width:20px; margin-left:10px; margin-right:5px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="dice-five" class="svg-inline--fa fa-dice-five fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M384 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V96c0-35.35-28.65-64-64-64zM128 384c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm0-192c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm96 96c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm96 96c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm0-192c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32z"></path></svg>'}
+}
+prototype(NeosRulez.Shop:Document.Shipping) < prototype(NeosRulez.Shop:Document.GenericPage) {
+    @context.icon = ${'<svg style="width:20px; margin-left:10px; margin-right:5px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="truck-loading" class="svg-inline--fa fa-truck-loading fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M50.2 375.6c2.3 8.5 11.1 13.6 19.6 11.3l216.4-58c8.5-2.3 13.6-11.1 11.3-19.6l-49.7-185.5c-2.3-8.5-11.1-13.6-19.6-11.3L151 133.3l24.8 92.7-61.8 16.5-24.8-92.7-77.3 20.7C3.4 172.8-1.7 181.6.6 190.1l49.6 185.5zM384 0c-17.7 0-32 14.3-32 32v323.6L5.9 450c-4.3 1.2-6.8 5.6-5.6 9.8l12.6 46.3c1.2 4.3 5.6 6.8 9.8 5.6l393.7-107.4C418.8 464.1 467.6 512 528 512c61.9 0 112-50.1 112-112V0H384zm144 448c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"></path></svg>'}
+}
+prototype(NeosRulez.Shop:Document.Coupon) < prototype(NeosRulez.Shop:Document.GenericPage) {
+    @context.icon = ${'<svg style="width:20px; margin-left:10px; margin-right:5px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" class="svg-inline--fa fa-bookmark fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400 0 512z"></path></svg>'}
+}
+prototype(NeosRulez.Shop:Document.FreeStyleTextOption) < prototype(NeosRulez.Shop:Document.GenericPage) {
+    @context.icon = ${'<svg style="width:20px; margin-left:10px; margin-right:5px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="font" class="svg-inline--fa fa-font fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 416h-23.41L277.88 53.69A32 32 0 0 0 247.58 32h-47.16a32 32 0 0 0-30.3 21.69L39.41 416H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16h-19.58l23.3-64h152.56l23.3 64H304a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM176.85 272L224 142.51 271.15 272z"></path></svg>'}
+}

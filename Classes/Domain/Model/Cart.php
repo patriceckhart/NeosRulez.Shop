@@ -100,10 +100,20 @@ class Cart {
                 $option_node = $context->getNodeByIdentifier($option);
                 $option_price = floatval(str_replace(',', '.', str_replace('.', '', $option_node->getProperty('price'))));
                 $combined_options[] = ['name' => $option_node->getProperty('title'), 'price' => $option_price * $quantity];
-                $item['combined_options'] = $combined_options;
+//                $item['combined_options'] = $combined_options;
                 $additional_price_gross = $additional_price_gross + $option_price;
                 $additional_tax_value_price = $additional_price_gross / $factor;
             }
+        }
+
+        if (array_key_exists('options2', $item)) {
+            foreach ($item['options2'] as $option2) {
+                $combined_options[] = ['name' => $option2];
+            }
+        }
+
+        if (array_key_exists('options', $item) || array_key_exists('options2', $item)) {
+            $item['combined_options'] = $combined_options;
         }
 
         $item['price'] = $item['price'] + $additional_price_gross - $additional_tax_value_price;

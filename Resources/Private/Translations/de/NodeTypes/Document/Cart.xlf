@@ -56,6 +56,9 @@
             <trans-unit id="properties.invoice_info_prepayment" xml:space="preserve">
                 <source>Informationstext Vorauskasse</source>
             </trans-unit>
+            <trans-unit id="properties.mailFooterText" xml:space="preserve">
+                <source>E-Mail Footer Text</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

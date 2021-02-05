@@ -14,6 +14,9 @@
 			<trans-unit id="variants" xml:space="preserve">
 				<source>Varianten</source>
 			</trans-unit>
+			<trans-unit id="freestyleTextLabel" xml:space="preserve">
+				<source>Geben Sie Ihren Wunschtext ein ...</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

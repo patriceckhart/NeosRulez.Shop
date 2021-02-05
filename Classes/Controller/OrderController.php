@@ -48,7 +48,8 @@ class OrderController extends ActionController
      * @return void
      */
     public function indexAction() {
-        $orders = $this->orderRepository->findSortedByOrdernumber();
+//        $orders = $this->orderRepository->findSortedByOrdernumber();
+        $orders = $this->orderRepository->findAll();
         $result = [];
         foreach ($orders as $order) {
             $payment_label = $this->settings['Payment'][$order->getPayment()]['props']['label'];
@@ -71,8 +72,8 @@ class OrderController extends ActionController
         $shipping = $shipping_node->getProperty('title');
         $shipping_cost = $shipping_node->getProperty('price');
 
-        $this->view->assign('coupons', json_decode($order->getCoupons(), true));
-        $this->view->assign('summary', json_decode($order->getSummary(), true));
+//        $this->view->assign('coupons', json_decode($order->getCoupons(), true));
+//        $this->view->assign('summary', json_decode($order->getSummary(), true));
 
         $this->view->assign('shipping', $shipping);
         $this->view->assign('shippingcost', str_replace(',', '.', $shipping_cost));

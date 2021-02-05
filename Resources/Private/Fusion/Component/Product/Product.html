@@ -97,12 +97,15 @@
 </f:section>
 
 <f:section name="add_to_form">
-    <f:form action="add" controller="Cart" objectName="item" package="NeosRulez.Shop" id="product_form">
+    <f:form action="add" controller="Cart" objectName="item" package="NeosRulez.Shop" id="xproduct_form">
         <f:if condition="{sub_products}">
             <f:render section="sub_products" arguments="{_all}" />
         </f:if>
         <f:if condition="{options_groups}">
             <f:render section="options" arguments="{_all}" />
+        </f:if>
+        <f:if condition="{options2}">
+            <f:render section="options2" arguments="{_all}" />
         </f:if>
         <div class="row align-items-center add_to_cart">
             <div class="col-md-4">
@@ -130,6 +133,22 @@
                     </f:for>
                 </select>
             </div>
+        </div>
+    </f:for>
+</f:section>
+
+<f:section name="options2">
+    <f:for each="{options2}" as="option2">
+        <div class="d-block mb-3">
+            <label>{option2.properties.title}</label>
+            <f:if condition="{option2.properties.isMultiline}">
+                <f:then>
+                    <textarea name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}"></textarea>
+                </f:then>
+                <f:else>
+                    <input type="text" name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}" value="" />
+                </f:else>
+            </f:if>
         </div>
     </f:for>
 </f:section>

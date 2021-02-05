@@ -59,4 +59,19 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
             </div>
         </NeosRulez.Shop:Content.AbstractContent>
     `
+
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTag(documentNode)}
+        }
+    }
 }

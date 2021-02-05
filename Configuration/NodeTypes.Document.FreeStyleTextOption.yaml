@@ -1,0 +1,30 @@
+'NeosRulez.Shop:Document.FreeStyleTextOption':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+  ui:
+    label: i18n
+    icon: fas fa-font
+    position: 4
+    group: neosrulez_shop
+    inspector:
+      groups:
+        document:
+          label: i18n
+          icon: fas fa-font
+  properties:
+    isRequired:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          position: 'before isMultiline'
+    isMultiline:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          position: 'end'

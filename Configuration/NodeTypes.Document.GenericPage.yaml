@@ -1,7 +1,7 @@
 'NeosRulez.Shop:Document.GenericPage':
   abstract: true
   superTypes:
-    'Neos.Neos:Shortcut': true
+    'Neos.Neos:Document': true
     'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
   properties:
     faicon:

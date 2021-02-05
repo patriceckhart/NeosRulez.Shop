@@ -153,5 +153,6 @@
             dataSourceIdentifier: neosrulez-shop-relays
   constraints:
     nodeTypes:
+      'NeosRulez.Shop:Document.FreeStyleTextOption': true
       'NeosRulez.Shop:Document.Options': true
       'NeosRulez.Shop:Document.Product': true

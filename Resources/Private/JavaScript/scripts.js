@@ -95,7 +95,11 @@ $(document).ready(function(){
                 if(val=='') {
                     $(this).addClass('is-invalid');
                 } else {
-                    $(this).removeClass('is-invalid');
+                    if(val === null) {
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
                 }
             }
         });

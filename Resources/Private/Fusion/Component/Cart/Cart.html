@@ -44,6 +44,7 @@
                     <f:form.hidden name="cart_variables[invoice_number_prefix]" value="{cart_variables.0.invoice_number_prefix}" />
                     <f:form.hidden name="cart_variables[invoice_info_prepayment]" value="{cart_variables.0.invoice_info_prepayment}" />
                     <f:form.hidden name="cart_variables[invoice_address]" value="{cart_variables.0.invoice_address}" />
+                    <f:form.hidden name="cart_variables[footer_text]" value="{footer_text -> f:format.raw()}" />
                 </f:form>
             </f:then>
             <f:else>
