@@ -1,0 +1,8 @@
+prototype(NeosRulez.Shop:Class.Currency) {
+    @class = 'NeosRulez\\Shop\\Fusion\\CurrencyFusion'
+    float = false
+    decimalSeparator = false
+    thousandsSeparator = false
+    decimals = false
+    currencySign = false
+}

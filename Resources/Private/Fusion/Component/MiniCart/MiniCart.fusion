@@ -1,0 +1,106 @@
+prototype(NeosRulez.Shop:Component.MiniCart) < prototype(Neos.Fusion:Component) {
+    cart = NeosRulez.Shop:Fusion.Cart
+    cartPage = ${node.properties.cartPage}
+
+    renderer = afx`
+        <NeosRulez.Shop:Component.MiniCart.CartItemHeader @if.render={props.cart} />
+        <Neos.Fusion:Loop @if.render={props.cart} items={props.cart} itemName="item" itemKey="itemKey">
+            <NeosRulez.Shop:Component.MiniCart.CartItem item={item} />
+        </Neos.Fusion:Loop>
+        <NeosRulez.Shop:Component.MiniCart.Summary @if.render={props.cart} />
+        <Neos.Neos:NodeLink @if.render={props.cartPage && props.cart} node={props.cartPage} attributes.class="btn btn-primary btn-sm btn-block mt-3">
+            <i class="fas fa-shopping-cart mr-2"></i> {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:cartBtnLabel')}
+        </Neos.Neos:NodeLink>
+        <span @if.render={!props.cart} class="d-block cart-empty" >{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:cart_empty')}</span>
+    `
+
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryDiscriminator = ${request.arguments.update}
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+        }
+    }
+}
+
+prototype(NeosRulez.Shop:Component.MiniCart.CartItemHeader) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <div class="row py-2">
+            <div class="col-5">
+                {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:product')}
+            </div>
+            <div class="col-2 text-center">
+                {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:quantity')}
+            </div>
+            <div class="col-3 text-right">
+                {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:total')}
+            </div>
+            <div class="col-2">
+                &nbsp;
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.MiniCart.CartItem) < prototype(Neos.Fusion:Component) {
+
+    documentNode = Neos.Neos:NodeUri {
+        node = ${documentNode}
+    }
+
+    renderer = afx`
+        <div class="row align-items-center py-2">
+            <div class="col-5">
+                {props.item.title}
+                <small class="d-block">{props.item.article_number}</small>
+            </div>
+            <div class="col-2 text-center">
+                {props.item.quantity}
+            </div>
+            <div class="col-3 text-right">
+                <NeosRulez.Shop:Class.Currency float={props.item.total} decimalSeparator="," thousandsSeparator="" decimals="2" currencySign="€" />
+                <small class="d-block">{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} {props.item.tax} % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}</small>
+            </div>
+            <div class="col-2">
+                <Neos.Fusion.Form:Form form.target.action="deleteItem" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
+                    <Neos.Fusion.Form:Hidden field.name="item[tstamp]" attributes.value={props.item.tstamp} />
+                    <Neos.Fusion.Form:Hidden field.name="return" attributes.value={props.documentNode} />
+                    <Neos.Fusion.Form:Hidden field.name="update" attributes.value="1" />
+                    <Neos.Fusion.Form:Button attributes.class="btn btn-danger btn-sm btn-block" >
+                        <i class="fas fa-trash"></i>
+                    </Neos.Fusion.Form:Button>
+                </Neos.Fusion.Form:Form>
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.MiniCart.Summary) < prototype(Neos.Fusion:Component) {
+    summary = NeosRulez.Shop:Fusion.Summary
+
+    renderer = afx`
+        <div @if.render={props.summary} class="row align-items-center py-2">
+            <div class="col-7 text-right">
+                <strong>{I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:total')}</strong>
+            </div>
+            <div class="col-3 text-right">
+                <strong>
+                    <NeosRulez.Shop:Class.Currency float={props.summary.total} decimalSeparator="," thousandsSeparator="" decimals="2" currencySign="€" />
+                </strong>
+                <small class="d-block">
+                    <strong>{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} {props.item.tax} % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}</strong>
+                </small>
+            </div>
+            <div class="col-2">
+                &nbsp;
+            </div>
+        </div>
+    `
+}
