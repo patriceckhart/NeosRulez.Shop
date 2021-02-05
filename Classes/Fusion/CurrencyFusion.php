@@ -10,7 +10,8 @@ class CurrencyFusion extends AbstractFusionObject {
      * @return string
      */
     public function evaluate() {
-        $float = (float) $this->fusionValue('float');
+        $float = $this->fusionValue('float');
+        $float = (float) str_replace(',', '.', $float);
         $decimalSeparator = $this->fusionValue('decimalSeparator');
         $thousandsSeparator = $this->fusionValue('thousandsSeparator');
         $decimals = (int) $this->fusionValue('decimals');

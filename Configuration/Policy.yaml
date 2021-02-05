@@ -4,6 +4,8 @@ privilegeTargets:
       matcher: 'method(NeosRulez\Shop\Controller\CartController->.*Action())'
     'NeosRulez.Shop:OrderControllerActions':
       matcher: 'method(NeosRulez\Shop\Controller\OrderController->.*Action())'
+    'NeosRulez.Shop:ProductControllerActions':
+      matcher: 'method(NeosRulez\Shop\Controller\ProductController->.*Action())'
 
 roles:
   'Neos.Flow:Everybody':
@@ -11,6 +13,11 @@ roles:
       -
         privilegeTarget: 'NeosRulez.Shop:CartControllerActions'
         permission: GRANT
+  'Neos.Neos:AbstractEditor':
+    privileges:
       -
         privilegeTarget: 'NeosRulez.Shop:OrderControllerActions'
+        permission: GRANT
+      -
+        privilegeTarget: 'NeosRulez.Shop:ProductControllerActions'
         permission: GRANT

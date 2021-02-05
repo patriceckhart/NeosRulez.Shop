@@ -1,1 +1,8 @@
+include: resource://Neos.Fusion/Private/Fusion/Root.fusion
+include: resource://Neos.Fusion.Form/Private/Fusion/Root.fusion
+
+NeosRulez.Shop.ProductController.index = NeosRulez.Shop:BackendView.Product.Index
+//NeosRulez.Scheduler.JobController.new = NeosRulez.Scheduler:BackendView.Job.New
+//NeosRulez.Scheduler.JobController.edit = NeosRulez.Scheduler:BackendView.Job.Edit
+
 include: **/*.fusion

@@ -1,0 +1,83 @@
+//include: resource://Neos.Neos/Private/Fusion/Prototypes/Editable.fusion
+//include: resource://Neos.Neos/Private/Fusion/Prototypes/ConvertUris.fusion
+
+
+prototype(NeosRulez.Shop:BackendView.Product.Index) < prototype(Neos.Fusion:Component) {
+
+    inlineStyles = ${'<style>.neos .neos-control-group { margin-bottom:0px; } .neos input { width:100%; } </style>'}
+
+    renderer = afx`
+        {props.inlineStyles ? props.inlineStyles : false}
+        <table @if.render={products} class="neos-table" style="margin:0;">
+            <NeosRulez.Shop:BackendView.Product.Index.Head />
+            <Neos.Fusion:Loop items={products} itemName="product">
+                <NeosRulez.Shop:BackendView.Product.Index.ProductItem product={product} />
+            </Neos.Fusion:Loop>
+        </table>
+    `
+}
+
+prototype(NeosRulez.Shop:BackendView.Product.Index.Head) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Artikelnummer</td>
+                <td>Preis</td>
+                <td>Alter Preis</td>
+                <td>Auf Lager</td>
+            </tr>
+        </thead>
+    `
+}
+
+prototype(NeosRulez.Shop:BackendView.Product.Index.ProductItem) < prototype(Neos.Fusion:Component) {
+
+    price = NeosRulez.Shop:Class.Currency {
+        float = ${product.properties.price}
+        decimalSeparator = ','
+        thousandsSeparator = ''
+        decimals = '2'
+        currencySign = ''
+    }
+
+    old_price = NeosRulez.Shop:Class.Currency {
+        float = ${product.properties.old_price}
+        decimalSeparator = ','
+        thousandsSeparator = ''
+        decimals = '2'
+        currencySign = ''
+    }
+
+    renderer = afx`
+        <tr>
+            <td>
+                {product.properties.title}
+            </td>
+            <td>
+                <NeosRulez.Shop:BackendView.Product.Index.ProductItem.Form value={product.properties.article_number} action="updateProperty" property="article_number" />
+            </td>
+            <td>
+                <NeosRulez.Shop:BackendView.Product.Index.ProductItem.Form value={props.price} action="updateProperty" property="price" />
+            </td>
+            <td>
+                <NeosRulez.Shop:BackendView.Product.Index.ProductItem.Form value={props.old_price} action="updateProperty" property="old_price" />
+            </td>
+            <td>{product.properties.stock ? 'Ja' : 'Nein'}</td>
+        </tr>
+    `
+}
+
+prototype(NeosRulez.Shop:BackendView.Product.Index.ProductItem.Form) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <Neos.Fusion.Form:Form form.target.action={props.action} form.target.controller="Product" form.target.package="NeosRulez.Shop" form.data.args={args} >
+            <Neos.Fusion.Form:Hidden field.name="args[identifier]" attributes.value={product.identifier} />
+            <Neos.Fusion.Form:Hidden field.name="args[property]" attributes.value={props.property} />
+            <Neos.Fusion.Form:Neos.BackendModule.FieldContainer field.name="product[price]">
+                <Neos.Fusion.Form:Input field.name="args[value]" field.value={props.value} />
+            </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+        </Neos.Fusion.Form:Form>
+    `
+}
