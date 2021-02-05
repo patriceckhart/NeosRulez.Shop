@@ -23,8 +23,8 @@
     isMultiline:
       type: boolean
       defaultValue: false
-      ui:
-        label: i18n
-        inspector:
-          group: document
-          position: 'end'
+      ui: ~
+#        label: i18n
+#        inspector:
+#          group: document
+#          position: 'end'

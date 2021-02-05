@@ -143,10 +143,10 @@
             <label>{option2.properties.title}</label>
             <f:if condition="{option2.properties.isMultiline}">
                 <f:then>
-                    <textarea name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}"></textarea>
+                    <textarea name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}"{f:if(condition: '{option2.properties.isRequired}', then: ' required')}></textarea>
                 </f:then>
                 <f:else>
-                    <input type="text" name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}" value="" />
+                    <input type="text" name="item[options2][]" class="form-control" placeholder="{f:translate(id: 'freestyleTextLabel', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}" value=""{f:if(condition: '{option2.properties.isRequired}', then: ' required')} />
                 </f:else>
             </f:if>
         </div>
