@@ -33,6 +33,8 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     relay = NeosRulez.Shop:Fusion.Relay
     relayinfos = ${Configuration.setting('NeosRulez.Shop.quantityRelays')}
     footer_text = ${q(documentNode).property('mailFooterText')}
+    userdata = NeosRulez.Shop:Class.UserData
+    userdata.@if.condition = ${Configuration.setting('NeosRulez.Shop.useFeLogin')}
     @cache {
         mode = 'dynamic'
         entryIdentifier {

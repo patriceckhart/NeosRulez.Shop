@@ -243,7 +243,7 @@
         </f:if>
         <div class="{f:if(condition: '{sub_product.properties.images}', then: 'col-10', else: 'col-12')}">
             {sub_product.properties.title}
-            <small class="d-block mt-2">{f:translate(id: 'article_number', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} {sub_product.properties.article_number} <strong class="ml-2"><f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{sub_product.properties.price}</f:format.currency></strong></small>
+            <small class="d-block mt-2">{f:translate(id: 'article_number', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')} {sub_product.properties.article_number} <strong class="ml-2">{sub_product.properties.price} €</strong></small>
         </div>
     </div>
 </f:section>

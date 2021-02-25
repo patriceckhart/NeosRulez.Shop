@@ -1,0 +1,3 @@
+prototype(NeosRulez.Shop:Class.UserData) {
+    @class = 'NeosRulez\\Shop\\Fusion\\UserDataFusion'
+}

@@ -48,8 +48,7 @@ class OrderController extends ActionController
      * @return void
      */
     public function indexAction() {
-//        $orders = $this->orderRepository->findSortedByOrdernumber();
-        $orders = $this->orderRepository->findAll();
+        $orders = $this->orderRepository->findAll()->getQuery()->setOrderings(array('created' => \Neos\Flow\Persistence\QueryInterface::ORDER_DESCENDING))->execute();
         $result = [];
         foreach ($orders as $order) {
             $payment_label = $this->settings['Payment'][$order->getPayment()]['props']['label'];

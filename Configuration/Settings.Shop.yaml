@@ -4,3 +4,4 @@ NeosRulez:
     coupons: true
     newsletter: false
     debugMode: false
+    useFeLogin: false # The package NeosRulez.FrontendLogin is required!

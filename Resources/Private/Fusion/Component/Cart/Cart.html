@@ -1,7 +1,6 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
-
 <div class="cart">
     <div class="container">
         <f:if condition="{checkout}">
@@ -68,6 +67,20 @@
             </f:else>
         </f:if>
     </div>
+    <f:if condition="!{order.country}">
+        <f:if condition="{userdata.country}">
+            <script>
+                if (document.getElementById('country')) {
+                    var body = document.body;
+                    body.classList.add('body-hide');
+                    country.value = '<f:format.raw>{userdata.country}</f:format.raw>';
+                    document.getElementById('shipping_country').value = '<f:format.raw>{userdata.country}</f:format.raw>';
+                    document.getElementById('selected_country').value = '<f:format.raw>{userdata.country}</f:format.raw>';
+                    document.getElementById('updateOrder').submit();
+                }
+            </script>
+        </f:if>
+    </f:if>
 </div>
 
 <f:section name="items">
@@ -398,20 +411,20 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="firstname" name="firstname" class="form-control" placeholder="{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.firstname}" />
+                <label for="firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>userdata
+                <f:form.textfield id="firstname" name="firstname" class="form-control" placeholder="{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.firstname}', then:'{order.firstname}', else:'{userdata.firstname}')}" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="lastname">{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="lastname" name="lastname" class="form-control" placeholder="{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.lastname}" />
+                <f:form.textfield id="lastname" name="lastname" class="form-control" placeholder="{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.lastname}', then:'{order.lastname}', else:'{userdata.lastname}')}" />
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="company">{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
-        <f:form.textfield id="company" name="company" class="form-control" placeholder="{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{order.company}" />
+        <f:form.textfield id="company" name="company" class="form-control" placeholder="{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{f:if(condition='{order.company}', then:'{order.company}', else:'{userdata.company}')}" />
     </div>
     <div class="form-group">
         <label for="country">{f:translate(id: 'country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
@@ -428,19 +441,19 @@
         <div class="col-md-5">
             <div class="form-group">
                 <label for="address">{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="address" name="address" class="form-control" placeholder="{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.address}" />
+                <f:form.textfield id="address" name="address" class="form-control" placeholder="{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.address}', then:'{order.address}', else:'{userdata.address}')}" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="zip">{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="zip" name="zip" class="form-control" placeholder="{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.zip}" />
+                <f:form.textfield id="zip" name="zip" class="form-control" placeholder="{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.zip}', then:'{order.zip}', else:'{userdata.zip}')}" />
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="city">{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="city" name="city" class="form-control" placeholder="{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.city}" />
+                <f:form.textfield id="city" name="city" class="form-control" placeholder="{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.city}', then:'{order.city}', else:'{userdata.city}')}" />
             </div>
         </div>
     </div>
@@ -448,13 +461,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="phone">{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="phone" name="phone" class="form-control" placeholder="{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.phone}" />
+                <f:form.textfield id="phone" name="phone" class="form-control" placeholder="{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.phone}', then:'{order.phone}', else:'{userdata.phone}')}" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="email">{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="email" name="email" class="form-control" placeholder="{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.email}" />
+                <f:form.textfield id="email" name="email" class="form-control" placeholder="{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.email}', then:'{order.email}', else:'{userdata.email}')}" />
             </div>
         </div>
     </div>
