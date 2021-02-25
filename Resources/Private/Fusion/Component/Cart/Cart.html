@@ -411,7 +411,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>userdata
+                <label for="firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="firstname" name="firstname" class="form-control" placeholder="{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.firstname}', then:'{order.firstname}', else:'{userdata.firstname}')}" />
             </div>
         </div>
