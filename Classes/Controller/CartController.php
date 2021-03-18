@@ -228,6 +228,7 @@ class CartController extends ActionController
             $order = $this->orderRepository->findByOrderNumber($order_number);
             if($paid==1) {
                 $order->setPaid(1);
+                $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
                 $this->orderRepository->update($order);
                 $this->persistenceManager->persistAll();
             }
