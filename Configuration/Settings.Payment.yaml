@@ -1,6 +1,19 @@
 #NeosRulez:
 #  Shop:
 #    Payment:
+#      paypalapi:
+#        class: NeosRulez\Shop\Service\Payment\PayPalApi
+#        render_redirect: true
+#        props:
+#          label: 'PayPal'
+#          icon: 'fab fa-paypal'
+#          success_page: 'e6a1431e-d9a3-44ca-bbc7-65a9e13e6cfd'
+#          failure_page: '00c2ec7f-7a07-4389-91c2-90ed99b27599'
+#          payment_status: 1
+#        args:
+#          paypal_account: 'mail-facilitator@foo.bar'
+#          client_id: 'AVxy-D_D7YxABrtv2hBDTitQeKtbKtH3lY_upyWVSp2CMsfsdfkzLxEjfCk3L7O-wP0diBSkfyXwsLJn'
+#          secret: 'ED8iGDkJd9fsfds3bAWmg-ySSw5Bu6_xNI3UVU-5UAR8sfsf59ph6Gj6VGV1RIgCwoiddEyKAA8pDD2H'
 #      paypal:
 #        class: NeosRulez\Shop\Service\Payment\PayPal
 #        props:

@@ -5,6 +5,9 @@
             <trans-unit id="invoice" xml:space="preserve">
 				<source>Invoice</source>
 			</trans-unit>
+            <trans-unit id="doNotCloseWindow" xml:space="preserve">
+				<source>Don't close this window!</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>
