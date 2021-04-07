@@ -46,6 +46,7 @@ class PayPalApi {
     public function execute($payment, $args, $success_uri) {
 
         return '
+            <style>body { overflow-x: hidden; }</style>
             <script src="https://www.paypal.com/sdk/js?client-id='.$this->settings['Payment']['paypalapi']['args']['client_id'].'&currency=EUR" ></script>
             <div style="width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;">
                 <div style="display:block;">
