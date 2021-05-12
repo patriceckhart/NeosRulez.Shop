@@ -13,8 +13,6 @@
     ],
     "require": {
         "neos/neos": "*",
-        "neosrulez/scssparser": "*",
-        "neosrulez/jsminifier": "*",
         "neos/fusion-form": "^1.0",
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
