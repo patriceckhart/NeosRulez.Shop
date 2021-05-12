@@ -8,7 +8,7 @@ prototype(NeosRulez.Shop:Component.MiniCart) < prototype(Neos.Fusion:Component) 
             <NeosRulez.Shop:Component.MiniCart.CartItem item={item} />
         </Neos.Fusion:Loop>
         <NeosRulez.Shop:Component.MiniCart.Summary @if.render={props.cart} />
-        <Neos.Neos:NodeLink @if.render={props.cartPage && props.cart} node={props.cartPage} attributes.class="btn btn-primary btn-sm btn-block mt-3">
+        <Neos.Neos:NodeLink @if.render={props.cartPage && props.cart} node={props.cartPage} attributes.class="btn btn-primary btn-sm btn-block w-100 mt-3">
             <i class="fas fa-shopping-cart mr-2"></i> {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:cartBtnLabel')}
         </Neos.Neos:NodeLink>
         <span @if.render={!props.cart} class="d-block cart-empty" >{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:cart_empty')}</span>
@@ -73,7 +73,7 @@ prototype(NeosRulez.Shop:Component.MiniCart.CartItem) < prototype(Neos.Fusion:Co
                     <Neos.Fusion.Form:Hidden field.name="item[tstamp]" attributes.value={props.item.tstamp} />
                     <Neos.Fusion.Form:Hidden field.name="return" attributes.value={props.documentNode} />
                     <Neos.Fusion.Form:Hidden field.name="update" attributes.value="1" />
-                    <Neos.Fusion.Form:Button attributes.class="btn btn-danger btn-sm btn-block" >
+                    <Neos.Fusion.Form:Button attributes.class="btn btn-danger btn-sm btn-block w-100" >
                         <i class="fas fa-trash"></i>
                     </Neos.Fusion.Form:Button>
                 </Neos.Fusion.Form:Form>

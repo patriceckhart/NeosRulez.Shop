@@ -44,6 +44,12 @@ class CartController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\StockService
+     */
+    protected $stockService;
+
+    /**
+     * @Flow\Inject
      * @var \NeosRulez\Shop\Domain\Repository\OrderRepository
      */
     protected $orderRepository;
@@ -280,6 +286,7 @@ class CartController extends ActionController
             return $this->mailService->execute($args);
         } else {
             if(!$this->settings['debugMode']) {
+                $this->stockService->execute();
                 $this->mailService->execute($args);
                 $this->cart->refreshCoupons();
                 $this->cart->deleteCart();

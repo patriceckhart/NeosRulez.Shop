@@ -1,0 +1,26 @@
+'NeosRulez.Shop:Mixin.Stock':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        neosrulez_shop_product_stocklevel:
+          label: NeosRulez.Shop:NodeTypes.Mixin.Stock:stockManagement
+          icon: fas fa-pallet
+  properties:
+    stockManagement:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        inspector:
+          group: neosrulez_shop_product_stocklevel
+          position: 1
+    stockLevel:
+      type: string
+      defaultValue: '0'
+      ui:
+        label: i18n
+        inspector:
+          hidden: 'ClientEval:node.properties.stockManagement ? false : true'
+          group: neosrulez_shop_product_stocklevel
+          position: 2

@@ -2,6 +2,7 @@
   superTypes:
     'NeosRulez.Shop:Document.AbstractPage': true
     'NeosRulez.Category:Mixin.Abstract.Categories': true
+    'NeosRulez.Shop:Mixin.Stock': true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'

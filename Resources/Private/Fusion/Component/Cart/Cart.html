@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="summary" arguments="{_all}" />
-                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}', update: true}" class="btn btn-outline-primary btn-sm btn-block mt-3 mb-4 btn-edit-order"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
+                                    <f:link.action action="showCart" controller="Cart" package="NeosRulez.Shop" arguments="{cart: true, return: '{node -> neos:uri.node()}', update: true}" class="btn btn-outline-primary btn-sm btn-block w-100 mt-3 mb-4 btn-edit-order"><i class="fas fa-pen"></i> {f:translate(id: 'edit_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:link.action>
                                 </div>
                                 <div class="d-block my-3">
                                     <f:render section="payment" arguments="{_all}" />
@@ -170,7 +170,7 @@
             </div>
             <div class="col-md-1">
                 <f:form action="deleteItem" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
-                    <button type="submit" class="btn btn-danger btn-sm btn-block btn_delete_item"><i class="fas fa-trash"></i></button>
+                    <button type="submit" class="btn btn-danger btn-sm btn-block w-100 btn_delete_item"><i class="fas fa-trash"></i></button>
                 </f:form>
             </div>
         </div>
@@ -295,7 +295,7 @@
                             <f:else>
                                 <div class="form-group mt-3">
                                     <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
-                                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                                        <button type="submit" class="btn btn-primary btn-block w-100"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                                     </f:form>
                                 </div>
                                 <f:if condition="{allow_coupons}">
@@ -354,7 +354,7 @@
                                         </f:if>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-times mr-2"></i> {f:translate(id: 'remove_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                                        <button type="submit" class="btn btn-danger btn-block w-100"><i class="fas fa-times mr-2"></i> {f:translate(id: 'remove_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                                     </div>
                                 </div>
                             </f:form>
@@ -379,7 +379,7 @@
                 <f:form.textfield name="code" class="form-control" placeholder="{f:translate(id: 'coupon_code', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" />
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-light btn-block"><i class="fas fa-check mr-2"></i> {f:translate(id: 'apply_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                <button type="submit" class="btn btn-light btn-block w-100"><i class="fas fa-check mr-2"></i> {f:translate(id: 'apply_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
             </div>
         </div>
     </f:form>
@@ -390,14 +390,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 <f:if condition="{return_page}">
-                    <neos:link.node class="btn btn-outline-primary btn-block" node="{return_page}">{f:translate(id: 'continue_shopping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>
+                    <neos:link.node class="btn btn-outline-primary btn-block w-100" node="{return_page}">{f:translate(id: 'continue_shopping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>
                 </f:if>
             </div>
         </div>
         <div class="col-md-6">
             <f:form action="deleteCart" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-trash mr-2"></i> {f:translate(id: 'empty_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+                    <button type="submit" class="btn btn-danger btn-block w-100"><i class="fas fa-trash mr-2"></i> {f:translate(id: 'empty_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                 </div>
             </f:form>
         </div>
@@ -595,5 +595,5 @@
         <input type="checkbox" class="custom-control-input" id="accept_terms" name="accept_terms" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
         <label class="custom-control-label" for="accept_terms">{f:translate(id: 'accept_terms1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{terms_page}">{f:translate(id: 'accept_terms2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</neos:link.node></label>
     </div>
-    <button type="submit" id="submit_btn" class="btn btn-primary btn-lg btn-block mt-3">{f:translate(id: 'complete_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
+    <button type="submit" id="submit_btn" class="btn btn-primary btn-lg btn-block w-100 mt-3">{f:translate(id: 'complete_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
 </f:section>

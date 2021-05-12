@@ -67,6 +67,8 @@ class Cart {
         $min_quantity = $product_node->getProperty('min_quantity');
         $max_quantity = $product_node->getProperty('max_quantity');
 
+        $stockLevel = $product_node->getProperty('stockLevel');
+
         $item['weight'] = $product_node->getProperty('weight');
 
         if($min_quantity) {
@@ -75,6 +77,10 @@ class Cart {
 
         if($max_quantity) {
             $item['max_quantity'] = $max_quantity;
+        }
+
+        if($stockLevel) {
+            $item['max_quantity'] = $stockLevel;
         }
 
         $item['images'] = $product_node->getProperty('images');

@@ -1,29 +1,35 @@
 prototype(NeosRulez.Shop:Document.Product) < prototype(Neos.NodeTypes:Page) {
     head {
-        shopCss = NeosRulez.ScssParser:ScssFile
-        shopCss {
-            source = 'resource://NeosRulez.Shop/Private/Styles/styles.scss'
-            inline = FALSE
-            format = 'compressed'
-            outputFolder = 'resource://NeosRulez.Shop/Public/Styles/'
+        shopCss = Neos.Fusion:Tag {
+            tagName = 'link'
+            attributes {
+                rel = 'stylesheet'
+                href = Neos.Fusion:ResourceUri {
+                    path = 'resource://NeosRulez.Shop/Public/Styles/styles.min.css'
+                }
+            }
         }
     }
-    shopJs = NeosRulez.JsMinifier:JsFile
-    shopJs {
+    shopJs = Neos.Fusion:Tag {
         @position = 'end'
-        source = 'resource://NeosRulez.Shop/Private/JavaScript/scripts.js'
-        inline = FALSE
-        outputFolder = 'resource://NeosRulez.Shop/Public/JavaScript/'
+        tagName = 'script'
+        attributes {
+            src = Neos.Fusion:ResourceUri {
+                path = 'resource://NeosRulez.Shop/Public/JavaScript/scripts.min.js'
+            }
+        }
     }
 }
 
 prototype(Neos.Neos:Page) {
-    shopAjaxJs = NeosRulez.JsMinifier:JsFile
-    shopAjaxJs {
+    shopAjaxJs = Neos.Fusion:Tag {
         @position = 'end'
-        source = 'resource://NeosRulez.Shop/Private/JavaScript/ajax.js'
-        inline = FALSE
-        outputFolder = 'resource://NeosRulez.Shop/Public/JavaScript/'
+        tagName = 'script'
+        attributes {
+            src = Neos.Fusion:ResourceUri {
+                path = 'resource://NeosRulez.Shop/Public/JavaScript/ajax.min.js'
+            }
+        }
     }
 }
 

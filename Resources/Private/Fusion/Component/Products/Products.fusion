@@ -49,7 +49,7 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
                                         </Neos.Fusion.Form:Select>
                                     </div>
                                     <div class="col-md-8">
-                                        <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block">In den Warenkorb</Neos.Fusion.Form:Button>
+                                        <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block w-100">In den Warenkorb</Neos.Fusion.Form:Button>
                                     </div>
                                 </div>
                             </Neos.Fusion.Form:Form>

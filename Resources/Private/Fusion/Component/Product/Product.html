@@ -97,7 +97,7 @@
 </f:section>
 
 <f:section name="add_to_form">
-    <f:form action="add" controller="Cart" objectName="item" package="NeosRulez.Shop" id="xproduct_form">
+    <f:form action="add" controller="Cart" objectName="item" package="NeosRulez.Shop" id="product_form">
         <f:if condition="{sub_products}">
             <f:render section="sub_products" arguments="{_all}" />
         </f:if>
@@ -112,7 +112,7 @@
                 <f:render section="quantity" arguments="{_all}" />
             </div>
             <div class="col-md-8">
-                <button type="submit" class="btn btn-primary btn-block add-to-cart">{f:translate(id: 'add_to_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</button>
+                <button type="submit" class="btn btn-primary btn-block w-100 add-to-cart">{f:translate(id: 'add_to_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</button>
             </div>
         </div>
         <f:form.hidden name="item[nodeUri]" value="{node -> neos:uri.node()}" />
@@ -159,7 +159,7 @@
             <label>{f:translate(id: 'variants', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Product')}</label>
             <div class="d-block">
                 <span class="btn-group d-block">
-                    <button type="button" class="btn btn-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-white btn-block w-100 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <f:if condition="{sub_products}">
                             <span class="first-sub-product">{sub_products.0.properties.title}</span>
                         </f:if>
