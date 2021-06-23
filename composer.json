@@ -13,7 +13,7 @@
     ],
     "require": {
         "neos/neos": "*",
-        "neos/fusion-form": "^1.0",
+        "neos/fusion-form": "*",
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
         "stripe/stripe-php": "v7.39.0",
