@@ -57,4 +57,4 @@
           position: 6
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
-            dataSourceIdentifier: neosrulez-shop-countries
+            dataSourceIdentifier: neosrulez-countries

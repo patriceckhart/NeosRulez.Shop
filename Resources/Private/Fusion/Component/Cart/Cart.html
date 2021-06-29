@@ -138,7 +138,7 @@
             </div>
             <div class="col-md-2 col-4">
                 <f:form action="update" controller="Cart" arguments="{item: item, return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
-                    <select class="form-control quantity" name="quantity">
+                    <select class="form-control form-select quantity" name="quantity">
                         <f:if condition="{item.max_quantity}">
                             <f:then>
                                 <f:for each="{full_quantity}" as="quantity">
@@ -428,7 +428,7 @@
     </div>
     <div class="form-group">
         <label for="country">{f:translate(id: 'country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-        <select id="country" name="country" class="form-control" required>
+        <select id="country" name="country" class="form-control form-select" required>
             <f:if condition="!{order.country} || {order.country}==''">
                 <option disabled selected>{f:translate(id: 'please_select', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</option>
             </f:if>
@@ -475,9 +475,9 @@
         <label for="notes">{f:translate(id: 'order_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
         <f:form.textarea id="notes" name="notes" class="form-control" placeholder="{f:translate(id: 'order_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{order.notes}" />
     </div>
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="shipping_address" name="alternative_shipping_address" value="1" {f:if(condition='{order.alternative_shipping_address}', then:' checked="checked"')}>
-        <label class="custom-control-label" for="shipping_address">{f:translate(id: 'differing_shipping_address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
+    <div class="custom-control custom-checkbox form-check">
+        <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="shipping_address" name="alternative_shipping_address" value="1" {f:if(condition='{order.alternative_shipping_address}', then:' checked="checked"')}>
+        <label class="custom-control-label form-check-label" for="shipping_address">{f:translate(id: 'differing_shipping_address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
     </div>
 </f:section>
 
@@ -505,7 +505,7 @@
     </div>
     <div class="form-group">
         <label for="shipping_country">{f:translate(id: 'country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-        <select id="shipping_country" name="shipping_country" class="form-control" required>
+        <select id="shipping_country" name="shipping_country" class="form-control form-select" required>
             <f:if condition="!{order.shipping_country} || {order.shipping_country}==''">
                 <option disabled selected>{f:translate(id: 'please_select', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</option>
             </f:if>
@@ -546,9 +546,9 @@
     </div>
     <div class="d-block">
         <f:for each="{payments}" as="payment" iteration="iterator">
-            <div class="custom-control custom-radio py-2 payment_{payment.identifier}">
-                <input type="radio" id="payment_{iterator.index}" name="payment" class="custom-control-input" value="{payment.identifier}" required="required"{f:if(condition='{order.payment}=={payment.identifier}', then:' checked="checked"')}>
-                <label class="custom-control-label" for="payment_{iterator.index}">{payment.label} <i class="{payment.icon} ml-2"></i></label>
+            <div class="custom-control custom-radio form-check py-2 payment_{payment.identifier}">
+                <input type="radio" id="payment_{iterator.index}" name="payment" class="custom-control-input form-check-input" style="float:left!important" value="{payment.identifier}" required="required"{f:if(condition='{order.payment}=={payment.identifier}', then:' checked="checked"')}>
+                <label class="custom-control-label form-check-label" for="payment_{iterator.index}">{payment.label} <i class="{payment.icon} ml-2"></i></label>
             </div>
             <f:form.hidden name="{payment.identifier}_success" value="{neos:uri.node(node: payment.success_page, absolute: true)}" />
             <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: payment.failure_page, absolute: true)}" />
@@ -560,7 +560,7 @@
     <div class="d-block pb-2 border-bottom-strong font-weight-bold mb-3">
         {f:translate(id: 'shipping_method', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
     </div>
-    <select id="shipping" name="shipping" class="form-control" {f:if(condition='!{shippings.0.selected_country}', then:' disabled')} required>
+    <select id="shipping" name="shipping" class="form-control form-select" {f:if(condition='!{shippings.0.selected_country}', then:' disabled')} required>
         <f:if condition="!{order.shipping} || {order.shipping}==''">
             <option disabled selected>{f:translate(id: 'please_select', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</option>
         </f:if>
@@ -582,18 +582,18 @@
 
 <f:section name="checkout">
     <f:if condition="{newsletter}">
-        <div class="custom-control custom-checkbox my-3">
-            <input type="checkbox" class="custom-control-input" id="newsletter" name="newsletter">
-            <label class="custom-control-label" for="newsletter">{f:translate(id: 'newsletter', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</label>
+        <div class="custom-control custom-checkbox form-check my-3">
+            <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="newsletter" name="newsletter">
+            <label class="custom-control-label form-check-label" for="newsletter">{f:translate(id: 'newsletter', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</label>
         </div>
     </f:if>
-    <div class="custom-control custom-checkbox my-3">
-        <input type="checkbox" class="custom-control-input" id="accept_privacy" name="accept_privacy" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
-        <label class="custom-control-label" for="accept_privacy">{f:translate(id: 'accept_privacy1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{privacy_page}">{f:translate(id: 'accept_privacy2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>.</label>
+    <div class="custom-control custom-checkbox form-check my-3">
+        <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="accept_privacy" name="accept_privacy" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
+        <label class="custom-control-label form-check-label" for="accept_privacy">{f:translate(id: 'accept_privacy1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{privacy_page}">{f:translate(id: 'accept_privacy2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>.</label>
     </div>
-    <div class="custom-control custom-checkbox my-3">
-        <input type="checkbox" class="custom-control-input" id="accept_terms" name="accept_terms" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
-        <label class="custom-control-label" for="accept_terms">{f:translate(id: 'accept_terms1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{terms_page}">{f:translate(id: 'accept_terms2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</neos:link.node></label>
+    <div class="custom-control custom-checkbox form-check my-3">
+        <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="accept_terms" name="accept_terms" required="true" {f:if(condition='!{order.shipping}', then:' disabled="disabled"')}>
+        <label class="custom-control-label form-check-label" for="accept_terms">{f:translate(id: 'accept_terms1', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} <neos:link.node node="{terms_page}">{f:translate(id: 'accept_terms2', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}.</neos:link.node></label>
     </div>
     <button type="submit" id="submit_btn" class="btn btn-primary btn-lg btn-block w-100 mt-3">{f:translate(id: 'complete_order', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
 </f:section>

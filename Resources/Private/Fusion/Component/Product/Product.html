@@ -33,7 +33,7 @@
 <f:section name="product_image">
     <f:if condition="{images}">
         <div class="image lightbox">
-            <a href="{media:uri.image(image: images.0, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}">
+            <a href="{media:uri.image(image: images.0, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}" data-fslightbox="lightbox__{node.identifier}">
                 <media:image class="img-fluid" image="{images.0}" width="550c" height="450c" allowCropping="TRUE" allowUpScaling="TRUE" alt="{node.properties.title}" />
             </a>
         </div>
@@ -48,7 +48,7 @@
                     <f:if condition="{iterator.index}!=0">
                         <div class="col-md-3 col-6">
                             <div class="image lightbox">
-                                <a href="{media:uri.image(image: asset, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}"><media:image image="{asset}" width="150c" height="150c" allowCropping="TRUE" allowUpScaling="TRUE" alt="" class="img-fluid" /></a>
+                                <a href="{media:uri.image(image: asset, maximumWidth:1024, maximumHeight:768, allowCropping:FALSE)}" data-fslightbox="lightbox__{node.identifier}"><media:image image="{asset}" width="150c" height="150c" allowCropping="TRUE" allowUpScaling="TRUE" alt="" class="img-fluid" /></a>
                             </div>
                         </div>
                     </f:if>
@@ -84,7 +84,7 @@
 </f:section>
 
 <f:section name="quantity">
-    <select class="form-control product-quantity" name="item[quantity]">
+    <select class="form-control form-select product-quantity" name="item[quantity]">
         <f:for each="{max_quantity}" as="quantity">
             <f:if condition="{quantity}!=0">
                 <option value="{quantity}">{quantity}</option>
@@ -92,7 +92,7 @@
         </f:for>
     </select>
     <f:comment>
-        <f:form.select options="{max_quantity}" value="1" property="quantity" class="form-control quantity" />
+        <f:form.select options="{max_quantity}" value="1" property="quantity" class="form-control form-select quantity" />
     </f:comment>
 </f:section>
 
@@ -125,7 +125,7 @@
         <div class="row mb-3">
             <div class="col-12">
                 <label>{options_group.properties.title}</label>
-                <select class="form-control" name="item[options][]">
+                <select class="form-control form-select" name="item[options][]">
                     <f:for each="{options}" as="option">
                         <f:if condition="{option.parent.identifier}=={options_group.identifier}">
                             <option value="{option.identifier}">{option.properties.title}<f:if condition="{option.properties.price}"> (+ <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{nrshop:strtofloat(string: option.properties.price)}</f:format.currency>)</f:if></option>

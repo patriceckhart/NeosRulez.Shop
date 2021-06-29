@@ -13,6 +13,7 @@
     ],
     "require": {
         "neos/neos": "*",
+        "neosrulez/bootstrap": "*",
         "neos/fusion-form": "*",
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
