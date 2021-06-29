@@ -14,6 +14,7 @@
     "require": {
         "neos/neos": "*",
         "neosrulez/bootstrap": "*",
+        "neosrulez/countrydatasource": "*",
         "neos/fusion-form": "*",
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
