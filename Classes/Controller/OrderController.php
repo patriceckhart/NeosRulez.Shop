@@ -109,11 +109,11 @@ class OrderController extends ActionController
      */
     public function cancelAction($order)
     {
-        $cancel_status = $order->getCancelled();
-        if($cancel_status == 1) {
-            $order->setCancelled(0);
+        $cancelStatus = $order->getCanceled();
+        if($cancelStatus) {
+            $order->setCanceled(false);
         } else {
-            $order->setCancelled(1);
+            $order->setCanceled(true);
         }
         $this->orderRepository->update($order);
         $this->persistenceManager->persistAll();

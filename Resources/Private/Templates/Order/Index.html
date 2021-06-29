@@ -13,7 +13,7 @@
             </thead>
             <tbody>
             <f:for each="{orders}" as="order">
-                <tr style="{f:if(condition='{order.order.cancelled}==1', then:'opacity:0.4;')}">
+                <tr style="{f:if(condition='{order.order.canceled}', then:'opacity:0.4;')}">
                     <td>{order.order.ordernumber}</td>
                     <td><f:format.date format="d.m.Y, H:i">{order.order.created}</f:format.date></td>
                     <td>
@@ -26,13 +26,13 @@
                                 <span class="neos-badge neos-badge-danger">Zahlung ausständig</span>
                             </f:else>
                         </f:if>
-                        <f:if condition="{order.order.cancelled}">
+                        <f:if condition="{order.order.canceled}">
                             <span class="neos-badge neos-badge-warning" style="margin-left:10px;">Storniert</span>
                         </f:if>
                     </td>
                     <td class="neos-action">
                         <div class="neos-pull-right">
-                            <f:if condition="{order.order.cancelled}">
+                            <f:if condition="{order.order.canceled}">
                                 <f:else>
                                     <f:link.action class="neos-button neos-button-primary" action="show" arguments="{order: order.order}"><i class="fas fa-eye"></i></f:link.action>
                                 </f:else>
@@ -43,7 +43,7 @@
                                 <f:link.action class="neos-button neos-button-primary" action="show" arguments="{data: data}"><i class="fas fa-paper-plane"></i></f:link.action>
                             </f:comment>
 
-                            <f:if condition="{order.order.cancelled}">
+                            <f:if condition="{order.order.canceled}">
                                 <f:else>
                                     <f:if condition="{order.order.paid}">
                                         <f:then>
@@ -56,7 +56,7 @@
                                 </f:else>
                             </f:if>
 
-                            <f:if condition="{order.order.cancelled}">
+                            <f:if condition="{order.order.canceled}">
                                 <f:then>
                                     <f:link.action class="neos-button neos-button-success" action="cancel" arguments="{order: order.order}"><i class="fas fa-check-circle"></i></f:link.action>
                                 </f:then>

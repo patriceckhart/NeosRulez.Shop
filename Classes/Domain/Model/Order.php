@@ -101,6 +101,28 @@ class Order
     }
 
     /**
+     * @var boolean
+     */
+    protected $canceled = false;
+
+    /**
+     * @return boolean
+     */
+    public function getCanceled()
+    {
+        return $this->canceled;
+    }
+
+    /**
+     * @param boolean $canceled
+     * @return void
+     */
+    public function setCanceled($canceled)
+    {
+        $this->canceled = $canceled;
+    }
+
+    /**
      * @var string
      * @ORM\Column(type="text")
      * @ORM\Column(length=4000)
