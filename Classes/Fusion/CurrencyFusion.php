@@ -12,9 +12,9 @@ class CurrencyFusion extends AbstractFusionObject {
     public function evaluate() {
         $float = $this->fusionValue('float');
         $float = (float) str_replace(',', '.', $float);
-        $decimalSeparator = $this->fusionValue('decimalSeparator');
-        $thousandsSeparator = $this->fusionValue('thousandsSeparator');
-        $decimals = (int) $this->fusionValue('decimals');
+        $decimalSeparator = $this->fusionValue('decimalSeparator') ? $this->fusionValue('decimalSeparator') : ',';
+        $thousandsSeparator = $this->fusionValue('thousandsSeparator') ? $this->fusionValue('thousandsSeparator') : '.';
+        $decimals = (int) $this->fusionValue('decimals') ? (int) $this->fusionValue('decimals') : 2;
         $currencySign = $this->fusionValue('currencySign');
         $result = false;
         if($float) {

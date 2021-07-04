@@ -1,0 +1,240 @@
+prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Component) {
+
+    main = Neos.Neos:ContentCollection {
+        nodePath = 'main'
+    }
+
+    renderer = afx`
+        <div class="product_detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <NeosRulez.Shop:Component.Product.Afx.Images />
+                    </div>
+                    <div class="col-md-6">
+                        <NeosRulez.Shop:Component.Product.Afx.Content />
+                        <NeosRulez.Shop:Component.Product.Afx.Add />
+                        <NeosRulez.Shop:Component.CartAlert />
+                    </div>
+                </div>
+            </div>
+        </div>
+        {props.main}
+    `
+    renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+        node = ${documentNode}
+    }
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:Component) {
+
+    galleryId = ${node.identifier}
+
+    imageWidth = 550
+    imageHeight = 450
+    thumbWidth = 150
+    thumbHeight = 150
+
+    renderer = afx`
+        <div class="product_image">
+            <div @if.render={node.properties.images} class="image lightbox">
+                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={node.properties.images[0]} galleryId={'lightbox__' + props.galleryId} width={props.imageWidth} height={props.imageHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} />
+            </div>
+        </div>
+        <div @if.render={node.properties.images} class="product_images">
+            <div class="images">
+                <div class="row">
+                    <Neos.Fusion:Loop items={node.properties.images} itemName="image">
+                        <div class="col-md-3 col-6">
+                            <div class="image lightbox">
+                                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={image} galleryId={'lightbox__' + props.galleryId} width={props.thumbWidth} height={props.thumbHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} />
+                            </div>
+                        </div>
+                    </Neos.Fusion:Loop>
+                </div>
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div class="product_content">
+            <div class="row">
+                <div class="col-md-8 col-6">
+                    <h1>
+                        <Neos.Neos:Editable property="title" />
+                    </h1>
+                    <small class="article_number">
+                        {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:article_number')} <Neos.Neos:Editable property="article_number" block={false} />
+                    </small>
+                </div>
+                <div class="col-md-4 col-6">
+                    <NeosRulez.Shop:Component.Product.Afx.Content.Price />
+                </div>
+            </div>
+            <div class="my-3 description">
+                <Neos.Neos:Editable property="description" />
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div class="d-block price">
+            <NeosRulez.Shop:Class.Currency float={node.properties.price} currencySign="€" />
+        </div>
+        <small class="d-block tax">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} 20 % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}
+        </small>
+        <div class="d-block mt-2 old_price">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:instead_of')} <NeosRulez.Shop:Class.Currency float={node.properties.old_price} currencySign="€" />
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Component) {
+
+    nodeUri = Neos.Neos:NodeUri {
+        node = ${documentNode}
+        absolute = true
+    }
+
+    stock = ${q(node).property('stock')}
+
+    renderer = afx`
+        <Neos.Fusion.Form:Form @if.render={props.stock} attributes.id="product_form" form.target.action="add" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
+            <div class="row align-items-center add_to_cart">
+                <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants />
+                <NeosRulez.Shop:Component.Product.Afx.Options />
+                <NeosRulez.Shop:Component.Product.Afx.Options.FreeStyleText />
+                <div class="col-md-4">
+                    <NeosRulez.Shop:Component.Product.Afx.Quantity />
+                </div>
+                <div class="col-md-8">
+                    <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block w-100 add-to-cart" >
+                        {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:add_to_cart')}
+                    </Neos.Fusion.Form:Button>
+                </div>
+            </div>
+            <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" field.value={props.nodeUri} />
+            <Neos.Fusion.Form:Hidden field.name="item[node]" field.value={node.identifier} />
+        </Neos.Fusion.Form:Form>
+        <div @if.render={!props.stock} class="alert alert-danger">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:notInStock')}
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion:Component) {
+
+    product_min_quantity = ${q(node).property('min_quantity')}
+    product_max_quantity = ${q(node).property('max_quantity')}
+    array_min_quantity = ${this.product_min_quantity ? String.toInteger(this.product_min_quantity) : 0}
+    stockManagement = ${documentNode.properties.stockManagement ? documentNode.properties.stockLevel : false}
+    max_quantity = ${this.stockManagement ? Array.range(this.product_max_quantity, this.stockManagement, 1) : (this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1))}
+
+    renderer = afx`
+        <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control form-select product-quantity">
+            <Neos.Fusion:Loop items={props.max_quantity} itemName="quantity">
+                <Neos.Fusion.Form:Select.Option @if.render={quantity != 0} option.value={quantity} >{quantity}</Neos.Fusion.Form:Select.Option>
+            </Neos.Fusion:Loop>
+        </Neos.Fusion.Form:Select>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Options) < prototype(Neos.Fusion:Component) {
+
+    option_groups = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').get()}
+    options = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').children('[instanceof NeosRulez.Shop:Document.Option]').get()}
+
+    renderer = afx`
+        <Neos.Fusion:Loop @if.render={props.option_groups} items={props.option_groups} itemName="option_group">
+            <div class="mb-3">
+                <label for={'option__' + option_group.identifier} >{option_group.properties.title}</label>
+                <Neos.Fusion.Form:Select attributes.id={'option__' + option_group.identifier} field.name="item[options][]" attributes.class="form-control form-select">
+                    <Neos.Fusion:Loop @if.render={props.options} items={props.options} itemName="optionItem">
+                        <Neos.Fusion.Form:Select.Option option.value={optionItem.identifier} >
+                            {optionItem.properties.title}
+                            <span @if.render={optionItem.properties.price} >
+                                    &nbsp;(+ <NeosRulez.Shop:Class.Currency float={optionItem.properties.price} currencySign="€" />)
+                                </span>
+                        </Neos.Fusion.Form:Select.Option>
+                    </Neos.Fusion:Loop>
+                </Neos.Fusion.Form:Select>
+            </div>
+        </Neos.Fusion:Loop>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Options.FreeStyleText) < prototype(Neos.Fusion:Component) {
+
+    freeStyleOptions = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.FreeStyleTextOption]').sort('_index', 'ASC').get()}
+
+    renderer = afx`
+        <Neos.Fusion:Loop @if.render={props.freeStyleOptions} items={props.freeStyleOptions} itemName="freeStyleOption">
+            <div class="mb-3">
+                <label for={'option__' + freeStyleOption.identifier} >{freeStyleOption.properties.title}</label>
+                <Neos.Fusion.Form:Input attributes.id={'option__' + freeStyleOption.identifier} field.name="item[options2][]" attributes.class="form-control" attributes.placeholder={I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:freestyleTextLabel')} attributes.required={freeStyleOption.properties.isRequired ? 'required' : false} />
+            </div>
+        </Neos.Fusion:Loop>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants) < prototype(Neos.Fusion:Component) {
+
+    parent_product = ${q(documentNode).parent('[instanceof NeosRulez.Shop:Document.Product]').get()}
+    sub_products = ${this.parent_product ? q(this.parent_product).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get() : q(documentNode).children('[instanceof NeosRulez.Shop:Document.Product]').sort('_index', 'ASC').get()}
+
+    renderer = afx`
+        <div @if.render={props.sub_products} class="mb-3">
+            <label for="variants">{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:variants')}</label>
+            <div class="d-block btn-group">
+                <button type="button" class="form-control form-select" data-bs-toggle="dropdown" aria-expanded="false" style="text-align:left">
+                    <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant product={documentNode} self={true} />
+                </button>
+                <ul class="dropdown-menu">
+                    <li @if.render={props.parent_product} >
+                        <Neos.Neos:NodeLink node={props.parent_product[0]} attributes.class="dropdown-item">
+                            <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant product={props.parent_product[0]} />
+                        </Neos.Neos:NodeLink>
+                    </li>
+                    <Neos.Fusion:Loop @if.render={props.sub_products} items={props.sub_products} itemName="sub_product">
+                        <li>
+                            <Neos.Neos:NodeLink node={sub_product} attributes.class="dropdown-item">
+                                <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant product={sub_product} />
+                            </Neos.Neos:NodeLink>
+                        </li>
+                    </Neos.Fusion:Loop>
+                </ul>
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div @if.render={props.product.identifier != documentNode.identifier || props.self ? true : false} class="row align-items-center">
+            <div class="col-2">
+                <NeosRulez.Bootstrap:Component.ImageTag @if.render={props.product.properties.images} image={props.product.properties.images[0]} width="60" height="60" allowCropping={true} allowUpScaling={true} alternativeText={props.product.properties.title} title={props.product.properties.title} />
+            </div>
+            <div class="col-10">
+                {props.product.properties.title}
+                <small class="d-block mt-2">
+                    {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:article_number')} {props.product.properties.article_number}
+                    <strong class="ml-2">
+                        <NeosRulez.Shop:Class.Currency float={props.product.properties.price} currencySign="€" />
+                    </strong>
+                </small>
+            </div>
+        </div>
+    `
+}
+
+//prototype(NeosRulez.Shop:Document.Product) < prototype(Acme.Site:Document.AbstractPage) {
+//    body.content = NeosRulez.Shop:Component.Product.Afx
+//}

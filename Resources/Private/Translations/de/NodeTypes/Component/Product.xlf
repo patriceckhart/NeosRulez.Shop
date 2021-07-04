@@ -17,6 +17,9 @@
 			<trans-unit id="freestyleTextLabel" xml:space="preserve">
 				<source>Geben Sie Ihren Wunschtext ein ...</source>
 			</trans-unit>
+            <trans-unit id="notInStock" xml:space="preserve">
+				<source>Das Produkt ist momentan nicht verfügbar</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

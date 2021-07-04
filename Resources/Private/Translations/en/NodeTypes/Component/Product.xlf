@@ -17,6 +17,9 @@
 			<trans-unit id="freestyleTextLabel" xml:space="preserve">
 				<source>Enter your custom text ...</source>
 			</trans-unit>
+            <trans-unit id="notInStock" xml:space="preserve">
+				<source>The product is currently unavailable</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>
