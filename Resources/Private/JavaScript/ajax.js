@@ -18,7 +18,7 @@ function cartCount() {
 $(document).ready(function(){
 
     $(function () {
-        $('#product_form').on('submit', function (e) {
+        $(document).on('submit', '#product_form', function(e){
             $('body').toggleClass('body-hide');
             var form = $(this);
             var post_url = form.attr('action');

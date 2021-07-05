@@ -2,16 +2,12 @@ $(document).ready(function(){
 
     $('body').append('<div id="spinner"><div class="d-flex h-100 align-items-center"><div class="d-block w-100 text-center"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></div></div></div>');
 
-    $('.sub_products').click(function(){
-        $(this).find('.sub_products_dropdown').slideDown();
-    });
-
-    $('.quantity').change(function() {
+    $(document).on('change', '.quantity', function(){
         $('body').toggleClass('body-hide');
         $(this).parent().submit();
     });
 
-    $('.product_detail .dropdown-item').click(function() {
+    $(document).on('click', '.product_detail .dropdown-item', function(){
         $('body').toggleClass('body-hide');
     });
 
@@ -25,7 +21,7 @@ $(document).ready(function(){
         $('.shipping_form').find('.form-control').removeAttr('required');
     }
 
-    $('#shipping_address').change(function() {
+    $(document).on('change', '#shipping_address', function(){
         $('.shipping_form').slideToggle().removeClass('d-block');
         if(required_change==0) {
             $('.shipping_form').find('.form-control').attr('required', 'required');
@@ -39,23 +35,21 @@ $(document).ready(function(){
         $('#shipping_company').removeAttr('required');
     });
 
-    $('#shipping').change(function() {
+    $(document).on('change', '#shipping', function(){
         $('body').toggleClass('body-hide');
         $('#updateOrder').submit();
     });
 
     if($('.shipping_form').is(':visible')) {
-        $('#shipping_country').change(function() {
+        $(document).on('change', '#shipping_country', function(){
             country = $(this).val();
-            // console.log(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
         });
     } else {
-        $('#country').change(function() {
+        $(document).on('change', '#country', function(){
             country = $(this).val();
-            // console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
@@ -63,13 +57,12 @@ $(document).ready(function(){
         });
     }
 
-    $('#country').change(function() {
+    $(document).on('change', '#country', function(){
         $('body').toggleClass('body-hide');
         if($('.shipping_form').is(':visible')) {
 
         } else {
             country = $(this).val();
-            // console.log(country);
             $('#shipping_country').val(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
@@ -77,10 +70,9 @@ $(document).ready(function(){
         }
     });
 
-    $('#shipping_country').change(function() {
+    $(document).on('change', '#shipping_country', function(){
         if($('.shipping_form').is(':visible')) {
             country = $(this).val();
-            // console.log(country);
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
