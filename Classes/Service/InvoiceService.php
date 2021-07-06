@@ -55,7 +55,13 @@ class InvoiceService {
         return $this->createInvoice($variables, $create);
     }
 
-    public function createInvoice($variables, $create) {
+    /**
+     * @param array $variables
+     * @param bool $create
+     * @param bool $download
+     * @return void
+     */
+    public function createInvoice(array $variables, bool $create, bool $download = false) {
         $variables['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
@@ -88,6 +94,10 @@ class InvoiceService {
 
         $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
         $mpdf->WriteHTML($pdf,\Mpdf\HTMLParserMode::HTML_BODY);
+        if($download) {
+            $mpdf->Output('Rechnung.pdf', 'D');
+            exit;
+        }
         $file = $mpdf->Output('', 'S');
         return $file;
 

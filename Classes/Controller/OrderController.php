@@ -31,6 +31,12 @@ class OrderController extends ActionController
     protected $finisherService;
 
     /**
+     * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\InvoiceService
+     */
+    protected $invoiceService;
+
+    /**
      * @var array
      */
     protected $settings;
@@ -51,6 +57,9 @@ class OrderController extends ActionController
         $orders = $this->orderRepository->findAll()->getQuery()->setOrderings(array('created' => \Neos\Flow\Persistence\QueryInterface::ORDER_DESCENDING))->execute();
         $result = [];
         foreach ($orders as $order) {
+            $order->firstname = json_decode($order->getInvoicedata())->firstname;
+            $order->lastname = json_decode($order->getInvoicedata())->lastname;
+            $order->email = json_decode($order->getInvoicedata())->email;
             $payment_label = $this->settings['Payment'][$order->getPayment()]['props']['label'];
             $result[] = ['order' => $order, 'payment' => $payment_label];
         }
@@ -118,6 +127,19 @@ class OrderController extends ActionController
         $this->orderRepository->update($order);
         $this->persistenceManager->persistAll();
         $this->redirect('index');
+    }
+
+    /**
+     * @param string $json
+     * @return void
+     */
+    public function downloadInvoiceAction(string $json):void
+    {
+        $invoiceData['args'] = (array) json_decode($json);
+        $cartVariables = (array) json_decode($json)->cart_variables;
+        $invoiceData['args']['cart_variables'] = $cartVariables;
+        $invoiceData['items'] = json_decode($this->orderRepository->findByOrderNumber((int) $invoiceData['args']['order_number'])->getCart());
+        $this->invoiceService->createInvoice($invoiceData, false, true);
     }
 
 }
