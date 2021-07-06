@@ -461,7 +461,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="phone">{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="phone" name="phone" class="form-control" placeholder="{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.phone}', then:'{order.phone}', else:'{userdata.phone}')}" />
+                <f:form.textfield id="phone" name="phone" class="form-control" placeholder="{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{f:if(condition='{order.phone}', then:'{order.phone}', else:'{userdata.phone}')}" />
             </div>
         </div>
         <div class="col-md-6">

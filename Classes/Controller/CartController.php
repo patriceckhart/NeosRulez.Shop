@@ -234,6 +234,21 @@ class CartController extends ActionController
             $order = $this->orderRepository->findByOrderNumber($order_number);
             if($paid==1) {
                 $order->setPaid(1);
+                $order->setCanceled(0);
+
+                $args = $this->cart->arguments;
+
+                if($this->settings['Mail']['debugMode']) {
+                    return $this->mailService->execute($args);
+                } else {
+                    if (!$this->settings['debugMode']) {
+                        $this->stockService->execute();
+                        $this->mailService->execute($args);
+                        $this->cart->refreshCoupons();
+                        $this->cart->deleteCart();
+                    }
+                }
+
                 $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
                 $this->orderRepository->update($order);
                 $this->persistenceManager->persistAll();
@@ -256,6 +271,7 @@ class CartController extends ActionController
         $order->setCart(json_encode($this->cart->cart(), JSON_UNESCAPED_UNICODE));
         $order->setPayment($args['payment']);
         $order->setPaid(0);
+        $order->setCanceled(1);
         if ($this->authenticationManager->isAuthenticated() === TRUE) {
             $account = $this->securityContext->getAccount();
             $ident = $account->getAccountIdentifier();
@@ -276,28 +292,29 @@ class CartController extends ActionController
         }
         $args['success_uri'] = $success_page;
         $args['failure_uri'] = $failure_page;
-        // execute after order finishers
+
         $this->finisherService->initAfterOrderFinishers($args);
 
         $payment_data = $this->paymentService->getPaymentByIdentifier($args['payment']);
         $payment_url = $this->paymentService->initPayment($args);
         $args['payment_url'] = $payment_url;
+
+        $this->cart->arguments = $args;
+
         if($this->settings['Mail']['debugMode']) {
+            $this->stockService->execute();
+            $this->mailService->execute($args);
+            $this->cart->refreshCoupons();
+            $this->cart->deleteCart();
             return $this->mailService->execute($args);
+        }
+
+        if (array_key_exists('render_redirect', $payment_data)) {
+            if($payment_data['render_redirect']) {
+                $this->view->assign('output',$payment_url);
+            }
         } else {
-            if(!$this->settings['debugMode']) {
-                $this->stockService->execute();
-                $this->mailService->execute($args);
-                $this->cart->refreshCoupons();
-                $this->cart->deleteCart();
-            }
-            if (array_key_exists('render_redirect', $payment_data)) {
-                if($payment_data['render_redirect']) {
-                    $this->view->assign('output',$payment_url);
-                }
-            } else {
-                $this->redirectToUri($payment_url);
-            }
+            $this->redirectToUri($payment_url);
         }
 
     }

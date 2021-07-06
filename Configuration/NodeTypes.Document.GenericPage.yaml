@@ -3,6 +3,12 @@
   superTypes:
     'Neos.Neos:Document': true
     'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
+    'Neos.Seo:TitleTagMixin': false
+    'Neos.Seo:SeoMetaTagsMixin': false
+    'Neos.Seo:TwitterCardMixin': false
+    'Neos.Seo:CanonicalLinkMixin': false
+    'Neos.Seo:OpenGraphMixin': false
+    'Neos.Seo:XmlSitemapMixin': false
   properties:
     faicon:
       ui: ~

@@ -1,8 +1,8 @@
 prototype(NeosRulez.Shop:Document.AbstractPayment) < prototype(Neos.NodeTypes:Page)
 
-#prototype(NeosRulez.Shop:Document.Product) < prototype(Raw.Site:Document.AbstractPage) {
-#    body.content = Neos.Neos:PrimaryContent {
-#        condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Product]')}
-#        type = 'NeosRulez.Shop:Component.Product'
-#    }
-#}
+//prototype(NeosRulez.Shop:Document.Product) < prototype(Raw.Site:Document.AbstractPage) {
+//    body.content = Neos.Neos:PrimaryContent {
+//        condition = ${q(documentNode).is('[instanceof NeosRulez.Shop:Document.Product]')}
+//        type = 'NeosRulez.Shop:Component.Product'
+//    }
+//}

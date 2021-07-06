@@ -37,6 +37,11 @@ class Cart {
     protected $order = array();
 
     /**
+     * @var array
+     */
+    public $arguments = array();
+
+    /**
      * @Flow\Inject
      * @var \Neos\ContentRepository\Domain\Service\ContextFactoryInterface
      */
@@ -476,8 +481,8 @@ class Cart {
      */
     public function checkRequiredArgs($args) {
         $result = false;
-        if (array_key_exists('firstname', $args) && array_key_exists('lastname', $args) && array_key_exists('country', $args) && array_key_exists('address', $args) && array_key_exists('zip', $args) && array_key_exists('city', $args) && array_key_exists('phone', $args) && array_key_exists('email', $args) && array_key_exists('shipping', $args) && array_key_exists('payment', $args) && array_key_exists('accept_terms', $args) && array_key_exists('accept_privacy', $args)) {
-            if($args['firstname'] && $args['lastname'] && $args['country'] && $args['address'] && $args['zip'] && $args['city'] && $args['phone'] && $args['email'] && $args['shipping'] && $args['payment'] && $args['accept_terms'] && $args['accept_privacy']) {
+        if (array_key_exists('firstname', $args) && array_key_exists('lastname', $args) && array_key_exists('country', $args) && array_key_exists('address', $args) && array_key_exists('zip', $args) && array_key_exists('city', $args) /*&& array_key_exists('phone', $args)*/ && array_key_exists('email', $args) && array_key_exists('shipping', $args) && array_key_exists('payment', $args) && array_key_exists('accept_terms', $args) && array_key_exists('accept_privacy', $args)) {
+            if($args['firstname'] && $args['lastname'] && $args['country'] && $args['address'] && $args['zip'] && $args['city'] /*&& $args['phone']*/ && $args['email'] && $args['shipping'] && $args['payment'] && $args['accept_terms'] && $args['accept_privacy']) {
                 $result = true;
             }
         }

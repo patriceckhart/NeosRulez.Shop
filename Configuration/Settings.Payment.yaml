@@ -1,6 +1,16 @@
 #NeosRulez:
 #  Shop:
 #    Payment:
+#      Use this for test payments
+#      testpayment:
+#        class: NeosRulez\Shop\Service\Payment\TestPayment
+#        render_redirect: true
+#        props:
+#          label: 'Test Payment'
+#          icon: 'fas fa-money-check-alt'
+#          success_page: '8f616ae4-bba3-4084-8cd8-21b42eb3cfc0'
+#          failure_page: 'edab2874-7a22-4dee-b690-c592fbc19f9b'
+#          payment_status: 1
 #      paypalapi:
 #        class: NeosRulez\Shop\Service\Payment\PayPalApi
 #        render_redirect: true

@@ -1,6 +1,11 @@
 'NeosRulez.Shop:Document.Cart':
   superTypes:
     'NeosRulez.Shop:Document.AbstractPage': true
+    'Neos.Seo:SeoMetaTagsMixin': false
+    'Neos.Seo:TwitterCardMixin': false
+    'Neos.Seo:CanonicalLinkMixin': false
+    'Neos.Seo:OpenGraphMixin': false
+    'Neos.Seo:XmlSitemapMixin': false
   ui:
     label: i18n
     icon: 'icon-shopping-basket'
@@ -263,3 +268,4 @@
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.Shipping': true
+      'NeosRulez.Shop:Document.Tax': true
