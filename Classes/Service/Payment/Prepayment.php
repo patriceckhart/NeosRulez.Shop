@@ -13,9 +13,27 @@ class Prepayment {
 
     /**
      * @Flow\Inject
+     * @var \NeosRulez\Shop\Domain\Model\Cart
+     */
+    protected $cart;
+
+    /**
+     * @Flow\Inject
      * @var \NeosRulez\Shop\Domain\Repository\OrderRepository
      */
     protected $orderRepository;
+
+    /**
+     * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\StockService
+     */
+    protected $stockService;
+
+    /**
+     * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\MailService
+     */
+    protected $mailService;
 
 
     /**
@@ -29,6 +47,13 @@ class Prepayment {
         $order = $this->orderRepository->findByOrderNumber($args['order_number']);
         $order->setCanceled(false);
         $this->orderRepository->update($order);
+
+        $args = $this->cart->arguments;
+
+        $this->stockService->execute();
+        $this->mailService->execute($args);
+        $this->cart->refreshCoupons();
+
         return $success_uri;
     }
 

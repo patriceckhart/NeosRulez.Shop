@@ -245,7 +245,6 @@ class CartController extends ActionController
                         $this->stockService->execute();
                         $this->mailService->execute($args);
                         $this->cart->refreshCoupons();
-                        $this->cart->deleteCart();
                     }
                 }
 
