@@ -3,6 +3,7 @@ namespace NeosRulez\Shop\Service;
 
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
+use Neos\Flow\ResourceManagement\ResourceManager;
 use Mpdf\Mpdf;
 
 /**
@@ -31,6 +32,18 @@ class InvoiceService {
     protected $invoiceRepository;
 
     /**
+     * @Flow\Inject
+     * @var ResourceManager
+     */
+    protected $resourceManager;
+
+    /**
+     * @Flow\Inject
+     * @var \Neos\Media\Domain\Repository\AssetRepository
+     */
+    protected $assetRepository;
+
+    /**
      * @var array
      */
     protected $settings;
@@ -42,6 +55,7 @@ class InvoiceService {
     public function injectSettings(array $settings) {
         $this->settings = $settings;
     }
+
 
     /**
      * @param string $args
@@ -62,7 +76,7 @@ class InvoiceService {
      * @return void
      */
     public function createInvoice(array $variables, bool $create, bool $download = false) {
-        $variables['taxcart'] = $this->settings['tax'];
+        $variables['args']['cart_variables']['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
         if(!$start) {
@@ -81,7 +95,9 @@ class InvoiceService {
         $view = new \Neos\FluidAdaptor\View\StandaloneView();
         $view->setTemplatePathAndFilename($this->settings['Invoice']['templatePathAndFilename']);
         $view->assignMultiple($variables);
-        $pdf =  $view->render();
+        $pdf = $view->render();
+
+//        echo $pdf;
 
         $mpdf = new \Mpdf\Mpdf();
         $stylesheet = file_get_contents('resource://NeosRulez.Shop/Public/Styles/print.css');
@@ -94,6 +110,7 @@ class InvoiceService {
 
         $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
         $mpdf->WriteHTML($pdf,\Mpdf\HTMLParserMode::HTML_BODY);
+
         if($download) {
             $mpdf->Output('Rechnung.pdf', 'D');
             exit;

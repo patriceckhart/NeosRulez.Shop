@@ -148,6 +148,30 @@ class Order
 
     /**
      * @var string
+     * @ORM\Column(type="text")
+     * @ORM\Column(length=4000)
+     */
+    protected $summary;
+
+    /**
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param string $summary
+     * @return void
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * @var string
      * @ORM\Column(nullable=true)
      */
     protected $user;

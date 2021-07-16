@@ -268,6 +268,7 @@ class CartController extends ActionController
         $order->setOrdernumber($oder_number);
         $order->setInvoicedata(json_encode($args, JSON_UNESCAPED_UNICODE));
         $order->setCart(json_encode($this->cart->cart(), JSON_UNESCAPED_UNICODE));
+        $order->setSummary(json_encode($this->cart->summary(), JSON_UNESCAPED_UNICODE));
         $order->setPayment($args['payment']);
         $order->setPaid(0);
         $order->setCanceled(1);

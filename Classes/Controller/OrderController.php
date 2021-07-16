@@ -139,6 +139,7 @@ class OrderController extends ActionController
         $cartVariables = (array) json_decode($json)->cart_variables;
         $invoiceData['args']['cart_variables'] = $cartVariables;
         $invoiceData['items'] = json_decode($this->orderRepository->findByOrderNumber((int) $invoiceData['args']['order_number'])->getCart());
+        $invoiceData['args']['summary'] = json_decode($this->orderRepository->findByOrderNumber((int) $invoiceData['args']['order_number'])->getSummary());
         $this->invoiceService->createInvoice($invoiceData, false, true);
     }
 

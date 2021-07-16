@@ -1,6 +1,7 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
+
 <f:if condition="{args.cart_variables.invoice_background}">
     <div style="float:left; width:100%; position: absolute; left:0; top:0; ">
         <img src="{args.cart_variables.invoice_background}" style="width:100%; height:auto;" />
@@ -35,18 +36,13 @@
             <div style="float:left; width:50%;">
                 Produkt
             </div>
-            <div style="float:left; width:15%; text-align:right;">
+            <div style="float:left; width:20%; text-align:right;">
                 Preis
             </div>
-            <f:if condition="{args.cart_variables.taxcart}">
-                <div style="float:left; width:10%; text-align:right;">
-                    Steuer
-                </div>
-            </f:if>
             <div style="float:left; width:10%; text-align:center;">
                 Anzahl
             </div>
-            <div style="float:left; width:15%; text-align:right;">
+            <div style="float:left; width:20%; text-align:right;">
                 Gesamt
             </div>
         </div>
@@ -65,21 +61,16 @@
                         </f:if>
                         <small style="display:block;">Art. Nr.: {item.article_number}</small>
                     </div>
-                    <div style="float:left; width:15%; text-align:right;">
+                    <div style="float:left; width:20%; text-align:right;">
                         {item.price -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}<br />
                         <f:if condition="{args.cart_variables.taxcart}">
                             <small style="display:block;">exkl. {item.tax} % MwSt.</small>
                         </f:if>
                     </div>
-                    <f:if condition="{args.cart_variables.taxcart}">
-                        <div style="float:left; width:10%; text-align:right;">
-                            {item.tax} %
-                        </div>
-                    </f:if>
                     <div style="float:left; width:10%; text-align:center;">
                         {item.quantity}
                     </div>
-                    <div style="float:left; width:15%; text-align:right;">
+                    <div style="float:left; width:20%; text-align:right;">
                         {item.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}<br />
                         <f:if condition="{args.cart_variables.taxcart}">
                             <small style="display:block;">inkl. {item.tax} % MwSt.</small>
@@ -150,16 +141,6 @@
                 </div>
             </div>
         </div>
-
-        <f:if condition="{args.payment_url}">
-            <div style="float:left; width:100%; margin-bottom:20px;">
-                <f:if condition="{args.payment}=='prepayment'">
-                    <div style="float:left; width:100%; margin-top:40px;">
-                        <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
-                    </div>
-                </f:if>
-            </div>
-        </f:if>
 
     </div>
 
