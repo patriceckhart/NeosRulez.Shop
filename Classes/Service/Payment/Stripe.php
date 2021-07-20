@@ -45,7 +45,7 @@ class Stripe {
             'name' => '#'.$args['order_number'],
         ]);
         $price = $stripe->prices->create([
-            'unit_amount' => $amount,
+            'unit_amount' => (int) $amount,
             'currency' => 'eur',
             'product' => $product,
         ]);
@@ -62,11 +62,13 @@ class Stripe {
             'mode' => 'payment',
         ]);
 
+        \Neos\Flow\var_dump($price);
+
         return '
             <script src="https://js.stripe.com/v3/"></script>
             <script>
                 var stripe = Stripe("'.$public_key.'");
-                
+
                 stripe.redirectToCheckout({
                 sessionId: "'.$session->id.'"
                 }).then(function (result) {
