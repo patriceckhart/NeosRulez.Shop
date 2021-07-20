@@ -62,8 +62,6 @@ class Stripe {
             'mode' => 'payment',
         ]);
 
-        \Neos\Flow\var_dump($price);
-
         return '
             <script src="https://js.stripe.com/v3/"></script>
             <script>
