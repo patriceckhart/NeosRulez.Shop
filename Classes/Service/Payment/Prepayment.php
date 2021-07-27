@@ -47,7 +47,7 @@ class Prepayment {
         $order = $this->orderRepository->findByOrderNumber($args['order_number']);
         $order->setCanceled(false);
         $this->orderRepository->update($order);
-        
+
         $this->stockService->execute();
         $this->mailService->execute($args);
         $this->cart->refreshCoupons();
