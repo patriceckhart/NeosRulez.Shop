@@ -3,7 +3,7 @@ namespace NeosRulez\Shop\Service;
 
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
-use Neos\Flow\ResourceManagement\ResourceManager;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Mpdf\Mpdf;
 
 /**
@@ -33,15 +33,10 @@ class InvoiceService {
 
     /**
      * @Flow\Inject
-     * @var ResourceManager
+     * @var PersistenceManagerInterface
      */
-    protected $resourceManager;
+    protected $persistenceManager;
 
-    /**
-     * @Flow\Inject
-     * @var \Neos\Media\Domain\Repository\AssetRepository
-     */
-    protected $assetRepository;
 
     /**
      * @var array
@@ -76,22 +71,42 @@ class InvoiceService {
      * @return void
      */
     public function createInvoice(array $variables, bool $create, bool $download = false) {
+
         $variables['args']['cart_variables']['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
         if(!$start) {
             $start = 1;
         }
-        $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+
         if($create) {
+            $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+
             $invoice = new \NeosRulez\Shop\Domain\Model\Invoice();
             $invoice->setOrdernumber($variables['args']['order_number']);
             $invoice->setInvoicenumber($invoice_number);
             $this->invoiceRepository->add($invoice);
+
+            $variables['invoice_date'] = new \DateTime();
+        } else {
+            $rInvoice = $this->invoiceRepository->findByOrdernumber($variables['args']['order_number'])->getFirst();
+
+            if(empty($rInvoice) || $rInvoice == null) {
+                $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+                $invoice = new \NeosRulez\Shop\Domain\Model\Invoice();
+                $invoice->setOrdernumber($variables['args']['order_number']);
+                $invoice->setInvoicenumber($invoice_number);
+                $this->invoiceRepository->add($invoice);
+                $this->persistenceManager->persistAll();
+                $variables['invoice_date'] = new \DateTime();
+            } else {
+                $invoice_number = $prefix . $rInvoice->getInvoicenumber();
+                $variables['invoice_date'] = $rInvoice->getCreated();
+            }
         }
 
         $variables['invoice_number'] = $invoice_number;
-        $variables['invoice_date'] = new \DateTime();
+
         $view = new \Neos\FluidAdaptor\View\StandaloneView();
         $view->setTemplatePathAndFilename($this->settings['Invoice']['templatePathAndFilename']);
         $view->assignMultiple($variables);
