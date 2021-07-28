@@ -104,6 +104,7 @@ class Cart {
         $additional_tax_value_price = 0;
 
         $option_key = false;
+        $optionsT = '';
         if (array_key_exists('options', $item)) {
             $option_key = array_search($item['options'], array_column($cart, 'options'));
             $combined_options = [];
@@ -111,7 +112,8 @@ class Cart {
                 $option_node = $context->getNodeByIdentifier($option);
                 $option_price = floatval(str_replace(',', '.', str_replace('.', '', $option_node->getProperty('price'))));
                 $combined_options[] = ['name' => $option_node->getProperty('title'), 'price' => $option_price * $quantity];
-//                $item['combined_options'] = $combined_options;
+
+                $optionsT .= $option_node->getProperty('title');
                 $additional_price_gross = $additional_price_gross + $option_price;
                 $additional_tax_value_price = $additional_price_gross / $factor;
             }
@@ -120,6 +122,7 @@ class Cart {
         if (array_key_exists('options2', $item)) {
             foreach ($item['options2'] as $option2) {
                 $combined_options[] = ['name' => $option2];
+                $optionsT .= $option2;
             }
         }
 
@@ -131,14 +134,13 @@ class Cart {
         $item['total'] = $item['total'] + $additional_price_gross;
         $item['price_gross'] = $item['price_gross'] + $additional_price_gross;
 
-        if ($key === false) {
-            $this->items[] = $item;
+        $itemHash = md5($item['article_number'] . $optionsT);
+        $item['hash'] = $itemHash;
+        if(array_key_exists($item['hash'], $this->items)) {
+            $quantity = $this->items[$itemHash]['quantity'];
+            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
         } else {
-            if ($option_key === false) {
-                $this->items[] = $item;
-            } else {
-                $this->items[$key] = $item;
-            }
+            $this->items[$itemHash] = $item;
         }
 
     }
@@ -171,12 +173,14 @@ class Cart {
         $additional_tax_value_price = 0;
 
         $option_key = false;
+        $optionsT = '';
         if (array_key_exists('options', $item)) {
             $option_key = array_search($item['options'], array_column($cart, 'options'));
             $combined_options = [];
             foreach ($item['options'] as $option) {
                 $combined_options[] = ['name' => $option['name'], 'price' => floatval(str_replace(',', '.', $option['price'])) * $quantity];
                 $item['combined_options'] = $combined_options;
+                $optionsT .= $option['name'];
                 $additional_price_gross = $additional_price_gross + floatval(str_replace(',', '.', $option['price']));
                 $additional_tax_value_price = $additional_price_gross / $factor;
             }
@@ -186,14 +190,13 @@ class Cart {
         $item['total'] = $item['total'] + $additional_price_gross;
         $item['price_gross'] = $item['price_gross'] + $additional_price_gross;
 
-        if ($key === false) {
-            $this->items[] = $item;
+        $itemHash = md5($item['article_number'] . $optionsT);
+        $item['hash'] = $itemHash;
+        if(array_key_exists($item['hash'], $this->items)) {
+            $quantity = $this->items[$itemHash]['quantity'];
+            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
         } else {
-            if ($option_key === false) {
-                $this->items[] = $item;
-            } else {
-                $this->items[$key] = $item;
-            }
+            $this->items[$itemHash] = $item;
         }
 
     }
@@ -204,12 +207,10 @@ class Cart {
      * @return void
      */
     public function updateItem($item, $quantity) {
-        $cart = $this->items;
-        $key = array_search($item['tstamp'], array_column($cart, 'tstamp'));
-        $this->items[$key]['quantity'] = $quantity;
+        $this->items[$item['hash']]['quantity'] = $quantity;
         $total = $item['price_gross']*$quantity;
-        $this->items[$key]['price'] = $item['price_gross'] - $item['tax_value_price'];
-        $this->items[$key]['total'] = $total;
+        $this->items[$item['hash']]['price'] = $item['price_gross'] - $item['tax_value_price'];
+        $this->items[$item['hash']]['total'] = $total;
     }
 
     /**
@@ -360,20 +361,15 @@ class Cart {
      * @return void
      */
     public function deleteItem($item) {
-        $cart = $this->items;
-        $key = array_search($item['tstamp'], array_column($cart, 'tstamp'));
-        unset($this->items[$key]);
-        sort($this->items);
+        unset($this->items[$item['hash']]);
     }
 
     /**
      * @return void
      */
     public function deleteCart() {
-        $cart = $this->items;
-        $cart_count = count($cart);
-        for ($i = 0; $i < $cart_count; $i++) {
-            unset($this->items[$i]);
+        foreach ($this->items as $item) {
+            unset($this->items[$item['hash']]);
         }
         $this->deleteCoupons();
         $this->deleteOrder();
