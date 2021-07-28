@@ -86,6 +86,7 @@ class InvoiceService {
             $invoice->setOrdernumber($variables['args']['order_number']);
             $invoice->setInvoicenumber($invoice_number);
             $this->invoiceRepository->add($invoice);
+            $this->persistenceManager->persistAll();
 
             $variables['invoice_date'] = new \DateTime();
         } else {
