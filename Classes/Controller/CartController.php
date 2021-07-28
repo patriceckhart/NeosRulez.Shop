@@ -267,7 +267,13 @@ class CartController extends ActionController
         $order = new \NeosRulez\Shop\Domain\Model\Order();
         $order->setOrdernumber($oder_number);
         $order->setInvoicedata(json_encode($args, JSON_UNESCAPED_UNICODE));
-        $order->setCart(json_encode($this->cart->cart(), JSON_UNESCAPED_UNICODE));
+
+        $newCart = [];
+        foreach ($this->cart->cart() as $item) {
+            $newCart[] = $item;
+        }
+
+        $order->setCart(json_encode($newCart, JSON_UNESCAPED_UNICODE));
         $order->setSummary(json_encode($this->cart->summary(), JSON_UNESCAPED_UNICODE));
         $order->setPayment($args['payment']);
         $order->setPaid(0);
