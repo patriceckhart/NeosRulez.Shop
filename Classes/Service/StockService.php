@@ -33,17 +33,19 @@ class StockService {
         $items = $this->cart->items;
         $context = $this->contextFactory->create();
         foreach ($items as $item) {
-            $nodeIdentifier = $item['node'];
-            $node = $context->getNodeByIdentifier($nodeIdentifier);
-            if($node->hasProperty('stockLevel')) {
-                $stockLevel = $node->getProperty('stockLevel');
-                $stockManagement = (int) $node->getProperty('stockManagement');
-                if($stockManagement) {
-                    $orderedQuantity = (int) $item['quantity'];
-                    $newQuantity = ($stockLevel - $orderedQuantity);
-                    $node->setProperty('stockLevel', $newQuantity);
-                    if($newQuantity <= 0) {
-                        $node->setProperty('stock', false);
+            if(array_key_exists('node', $item)) {
+                $nodeIdentifier = $item['node'];
+                $node = $context->getNodeByIdentifier($nodeIdentifier);
+                if($node->hasProperty('stockLevel')) {
+                    $stockLevel = $node->getProperty('stockLevel');
+                    $stockManagement = (int) $node->getProperty('stockManagement');
+                    if($stockManagement) {
+                        $orderedQuantity = (int) $item['quantity'];
+                        $newQuantity = ($stockLevel - $orderedQuantity);
+                        $node->setProperty('stockLevel', $newQuantity);
+                        if($newQuantity <= 0) {
+                            $node->setProperty('stock', false);
+                        }
                     }
                 }
             }
