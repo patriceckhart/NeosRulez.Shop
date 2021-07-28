@@ -35,14 +35,16 @@ class StockService {
         foreach ($items as $item) {
             $nodeIdentifier = $item['node'];
             $node = $context->getNodeByIdentifier($nodeIdentifier);
-            $stockLevel = $node->getProperty('stockLevel');
-            $stockManagement = (int) $node->getProperty('stockManagement');
-            if($stockManagement) {
-                $orderedQuantity = (int) $item['quantity'];
-                $newQuantity = ($stockLevel - $orderedQuantity);
-                $node->setProperty('stockLevel', $newQuantity);
-                if($newQuantity <= 0) {
-                    $node->setProperty('stock', false);
+            if($node->hasProperty('stockLevel')) {
+                $stockLevel = $node->getProperty('stockLevel');
+                $stockManagement = (int) $node->getProperty('stockManagement');
+                if($stockManagement) {
+                    $orderedQuantity = (int) $item['quantity'];
+                    $newQuantity = ($stockLevel - $orderedQuantity);
+                    $node->setProperty('stockLevel', $newQuantity);
+                    if($newQuantity <= 0) {
+                        $node->setProperty('stock', false);
+                    }
                 }
             }
         }
