@@ -40,11 +40,13 @@ class FinisherService {
      */
     public function initAfterOrderFinishers($args) {
         if(array_key_exists('Finisher', $this->settings)) {
-            $finishers = $this->settings['Finisher']['afterOrder'];
-            if($finishers) {
-                foreach ($finishers as $finisher) {
-                    $finisher_class = $this->objectManager->get($finisher['class']);
-                    $finisher_class->execute($args);
+            if(array_key_exists('afterOrder', $this->settings['Finisher'])) {
+                $finishers = $this->settings['Finisher']['afterOrder'];
+                if($finishers) {
+                    foreach ($finishers as $finisher) {
+                        $finisher_class = $this->objectManager->get($finisher['class']);
+                        $finisher_class->execute($args);
+                    }
                 }
             }
         }
@@ -56,11 +58,13 @@ class FinisherService {
      */
     public function initAfterPaymentFinishers($args) {
         if(array_key_exists('Finisher', $this->settings)) {
-            $finishers = $this->settings['Finisher']['afterPayment'];
-            if ($finishers) {
-                foreach ($finishers as $finisher) {
-                    $finisher_class = $this->objectManager->get($finisher['class']);
-                    $finisher_class->execute($args);
+            if(array_key_exists('afterPayment', $this->settings['Finisher'])) {
+                $finishers = $this->settings['Finisher']['afterPayment'];
+                if ($finishers) {
+                    foreach ($finishers as $finisher) {
+                        $finisher_class = $this->objectManager->get($finisher['class']);
+                        $finisher_class->execute($args);
+                    }
                 }
             }
         }
