@@ -8,6 +8,9 @@
             <trans-unit id="doNotCloseWindow" xml:space="preserve">
 				<source>Bitte dieses Fenster nicht schließen!</source>
 			</trans-unit>
+            <trans-unit id="content.freeShipping" xml:space="preserve">
+                <source>Versandkostenfrei</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

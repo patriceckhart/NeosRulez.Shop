@@ -27,6 +27,13 @@ class ShippingImplementation extends AbstractFusionObject {
     protected $cart;
 
     /**
+     * @Flow\Inject
+     * @var \Neos\Flow\I18n\Translator
+     */
+    protected $translator;
+
+
+    /**
      * @return array
      */
     public function evaluate() {
@@ -34,7 +41,7 @@ class ShippingImplementation extends AbstractFusionObject {
         $result = [];
         $selected_country = $this->cart->getCountry();
         if($freeShipping) {
-            $available_shippings[] = ['shipping' => ['identifier' => 1, 'properties' => ['title' => 'Versandkostenfrei']], 'float_price' => 0.00, 'price_kg' => 0.00, 'full_shipping_price' => 0.00, 'free_from' => 0.00];
+            $available_shippings[] = ['shipping' => ['identifier' => 1, 'properties' => ['title' => $this->translator->translateById('content.freeShipping', [], null, null, $sourceName = 'Main', $packageKey = 'NeosRulez.Shop')]], 'float_price' => 0.00, 'price_kg' => 0.00, 'full_shipping_price' => 0.00, 'free_from' => 0.00];
             $result[] = ['selected_country' => $selected_country, 'available_shippings' => $available_shippings];
         } else {
             $context = $this->contextFactory->create();

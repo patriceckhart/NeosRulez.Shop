@@ -47,6 +47,12 @@ class Cart {
      */
     protected $contextFactory;
 
+    /**
+     * @Flow\Inject
+     * @var \Neos\Flow\I18n\Translator
+     */
+    protected $translator;
+
 
     /**
      * @param array $item
@@ -467,7 +473,7 @@ class Cart {
      */
     public function findShipping($identifier) {
         if($identifier == '1') {
-            $result[] = ['name' => 'Versandkostenfrei', 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
+            $result[] = ['name' => $this->translator->translateById('content.freeShipping', [], null, null, $sourceName = 'Main', $packageKey = 'NeosRulez.Shop'), 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
         } else {
             $context = $this->contextFactory->create();
             $shipping_node = $context->getNodeByIdentifier($identifier);

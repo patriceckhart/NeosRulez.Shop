@@ -59,6 +59,9 @@
             <trans-unit id="properties.mailFooterText" xml:space="preserve">
                 <source>Mail footer text</source>
             </trans-unit>
+            <trans-unit id="content.freeShipping" xml:space="preserve">
+                <source>Free shipping</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
