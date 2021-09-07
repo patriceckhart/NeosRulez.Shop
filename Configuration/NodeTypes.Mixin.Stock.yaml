@@ -6,6 +6,7 @@
         neosrulez_shop_product_stocklevel:
           label: NeosRulez.Shop:NodeTypes.Mixin.Stock:stockManagement
           icon: fas fa-pallet
+          position: after document
   properties:
     stockManagement:
       type: boolean

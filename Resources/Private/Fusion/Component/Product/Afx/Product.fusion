@@ -90,7 +90,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) < prototype(Neos.F
         <small class="d-block tax">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} 20 % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}
         </small>
-        <div class="d-block mt-2 old_price">
+        <div @if.render={node.properties.old_price} class="d-block mt-2 old_price">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:instead_of')} <NeosRulez.Shop:Class.Currency float={node.properties.old_price} currencySign="€" />
         </div>
     `

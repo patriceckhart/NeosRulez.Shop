@@ -18,6 +18,9 @@
           icon: 'fas fa-file-invoice-dollar'
           position: 12
       groups:
+        document:
+          label: NeosRulez.Shop:NodeTypes.Document.Cart:groups.neosrulez_shop_cart
+          icon: icon-shopping-cart
         neosrulez_shop_cart:
           label: i18n
           icon: 'icon-shopping-cart'
@@ -26,6 +29,14 @@
           icon: 'fas fa-file-invoice-dollar'
           tab: 'neosrulez_shop_cart'
   properties:
+    uriPathSegment:
+      ui:
+        inspector:
+          position: after title
+    titleOverride:
+      ui:
+        inspector:
+          position: end
     min_quantity:
       type: string
       defaultValue: ''
@@ -33,8 +44,8 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
-          position: 1
+          group: document
+          position: before titleOverride
     min_weight:
       type: string
       defaultValue: ''
@@ -42,8 +53,8 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
-          position: 2
+          group: document
+          position: after min_quantity
     recipient_mail:
       type: string
       ui:
@@ -51,7 +62,7 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 3
     order_subject:
       type: string
@@ -60,7 +71,7 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 4
     mail_logo:
       type: 'Neos\Media\Domain\Model\ImageInterface'
@@ -68,7 +79,7 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 5
           editorOptions:
             features:
@@ -81,7 +92,7 @@
         reloadIfChanged: true
         label: i18n
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 6
     privacy_page:
       type: 'reference'
@@ -89,7 +100,7 @@
         reloadIfChanged: true
         label: i18n
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 7
     terms_page:
       type: 'reference'
@@ -97,7 +108,7 @@
         reloadIfChanged: true
         label: i18n
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 8
     invoice:
       type: boolean
@@ -232,7 +243,7 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: 'neosrulez_shop_cart'
+          group: document
           position: 'after terms_page'
           editor: 'Neos.Neos/Inspector/Editors/RichTextEditor'
           editorOptions:
