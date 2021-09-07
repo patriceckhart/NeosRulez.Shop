@@ -4,14 +4,14 @@
     'NeosRulez.Shop:Mixin.Constraints.AllConstraints': true
   ui:
     label: i18n
-    icon: 'fas fa-bookmark'
+    icon: 'fas fa-percentage'
     position: 4
     group: 'neosrulez_shop'
     inspector:
       groups:
         document:
           label: i18n
-          icon: 'fas fa-bookmark'
+          icon: 'fas fa-percentage'
   properties:
     code:
       type: string
@@ -22,6 +22,15 @@
         inspector:
           group: 'document'
           position: 1
+    isShippingCoupon:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 2
     percentual:
       type: boolean
       defaultValue: false
@@ -30,8 +39,9 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.isShippingCoupon ? true : false'
           group: 'document'
-          position: 2
+          position: 3
     value:
       type: string
       ui:
@@ -39,8 +49,9 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.isShippingCoupon ? true : false'
           group: 'document'
-          position: 3
+          position: 4
     min_cart_value:
       type: string
       defaultValue: '0'
@@ -49,8 +60,9 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.isShippingCoupon ? true : false'
           group: 'document'
-          position: 4
+          position: 5
     quantity_restriction:
       type: boolean
       defaultValue: false
@@ -58,8 +70,9 @@
         label: i18n
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.isShippingCoupon ? true : false'
           group: 'document'
-          position: 5
+          position: 6
     quantity:
       type: string
       defaultValue: ''
@@ -67,9 +80,9 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          hidden: 'ClientEval:node.properties.quantity_restriction ? false : true'
+          hidden: 'ClientEval:node.properties.quantity_restriction && !node.properties.isShippingCoupon ? false : true'
           group: 'document'
-          position: 6
+          position: 7
     redeemed:
       type: string
       defaultValue: '0'
@@ -77,7 +90,8 @@
         label: i18n
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.isShippingCoupon ? true : false'
           group: 'document'
-          position: 7
+          position: 8
           editorOptions:
             disabled: true

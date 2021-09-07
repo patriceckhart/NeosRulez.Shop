@@ -2,10 +2,13 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     templatePath = 'resource://NeosRulez.Shop/Private/Fusion/Component/Cart/Cart.html'
     cart = NeosRulez.Shop:Fusion.Cart
     coupons = NeosRulez.Shop:Fusion.Coupons
+    @context.coupons = ${this.coupons}
     summary = NeosRulez.Shop:Fusion.Summary
     checkout = NeosRulez.Shop:Fusion.Checkout
     countries = NeosRulez.Shop:Fusion.Countries
-    shippings = NeosRulez.Shop:Fusion.Shippings
+    shippings = NeosRulez.Shop:Fusion.Shippings {
+        freeShipping = ${coupons[0].isShippingCoupon}
+    }
     order = NeosRulez.Shop:Fusion.Order
     payments = NeosRulez.Shop:Fusion.Payments
     cart_variables = NeosRulez.Shop:Fusion.CartVariables {
@@ -77,6 +80,7 @@ prototype(NeosRulez.Shop:Fusion.Countries) {
 
 prototype(NeosRulez.Shop:Fusion.Shippings) {
     @class = 'NeosRulez\\Shop\\Fusion\\ShippingImplementation'
+    freeShipping = false
 }
 
 prototype(NeosRulez.Shop:Fusion.Order) {

@@ -29,6 +29,9 @@
             <trans-unit id="properties.redeemed" xml:space="preserve">
                 <source>Redeemed</source>
             </trans-unit>
+            <trans-unit id="properties.isShippingCoupon" xml:space="preserve">
+                <source>Free shipping</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

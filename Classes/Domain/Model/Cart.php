@@ -380,10 +380,11 @@ class Cart {
      * @param string $name
      * @param float $value
      * @param boolean $percentual
+     * @param boolean $isShippingCoupon
      * @return void
      */
-    public function applyCoupon($name, $value, $percentual) {
-        $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual];
+    public function applyCoupon($name, $value, $percentual, $isShippingCoupon = false) {
+        $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
     }
 
     /**
@@ -465,9 +466,13 @@ class Cart {
      * @return array
      */
     public function findShipping($identifier) {
-        $context = $this->contextFactory->create();
-        $shipping_node = $context->getNodeByIdentifier($identifier);
-        $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
+        if($identifier == '1') {
+            $result[] = ['name' => 'Versandkostenfrei', 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
+        } else {
+            $context = $this->contextFactory->create();
+            $shipping_node = $context->getNodeByIdentifier($identifier);
+            $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
+        }
         return $result;
     }
 

@@ -3,6 +3,8 @@
 {namespace media=Neos\Media\ViewHelpers}
 <div class="cart">
     <div class="container">
+        {coupons -> f:debug()}
+        {shippings -> f:debug()}
         <f:if condition="{checkout}">
             <f:then>
                 <h1>{f:translate(id: 'checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</h1>
@@ -343,13 +345,17 @@
                             <f:form action="deleteCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                                 <div class="d-block mt-3 coupon">
                                     <div class="form-group">
-                                        <i class="fas fa-bookmark mr-2"></i> {coupons.0.name} {f:translate(id: 'in_the_value_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                                        <i class="fas fa-percentage mr-2"></i> {coupons.0.name} <f:if condition="{coupons.0.value} == '0'"><f:else>{f:translate(id: 'in_the_value_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:else></f:if>
                                         <f:if condition="{coupons.0.percentual}">
                                             <f:then>
                                                 {coupons.0.value} %
                                             </f:then>
                                             <f:else>
-                                                <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{coupons.0.value}</f:format.currency>
+                                                <f:if condition="{coupons.0.value} == '0'">
+                                                    <f:else>
+                                                        <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{coupons.0.value}</f:format.currency>
+                                                    </f:else>
+                                                </f:if>
                                             </f:else>
                                         </f:if>
                                     </div>
@@ -374,7 +380,7 @@
         <div class="d-block mt-3 coupon">
             <div class="form-group">
                 <div class="d-block py-2 mb-2 border-bottom-strong font-weight-bold">
-                    <i class="fas fa-bookmark mr-2"></i> {f:translate(id: 'coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
+                    <i class="fas fa-percentage mr-2"></i> {f:translate(id: 'coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
                 </div>
                 <f:form.textfield name="code" class="form-control" placeholder="{f:translate(id: 'coupon_code', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" />
             </div>
@@ -581,6 +587,7 @@
 </f:section>
 
 <f:section name="checkout">
+    {order -> f:debug()}
     <f:if condition="{newsletter}">
         <div class="custom-control custom-checkbox form-check my-3">
             <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="newsletter" name="newsletter">

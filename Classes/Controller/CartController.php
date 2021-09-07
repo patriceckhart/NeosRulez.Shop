@@ -134,7 +134,15 @@ class CartController extends ActionController
                     } else {
                         $carttotal = $this->cart->getCartTotal();
                         if($carttotal >= floatval(str_replace(',', '.', $props['min_cart_value']))) {
-                            $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual']);
+                            if(array_key_exists('value', $props)) {
+                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual']);
+                            } else {
+                                if(array_key_exists('isShippingCoupon', $props)) {
+                                    if($props['isShippingCoupon'] === true) {
+                                        $this->cart->applyCoupon($props['title'], '0', $props['percentual'], true);
+                                    }
+                                }
+                            }
                         } else {
                             $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false);
                         }
