@@ -3,8 +3,6 @@
 {namespace media=Neos\Media\ViewHelpers}
 <div class="cart">
     <div class="container">
-        {coupons -> f:debug()}
-        {shippings -> f:debug()}
         <f:if condition="{checkout}">
             <f:then>
                 <h1>{f:translate(id: 'checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</h1>
@@ -587,7 +585,6 @@
 </f:section>
 
 <f:section name="checkout">
-    {order -> f:debug()}
     <f:if condition="{newsletter}">
         <div class="custom-control custom-checkbox form-check my-3">
             <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="newsletter" name="newsletter">
