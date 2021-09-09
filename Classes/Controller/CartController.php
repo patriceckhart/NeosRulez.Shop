@@ -240,25 +240,28 @@ class CartController extends ActionController
         if (array_key_exists('order', $_GET)) {
             $order_number = isset($_GET['order']) ? $_GET['order']:NULL;
             $order = $this->orderRepository->findByOrderNumber($order_number);
-            if($paid==1) {
-                $order->setPaid(1);
-                $order->setCanceled(0);
+            $orderPaid = $order->getPaid();
+            if(!$orderPaid) {
+                if($paid == 1) {
+                    $order->setPaid(1);
+                    $order->setCanceled(0);
 
-                $args = $this->cart->arguments;
+                    $args = $this->cart->arguments;
 
-                if($this->settings['Mail']['debugMode']) {
-                    return $this->mailService->execute($args);
-                } else {
-                    if (!$this->settings['debugMode']) {
-                        $this->stockService->execute();
-                        $this->mailService->execute($args);
-                        $this->cart->refreshCoupons();
+                    if($this->settings['Mail']['debugMode']) {
+                        return $this->mailService->execute($args);
+                    } else {
+                        if (!$this->settings['debugMode']) {
+                            $this->stockService->execute();
+                            $this->mailService->execute($args);
+                            $this->cart->refreshCoupons();
+                        }
                     }
-                }
 
-                $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
-                $this->orderRepository->update($order);
-                $this->persistenceManager->persistAll();
+                    $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
+                    $this->orderRepository->update($order);
+                    $this->persistenceManager->persistAll();
+                }
             }
         }
         $this->cart->deleteCart();
@@ -360,6 +363,15 @@ class CartController extends ActionController
      */
     public function paymentFailureAction() {
         return 'failure';
+    }
+
+    /**
+     * @param string $country
+     * @return void
+     */
+    public function selectCountryAction(string $country) {
+        $this->cart->setCountry($country);
+        $this->redirectToUri($_SERVER['HTTP_REFERER']);
     }
 
 }
