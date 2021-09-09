@@ -20,6 +20,12 @@ class OrderController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var \NeosRulez\Shop\Domain\Repository\InvoiceRepository
+     */
+    protected $invoiceRepository;
+
+    /**
+     * @Flow\Inject
      * @var Neos\ContentRepository\Domain\Service\ContextFactoryInterface
      */
     protected $contextFactory;
@@ -61,7 +67,8 @@ class OrderController extends ActionController
             $order->lastname = json_decode($order->getInvoicedata())->lastname;
             $order->email = json_decode($order->getInvoicedata())->email;
             $payment_label = $this->settings['Payment'][$order->getPayment()]['props']['label'];
-            $result[] = ['order' => $order, 'payment' => $payment_label];
+            $invoice = $this->invoiceRepository->findByOrdernumber($order->getOrdernumber())->getFirst();
+            $result[] = ['order' => $order, 'payment' => $payment_label, 'invoice' => $invoice];
         }
         $this->view->assign('orders', $result);
     }
