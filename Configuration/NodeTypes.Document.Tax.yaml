@@ -1,0 +1,20 @@
+'NeosRulez.Shop:Document.Tax':
+  superTypes:
+    'NeosRulez.Shop:Document.GenericPage': true
+  ui:
+    label: i18n
+    icon: fas fa-hand-holding-usd
+    position: end
+    group: neosrulez_shop
+    inspector:
+      groups:
+        document:
+          label: i18n
+          icon: fas fa-hand-holding-usd
+  childNodes:
+    countries:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'NeosRulez.Shop:Content.Country': true

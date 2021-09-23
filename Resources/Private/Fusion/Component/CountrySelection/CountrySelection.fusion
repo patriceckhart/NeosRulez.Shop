@@ -1,0 +1,57 @@
+prototype(NeosRulez.Shop:Component.CountrySelection) < prototype(Neos.Fusion:Component) {
+    isOneStopShop = ${Configuration.setting('NeosRulez.Shop.oneStopShop')}
+    countryIsSelected = NeosRulez.Shop:Class.SelectedCountry
+    availableCountries = NeosRulez.Shop:Class.AvailableCountries
+    inBackend = ${documentNode.context.inBackend}
+
+    renderer = afx`
+        <div @if.render={props.isOneStopShop && !props.countryIsSelected && !props.inBackend ? true : false} class="modal fade" id="country__modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:content.oneStopShopHeader')}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <NeosRulez.Shop:Component.CountrySelection.Form @if.render={props.availableCountries} availableCountries={props.availableCountries} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryDiscriminator = ${request.arguments.country}
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+        }
+    }
+}
+
+prototype(NeosRulez.Shop:Component.CountrySelection.Form) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <Neos.Fusion.Form:Form form.target.action="selectCountry" form.target.controller="Cart" form.target.package="NeosRulez.Shop" >
+            <div class="row">
+                <div class="col-8">
+                    <Neos.Fusion.Form:Select field.name="country" attributes.class="form-select h-100">
+                        <Neos.Fusion:Loop items={props.availableCountries} itemName="country">
+                            <option value={country.cca2} >{country.flag} {country.name.common}</option>
+                        </Neos.Fusion:Loop>
+                    </Neos.Fusion.Form:Select>
+                </div>
+                <div class="col-4">
+                    <Neos.Fusion.Form:Button attributes.class="btn btn-primary w-100" >
+                        {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:content.confirm')}
+                    </Neos.Fusion.Form:Button>
+                </div>
+            </div>
+        </Neos.Fusion.Form:Form>
+    `
+}

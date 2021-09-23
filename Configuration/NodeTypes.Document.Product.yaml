@@ -3,6 +3,7 @@
     'NeosRulez.Shop:Document.AbstractPage': true
     'NeosRulez.Category:Mixin.Abstract.Categories': true
     'NeosRulez.Shop:Mixin.Stock': true
+    'NeosRulez.Shop:Mixin.Tax': true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'
@@ -55,8 +56,9 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
-          group: document
-          position: 4
+          hidden: 'ClientEval:node.properties.taxClass ? true : false'
+          group: tax
+          position: 2
     stock:
       type: boolean
       defaultValue: true

@@ -72,6 +72,11 @@ class Cart {
         $item['title'] = $product_node->getProperty('title');
         $item['price_gross'] = floatval(str_replace(',', '.', $product_node->getProperty('price')));
         $item['tax'] = floatval(str_replace(',', '.', $product_node->getProperty('tax')));
+        if(array_key_exists('taxClass', $item)) {
+            $item['tax'] = (float) $item['taxClass'];
+            $priceGross = floatval(str_replace(',', '.', $product_node->getProperty('price')));
+            $item['price_gross'] = $priceGross * ($item['tax'] / 100 + 1);
+        }
 
         $item['relay'] = $product_node->getProperty('relay');
 
@@ -164,6 +169,11 @@ class Cart {
         $item['tstamp'] = time();
         $item['price_gross'] = floatval(str_replace(',', '.', $item['price_gross']));
         $item['tax'] = floatval(str_replace(',', '.', $item['tax']));
+        if(array_key_exists('taxClass', $item)) {
+            $item['tax'] = (float) $item['taxClass'];
+            $priceGross = floatval(str_replace(',', '.', $item['price_gross']));
+            $item['price_gross'] = $priceGross * ($item['tax'] / 100 + 1);
+        }
 
         $factor = floatval($item['tax'] / 100 + 1);
         $item['tax_value_price'] = $item['price_gross'] - ($item['price_gross'] / $factor);
@@ -430,6 +440,7 @@ class Cart {
     /**
      * @param string $country
      * @return void
+     * @Flow\Session(autoStart = TRUE)
      */
     public function setCountry($country) {
         $this->country = $country;
@@ -437,6 +448,7 @@ class Cart {
 
     /**
      * @return string
+     * @Flow\Session(autoStart = TRUE)
      */
     public function getCountry() {
         $country = $this->country;

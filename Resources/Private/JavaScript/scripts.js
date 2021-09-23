@@ -97,4 +97,27 @@ $(document).ready(function(){
         });
     }, 500);
 
+    selectableCountries = $('#country').find('option[value]').length;
+    selectableCountriesValue = $('#country').val();
+    if(selectableCountries >= 1 && selectableCountriesValue === null) {
+        $('#country').prop('selectedIndex', 1).change();
+    }
+
+    selectableShippings = $('#shipping').find('option[value]').length;
+    selectableShippingsValue = $('#shipping').val();
+    if(selectableShippings >= 1 && selectableShippingsValue === null) {
+        $('#shipping').prop('selectedIndex', 1).change();
+    }
+
+    if($('#country__modal').length) {
+        var countryModal = new bootstrap.Modal(document.getElementById('country__modal'), {
+            keyboard: false,
+            backdrop: 'static'
+        });
+
+        if($('.product_detail').length) {
+            countryModal.show();
+        }
+    }
+
 });

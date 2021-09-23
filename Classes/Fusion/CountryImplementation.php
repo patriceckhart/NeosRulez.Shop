@@ -10,7 +10,7 @@ class CountryImplementation extends AbstractFusionObject {
 
     /**
      * @Flow\Inject
-     * @var \NeosRulez\Shop\DataSource\CountriesDataSource
+     * @var \NeosRulez\CountryDataSource\DataSource\CountryDataSource
      */
     protected $countriesDataSource;
 
@@ -24,6 +24,7 @@ class CountryImplementation extends AbstractFusionObject {
      * @return array
      */
     public function evaluate() {
+        $selectedCountry = $this->fusionValue('selected');
         $context = $this->contextFactory->create();
         $shippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
         $all_countries = $this->countriesDataSource->getData();
@@ -38,8 +39,17 @@ class CountryImplementation extends AbstractFusionObject {
             $available_countries = array_unique($available_countries);
             foreach ($available_countries as $available_country) {
                 foreach ($all_countries as $all_country) {
-                    if($all_country['value']==$available_country) {
+                    if($all_country['value'] == $available_country) {
                         $result[] = ['label' => $all_country['label'], 'value' => $all_country['value']];
+                    }
+                }
+            }
+            if($selectedCountry) {
+                $bResult = $result;
+                $result = [];
+                foreach ($bResult as $bResultItem) {
+                    if($selectedCountry == $bResultItem['value']) {
+                        $result[] = ['label' => $bResultItem['label'], 'value' => $bResultItem['value']];
                     }
                 }
             }

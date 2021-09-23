@@ -20,6 +20,15 @@
             <trans-unit id="notInStock" xml:space="preserve">
 				<source>Das Produkt ist momentan nicht verfügbar</source>
 			</trans-unit>
+            <trans-unit id="content.oneStopShopHeader" xml:space="preserve">
+				<source>Wählen Sie Ihr Land um einzukaufen</source>
+			</trans-unit>
+            <trans-unit id="content.confirm" xml:space="preserve">
+				<source>Übernehmen</source>
+			</trans-unit>
+            <trans-unit id="content.changeCountry" xml:space="preserve">
+				<source>Land ändern</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

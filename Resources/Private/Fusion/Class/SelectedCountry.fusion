@@ -1,0 +1,3 @@
+prototype(NeosRulez.Shop:Class.SelectedCountry) {
+    @class = 'NeosRulez\\Shop\\Fusion\\SelectedCountryFusion'
+}

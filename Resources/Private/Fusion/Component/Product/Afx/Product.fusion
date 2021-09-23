@@ -5,6 +5,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
     }
 
     renderer = afx`
+        <NeosRulez.Shop:Component.CountrySelection />
         <div class="product_detail">
             <div class="container">
                 <div class="row">
@@ -38,16 +39,16 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:C
     renderer = afx`
         <div class="product_image">
             <div @if.render={node.properties.images} class="image lightbox">
-                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={node.properties.images[0]} galleryId={'lightbox__' + props.galleryId} width={props.imageWidth} height={props.imageHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} />
+                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={node.properties.images[0]} galleryId={'lightbox__' + props.galleryId} width={props.imageWidth} height={props.imageHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} class="img-fluid" />
             </div>
         </div>
         <div @if.render={node.properties.images} class="product_images">
             <div class="images">
                 <div class="row">
-                    <Neos.Fusion:Loop items={node.properties.images} itemName="image">
-                        <div class="col-md-3 col-6">
+                    <Neos.Fusion:Loop items={node.properties.images} itemName="image" iterationName="imagesIterator">
+                        <div @if.render={imagesIterator.index != 0 ? true : false} class="col-md-3 col-6">
                             <div class="image lightbox">
-                                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={image} galleryId={'lightbox__' + props.galleryId} width={props.thumbWidth} height={props.thumbHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} />
+                                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={image} galleryId={'lightbox__' + props.galleryId} width={props.thumbWidth} height={props.thumbHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={node.properties.title} class="img-fluid" />
                             </div>
                         </div>
                     </Neos.Fusion:Loop>
@@ -83,17 +84,48 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Content) < prototype(Neos.Fusion:
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) < prototype(Neos.Fusion:Component) {
 
+    getTaxClass = NeosRulez.Shop:Class.TaxClass {
+        taxClass = ${node.properties.taxClass}
+    }
+    getTaxClass.@if.condition = ${node.properties.taxClass ? true : false}
+
+    selectedCountry = NeosRulez.CountryDataSource:Class.Countries {
+        include = NeosRulez.Shop:Class.SelectedCountry
+    }
+
+    price = ${Configuration.setting('NeosRulez.Shop.oneStopShop') ? (String.toFloat(String.replace(node.properties.price, ',', '.')) * ((String.toFloat(this.getTaxClass) / 100) + 1)) : String.toFloat(String.replace(node.properties.price, ',', '.'))}
+
     renderer = afx`
         <div class="d-block price">
-            <NeosRulez.Shop:Class.Currency float={node.properties.price} currencySign="€" />
+            <NeosRulez.Shop:Class.Currency float={props.price} currencySign="€" />
         </div>
-        <small class="d-block tax">
-            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} 20 % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}
+        <small @if.render={node.properties.taxClass && props.getTaxClass} class="d-block tax">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} {props.getTaxClass} % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}
+            <div class="d-inline-block text-muted mt-2">
+                <strong>{props.selectedCountry[0].name.common}</strong> (<Neos.Fusion:Link.Action class="text-muted" href.action="selectcountry" href.package="NeosRulez.Shop" href.controller="Cart" href.arguments={{country: false}} >{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:content.changeCountry')}</Neos.Fusion:Link.Action>)
+            </div>
+        </small>
+        <small @if.render={node.properties.tax} class="d-block tax">
+            {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} {node.properties.tax} % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}
         </small>
         <div @if.render={node.properties.old_price} class="d-block mt-2 old_price">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:instead_of')} <NeosRulez.Shop:Class.Currency float={node.properties.old_price} currencySign="€" />
         </div>
     `
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryDiscriminator = ${request.arguments.country}
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+        }
+    }
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Component) {
@@ -104,6 +136,11 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     }
 
     stock = ${q(node).property('stock')}
+
+    getTaxClass = NeosRulez.Shop:Class.TaxClass {
+        taxClass = ${node.properties.taxClass}
+    }
+    getTaxClass.@if.condition = ${node.properties.taxClass ? true : false}
 
     renderer = afx`
         <Neos.Fusion.Form:Form @if.render={props.stock} attributes.id="product_form" form.target.action="add" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
@@ -122,11 +159,26 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
             </div>
             <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" field.value={props.nodeUri} />
             <Neos.Fusion.Form:Hidden field.name="item[node]" field.value={node.identifier} />
+            <Neos.Fusion.Form:Hidden @if.render={props.getTaxClass} field.name="item[taxClass]" field.value={props.getTaxClass} />
         </Neos.Fusion.Form:Form>
         <div @if.render={!props.stock} class="alert alert-danger">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:notInStock')}
         </div>
     `
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryDiscriminator = ${request.arguments.country}
+        context {
+            1 = 'node'
+            2 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+        }
+    }
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion:Component) {
@@ -217,6 +269,17 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants) < protot
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant) < prototype(Neos.Fusion:Component) {
 
+    getTaxClass = NeosRulez.Shop:Class.TaxClass {
+        taxClass = ${node.properties.taxClass}
+    }
+    getTaxClass.@if.condition = ${node.properties.taxClass ? true : false}
+
+    selectedCountry = NeosRulez.CountryDataSource:Class.Countries {
+        include = NeosRulez.Shop:Class.SelectedCountry
+    }
+
+    price = ${Configuration.setting('NeosRulez.Shop.oneStopShop') ? (String.toFloat(String.replace(node.properties.price, ',', '.')) * ((String.toFloat(this.getTaxClass) / 100) + 1)) : String.toFloat(String.replace(node.properties.price, ',', '.'))}
+
     renderer = afx`
         <div @if.render={props.product.identifier != documentNode.identifier || props.self ? true : false} class="row align-items-center">
             <div class="col-2">
@@ -227,7 +290,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant) 
                 <small class="d-block mt-2">
                     {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:article_number')} {props.product.properties.article_number}
                     <strong class="ml-2">
-                        <NeosRulez.Shop:Class.Currency float={props.product.properties.price} currencySign="€" />
+                        <NeosRulez.Shop:Class.Currency float={props.price} currencySign="€" />
                     </strong>
                 </small>
             </div>

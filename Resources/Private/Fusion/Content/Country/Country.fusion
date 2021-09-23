@@ -1,0 +1,31 @@
+prototype(NeosRulez.Shop:Content.Country) < prototype(Neos.Neos:ContentComponent) {
+
+    taxValue = ${node.properties.taxValue}
+
+    countries = NeosRulez.CountryDataSource:Class.Countries {
+        include = Neos.Fusion:Loop {
+            items = ${node.properties.countries}
+            itemName = 'country'
+            iterationName = 'iterator'
+            itemRenderer = ${country + (iterator.isLast ? '' : ',')}
+        }
+    }
+
+    renderer = afx`
+        <div class="country">
+            <div class="row my-4">
+                <div class="col-6">
+                    <Neos.Fusion:Loop items={props.countries} iterationName="iterator">
+                        {item.name.common}{iterator.isLast ? '' : ', '}
+                    </Neos.Fusion:Loop>
+                </div>
+                <div class="col-6">
+                    {props.taxValue} %
+                </div>
+            </div>
+        </div>
+    `
+    renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+        node = ${node}
+    }
+}

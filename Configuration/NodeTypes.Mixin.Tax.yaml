@@ -1,0 +1,21 @@
+'NeosRulez.Shop:Mixin.Tax':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        tax:
+          label: i18n
+          icon: fas fa-hand-holding-usd
+          position: after document
+  properties:
+    taxClass:
+      type: reference
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.tax ? true : false'
+          group: tax
+          position: 1
+          editorOptions:
+            nodeTypes: [ 'NeosRulez.Shop:Document.Tax' ]

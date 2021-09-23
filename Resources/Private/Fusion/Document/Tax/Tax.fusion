@@ -1,0 +1,30 @@
+prototype(NeosRulez.Shop:Document.Tax) < prototype(NeosRulez.Shop:Document.GenericPage) {
+
+    backend {
+        renderer = Neos.Neos:Page {
+            body = Neos.Fusion:Component {
+                nodes = Neos.Neos:ContentCollection {
+                    nodePath= 'countries'
+                }
+                @context.icon = '<i class="fas fa-hand-holding-usd"></i>'
+                renderer = afx`
+                    <div style="position:fixed; width:100%; height:100%; left:0; top:0; display:flex; align-items:center; background:#323232; color:#FFF; font-family:'Noto Sans', sans-serif; -webkit-font-smoothing:antialiased;">
+                        <div style="display:block; width:100%; text-align:center; font-size:22px; line-height:1.4;">
+                        <span style="color:#00b5ff;">
+                            {icon ? icon + ' ' : false}<Neos.Neos:Editable property="title" block={false} />
+                            <div class="d-block mb-5">
+                                {props.nodes}
+                            </div>
+                        </span>
+                        </div>
+                    </div>
+                `
+            }
+
+        }
+        renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+            node = ${documentNode}
+        }
+    }
+
+}

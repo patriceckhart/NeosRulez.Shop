@@ -101,3 +101,11 @@
     '@controller': 'Cart'
     '@package': 'NeosRulez.Shop'
     '@action': 'countcart'
+-
+  name: 'Select country'
+  uriPattern: 'selectcountry'
+  defaults:
+    '@controller': 'Cart'
+    '@package': 'NeosRulez.Shop'
+    '@action': 'selectCountry'
+  appendExceedingArguments: 'true'

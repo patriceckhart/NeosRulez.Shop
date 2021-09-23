@@ -5,7 +5,12 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     @context.coupons = ${this.coupons}
     summary = NeosRulez.Shop:Fusion.Summary
     checkout = NeosRulez.Shop:Fusion.Checkout
-    countries = NeosRulez.Shop:Fusion.Countries
+
+    @context.selectedCountry = NeosRulez.Shop:Class.SelectedCountry
+    countries = NeosRulez.Shop:Fusion.Countries {
+        selected = ${Configuration.setting('NeosRulez.Shop.oneStopShop') ? selectedCountry : false}
+    }
+
     shippings = NeosRulez.Shop:Fusion.Shippings {
         freeShipping = ${coupons[0].isShippingCoupon}
     }
@@ -76,6 +81,7 @@ prototype(NeosRulez.Shop:Fusion.Checkout) {
 
 prototype(NeosRulez.Shop:Fusion.Countries) {
     @class = 'NeosRulez\\Shop\\Fusion\\CountryImplementation'
+    selected = false
 }
 
 prototype(NeosRulez.Shop:Fusion.Shippings) {
