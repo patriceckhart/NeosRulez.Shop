@@ -83,12 +83,17 @@ class OrderController extends ActionController
         $payment_label = $this->settings['Payment'][$order->getPayment()]['props']['label'];
         $invoicedata = json_decode($order->getInvoicedata(), true);
 
+        $shipping = '';
+        $shipping_cost = '0,00';
         $shipping_node = $context->getNodeByIdentifier($invoicedata['shipping']);
-        $shipping = $shipping_node->getProperty('title');
-        $shipping_cost = $shipping_node->getProperty('price');
+        if(!empty($shipping_node)) {
+            $shipping = $shipping_node->getProperty('title');
+            $shipping_cost = $shipping_node->getProperty('price');
+        }
 
         $this->view->assign('shipping', $shipping);
         $this->view->assign('shippingcost', str_replace(',', '.', $shipping_cost));
+
 
         $cart = json_decode($order->getCart(), true);
         $this->view->assign('cart', $cart);
