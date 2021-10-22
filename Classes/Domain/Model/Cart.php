@@ -53,6 +53,25 @@ class Cart {
      */
     protected $translator;
 
+    /**
+     * @Flow\Inject
+     * @var \NeosRulez\Shop\Service\ShippingService
+     */
+    protected $shippingService;
+
+    /**
+     * @var array
+     */
+    protected $settings;
+
+    /**
+     * @param array $settings
+     * @return void
+     */
+    public function injectSettings(array $settings) {
+        $this->settings = $settings;
+    }
+
 
     /**
      * @param array $item
@@ -484,12 +503,22 @@ class Cart {
      * @return array
      */
     public function findShipping($identifier) {
+        $result = [];
+
         if($identifier == '1') {
             $result[] = ['name' => $this->translator->translateById('content.freeShipping', [], null, null, $sourceName = 'Main', $packageKey = 'NeosRulez.Shop'), 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
         } else {
             $context = $this->contextFactory->create();
             $shipping_node = $context->getNodeByIdentifier($identifier);
-            $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
+
+            if(array_key_exists('Shipping', $this->settings)) {
+                if (array_key_exists('class', $this->settings['Shipping'])) {
+                    $result[] = $this->shippingService->execute();
+                }
+            } else {
+                $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
+            }
+
         }
         return $result;
     }

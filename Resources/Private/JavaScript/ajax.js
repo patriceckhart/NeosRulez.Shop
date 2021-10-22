@@ -1,44 +1,35 @@
+var readyNeosRulezShopDocument = (callback) => {
+    if (document.readyState != "loading") callback();
+    else document.addEventListener("DOMContentLoaded", callback);
+}
+
 function cartCount() {
-    if($('#cartcount').length) {
-        var response = '';
-        $.ajax({
-            type: 'GET',
-            url: '/countcart',
-            async: false,
-            success: function (text) {
-                response = text;
-                if (response > 0) {
-                    $('#cartcount').text(response);
-                }
-            }
-        });
+    if(document.getElementById('cartcount')) {
+        fetch('/countcart')
+            .then(response => response.json())
+            .then(data => data > 0 ? document.getElementById('cartcount').innerText = data : '');
     }
 }
 
-$(document).ready(function(){
-
-    $(function () {
-        $(document).on('submit', '#product_form', function(e){
-            $('body').toggleClass('body-hide');
-            var form = $(this);
-            var post_url = form.attr('action');
-            var post_data = form.serialize();
+readyNeosRulezShopDocument(() => {
+    if(document.getElementById('product_form')) {
+        document.getElementById('product_form').addEventListener('submit', (e) => {
             e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: post_url,
-                data: post_data,
-                success: function(data) {
-                    if($('.cart-alert').length) {
-                        $('.cart-alert').slideDown();
-                    }
-                    cartCount();
-                    $('body').toggleClass('body-hide');
-                }
+            document.querySelector('body').classList.add('body-hide');
+            let postUrl = document.getElementById('product_form').action;
+            let formData = new FormData();
+            document.querySelectorAll('#product_form input, #product_form select').forEach(inputField => {
+                formData.append(inputField.name, inputField.value);
             });
+            var request = new XMLHttpRequest();
+            request.open('POST', postUrl);
+            request.send(formData);
+            cartCount();
+            if(document.querySelector('.cart-alert')) {
+                $('.cart-alert').slideDown();
+            }
+            document.querySelector('body').classList.remove('body-hide');
         });
-    });
-
+    }
     cartCount();
-
 });

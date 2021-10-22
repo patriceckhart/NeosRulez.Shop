@@ -1,0 +1,4 @@
+#NeosRulez:
+#  Shop:
+#    Shipping:
+#      class: Acme\Package\Shipping\CustomShippingClass
