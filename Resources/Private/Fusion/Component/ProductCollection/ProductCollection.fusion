@@ -1,0 +1,74 @@
+prototype(NeosRulez.Shop:Component.Product.Afx.Content) {
+
+    @context.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
+
+    @context.collectionItems = NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items
+
+    renderer.@process.isCollection = ${isCollection ? value + collectionItems : value}
+
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items) < prototype(Neos.Fusion:Component) {
+
+    itemCollection = ${node.properties.itemCollection}
+
+    renderer = afx`
+        <div @if.render={props.itemCollection} class="d-block my-4 product-item-collection">
+            <h5>{node.properties.title} {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.itemCollection')}</h5>
+            <div class="row">
+                <Neos.Fusion:Loop items={props.itemCollection} >
+                    <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item />
+                </Neos.Fusion:Loop>
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div class="col-md-4 mb-4">
+            <div @if.render={item.properties.images} class="product-image">
+                <Neos.Neos:NodeLink node={item} attributes.class="d-block">
+                    <Neos.Neos:ImageTag asset={item.properties.images[0]} allowUpScaling="true" allowCropping="true" width="400" height="280" attributes.class="img-fluid product-item-image" />
+                </Neos.Neos:NodeLink>
+            </div>
+            <div class="d-block product-item-title my-2">
+                {item.properties.title}
+            </div>
+            <Neos.Neos:NodeLink node={item} attributes.class="btn btn-primary w-100">
+                {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.product')}
+            </Neos.Neos:NodeLink>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) {
+
+    @context.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
+
+    productCollection = NeosRulez.Shop:Class.ProductCollection {
+        items = ${node.properties.itemCollection}
+    }
+
+    tax = ${isCollection ? (node.properties.tax ? node.properties.tax : this.productCollection.tax) : node.properties.tax}
+
+    price = ${isCollection ? (node.properties.price ? node.properties.price : this.productCollection.fullPrice) : node.properties.price}
+    oldPrice = ${isCollection ? false : node.properties.old_price}
+//    tax = ${isCollection ? (node.properties.tax ? node.properties.tax : this.productCollection.maxTax) : node.properties.tax}
+//    taxClass = ${isCollection ? false : node.properties.taxClass}
+
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Images) {
+
+    @context.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
+
+    productCollection = NeosRulez.Shop:Class.ProductCollection {
+        items = ${node.properties.itemCollection}
+    }
+
+    images = ${isCollection ? (node.properties.images ? node.properties.images : this.productCollection.images) : node.properties.images}
+    title = ${isCollection ? node.properties.title : node.properties.title}
+
+}

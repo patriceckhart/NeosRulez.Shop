@@ -1,0 +1,1 @@
+prototype(NeosRulez.Shop:Document.ProductCollection) < prototype(NeosRulez.Shop:Document.Product)

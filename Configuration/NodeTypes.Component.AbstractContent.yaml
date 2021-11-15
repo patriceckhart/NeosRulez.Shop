@@ -1,0 +1,3 @@
+'NeosRulez.Shop:Component.AbstractContent':
+  superTypes:
+    'NeosRulez.Bootstrap:Component.AbstractContent': true

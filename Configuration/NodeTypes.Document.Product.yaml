@@ -30,6 +30,8 @@
         inspector:
           group: document
           position: 1
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': []
     price:
       type: string
       ui:

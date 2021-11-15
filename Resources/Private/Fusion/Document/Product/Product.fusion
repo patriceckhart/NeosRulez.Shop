@@ -9,6 +9,9 @@ prototype(NeosRulez.Shop:Document.Product) < prototype(Neos.NodeTypes:Page) {
                 }
             }
         }
+        shopProductSchema = NeosRulez.Shop:Component.Schema.Product {
+            @position = 'end'
+        }
     }
     shopJs = Neos.Fusion:Tag {
         @position = 'end'

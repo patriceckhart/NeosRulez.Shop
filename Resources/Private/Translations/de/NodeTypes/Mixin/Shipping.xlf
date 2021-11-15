@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="shipping" xml:space="preserve">
+                <source>Lieferkosten</source>
+            </trans-unit>
+            <trans-unit id="properties.additionalShippingCosts" xml:space="preserve">
+                <source>Zusätzliche Lieferkosten</source>
+            </trans-unit>
+            <trans-unit id="properties.additionalShippingCostsPrice" xml:space="preserve">
+                <source>Lieferkosten pro Produkt</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

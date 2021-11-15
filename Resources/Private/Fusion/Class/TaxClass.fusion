@@ -1,4 +1,6 @@
 prototype(NeosRulez.Shop:Class.TaxClass) {
     @class = 'NeosRulez\\Shop\\Fusion\\TaxClassFusion'
     taxClass = false
+    isCollection = false
+    node = ${documentNode}
 }

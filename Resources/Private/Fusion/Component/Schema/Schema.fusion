@@ -1,0 +1,29 @@
+prototype(NeosRulez.Shop:Component.Schema.Product) < prototype(Neos.Fusion:Component) {
+
+    productImageUri = Neos.Neos:ImageUri {
+        asset = ${node.properties.images[0]}
+        width = 2000
+        height = 2000
+        allowCropping = true
+        allowUpScaling = true
+    }
+    productImageUri.@if.condition = ${node.properties.images ? true : false}
+
+    renderer = afx`
+        <script type="application/ld+json">{'
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "description": "' + String.stripTags(documentNode.properties.description) + '",
+          "name": "' + String.stripTags(documentNode.properties.title) + '",
+          ' + (props.productImageUri ? "\"image\": \"" + props.productImageUri + "\"," : "") + '
+          "offers": {
+            "@type": "Offer",
+            "availability": ' + (documentNode.properties.stock ? "\"https://schema.org/InStock\"" : "\"https://schema.org/SoldOut\"") + ',
+            "price": "' + String.replace(node.properties.price, ",", ".") +'",
+            "priceCurrency": "EUR"
+          }
+        }
+        '}</script>
+    `
+}

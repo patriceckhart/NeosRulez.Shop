@@ -1,0 +1,4 @@
+prototype(NeosRulez.Shop:Class.ProductCollection) {
+    @class = 'NeosRulez\\Shop\\Fusion\\ProductCollectionFusion'
+    items = false
+}

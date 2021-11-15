@@ -1,6 +1,6 @@
 'NeosRulez.Shop:Content.CustomProduct':
   superTypes:
-    'Neos.Neos:Content': true
+    'NeosRulez.Shop:Component.AbstractContent': true
   ui: ~
 #    label: 'Custom Product'
 #    group: 'neosrulez_shop'

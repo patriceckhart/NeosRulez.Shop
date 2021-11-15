@@ -6,7 +6,7 @@ prototype(NeosRulez.Shop:Content.CustomProduct) < prototype(Neos.Neos:ContentCom
     }
 
     renderer = afx`
-        <NeosRulez.Shop:Content.AbstractContent>
+        <NeosRulez.Shop:Component.AbstractContent>
             <Neos.Fusion.Form:Form form.target.action="addCustom" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
                 <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" attributes.value={props.nodeuri} />
                 <div class="form-group">
@@ -56,6 +56,6 @@ prototype(NeosRulez.Shop:Content.CustomProduct) < prototype(Neos.Neos:ContentCom
                 </div>
                 <!-- + images array -->
             </Neos.Fusion.Form:Form>
-        </NeosRulez.Shop:Content.AbstractContent>
+        </NeosRulez.Shop:Component.AbstractContent>
     `
 }

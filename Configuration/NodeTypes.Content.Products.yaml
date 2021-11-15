@@ -1,6 +1,6 @@
 'NeosRulez.Shop:Content.Products':
   superTypes:
-    'Neos.Neos:Content': true
+    'NeosRulez.Shop:Component.AbstractContent': true
   ui:
     label: i18n
     group: 'neosrulez_shop'

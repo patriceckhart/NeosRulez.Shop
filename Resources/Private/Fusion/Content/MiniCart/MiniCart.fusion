@@ -1,8 +1,8 @@
 prototype(NeosRulez.Shop:Content.MiniCart) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
-        <NeosRulez.Shop:Content.AbstractContent>
+        <NeosRulez.Shop:Component.AbstractContent>
             <NeosRulez.Shop:Component.MiniCart />
-        </NeosRulez.Shop:Content.AbstractContent>
+        </NeosRulez.Shop:Component.AbstractContent>
     `
 }

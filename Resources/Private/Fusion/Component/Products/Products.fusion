@@ -16,48 +16,15 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
         `
     }
     renderer = afx`
-        <NeosRulez.Shop:Content.AbstractContent>
+        <NeosRulez.Shop:Component.AbstractContent>
             <div class="products filtered">
                 <div class="row">
                     <Neos.Fusion:Loop items={props.products} item="item">
-                        <div class={'col-md-4 mix' + (q(item.node).property('categories')[0].identifier ? ' category-' + q(item.node).property('categories')[0].identifier : '')}>
-                            <Neos.Neos:NodeLink node={item.node} attributes.class="d-block product-item-link">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <Neos.Fusion:Loop items={item.node.properties.images} itemName="asset" itemKey="assetKey">
-                                            <Neos.Neos:ImageTag @if.render={assetKey == 0} asset={asset} allowUpScaling="true" allowCropping="true" width="400" height="280" attributes.class="img-fluid product-item-image" />
-                                        </Neos.Fusion:Loop>
-                                        <div class="d-block mt-2 product-item-title">
-                                            {item.node.properties.title}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row align-items-end">
-                                    <div class="col-5">
-                                        <small class="product-item-articlenumber">Art.Nr.: {item.node.properties.article_number}</small>
-                                    </div>
-                                    <div class="col-7 text-right product-item-price">
-                                        € {item.node.properties.price}
-                                    </div>
-                                </div>
-                            </Neos.Neos:NodeLink>
-                            <Neos.Fusion.Form:Form @if.render={props.show_addto} form.target.action="add" form.target.controller="Cart" form.data.item={item} >
-                                <div class="row align-items-center mt-3">
-                                    <div class="col-md-4">
-                                        <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control">
-                                            {props.quantity}
-                                        </Neos.Fusion.Form:Select>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block w-100">In den Warenkorb</Neos.Fusion.Form:Button>
-                                    </div>
-                                </div>
-                            </Neos.Fusion.Form:Form>
-                        </div>
+                        <NeosRulez.Shop:Content.Products.Item />
                     </Neos.Fusion:Loop>
                 </div>
             </div>
-        </NeosRulez.Shop:Content.AbstractContent>
+        </NeosRulez.Shop:Component.AbstractContent>
     `
 
     @cache {
@@ -74,4 +41,44 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
             2 = ${Neos.Caching.nodeTag(documentNode)}
         }
     }
+}
+
+prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div class={'col-md-4 mix' + (q(item.node).property('categories')[0].identifier ? ' category-' + q(item.node).property('categories')[0].identifier : '')}>
+            <Neos.Neos:NodeLink node={item.node} attributes.class="d-block product-item-link">
+                <div class="row">
+                    <div class="col-12">
+                        <Neos.Fusion:Loop items={item.node.properties.images} itemName="asset" itemKey="assetKey">
+                            <Neos.Neos:ImageTag @if.render={assetKey == 0} asset={asset} allowUpScaling="true" allowCropping="true" width="400" height="280" attributes.class="img-fluid product-item-image" />
+                        </Neos.Fusion:Loop>
+                        <div class="d-block mt-2 product-item-title">
+                            {item.node.properties.title}
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-end">
+                    <div class="col-5">
+                        <small class="product-item-articlenumber">Art.Nr.: {item.node.properties.article_number}</small>
+                    </div>
+                    <div class="col-7 text-right product-item-price">
+                        € {item.node.properties.price}
+                    </div>
+                </div>
+            </Neos.Neos:NodeLink>
+            <Neos.Fusion.Form:Form @if.render={props.show_addto} form.target.action="add" form.target.controller="Cart" form.data.item={item} >
+                <div class="row align-items-center mt-3">
+                    <div class="col-md-4">
+                        <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control">
+                            {props.quantity}
+                        </Neos.Fusion.Form:Select>
+                    </div>
+                    <div class="col-md-8">
+                        <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block w-100">In den Warenkorb</Neos.Fusion.Form:Button>
+                    </div>
+                </div>
+            </Neos.Fusion.Form:Form>
+        </div>
+    `
 }

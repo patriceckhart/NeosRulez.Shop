@@ -183,11 +183,37 @@ class Cart {
     public function addCustom($item) {
         $cart = $this->items;
 
+        $item['images'] = [];
+        if(array_key_exists('node', $item)) {
+            $context = $this->contextFactory->create();
+            $productNode = $context->getNodeByIdentifier($item['node']);
+            if($productNode->hasProperty('images')) {
+                $images = $productNode->getProperty('images');
+                if(array_key_exists(0, $images)) {
+                    $item['images'][] = $images[0];
+                }
+            }
+            if($productNode->hasProperty('itemCollection')) {
+                $items = $productNode->getProperty('itemCollection');
+                if(array_key_exists(0, $items)) {
+                    $itemNode = $items[0];
+                    if($itemNode->hasProperty('images')) {
+                        $images = $itemNode->getProperty('images');
+                        if(array_key_exists(0, $images)) {
+                            $item['images'][] = $images[0];
+                        }
+                    }
+                }
+            }
+        }
+
         $quantity = intval($item['quantity']);
 
         $item['tstamp'] = time();
         $item['price_gross'] = floatval(str_replace(',', '.', $item['price_gross']));
-        $item['tax'] = floatval(str_replace(',', '.', $item['tax']));
+        if(array_key_exists('tax', $item)) {
+            $item['tax'] = floatval(str_replace(',', '.', $item['tax']));
+        }
         if(array_key_exists('taxClass', $item)) {
             $item['tax'] = (float) $item['taxClass'];
             $priceGross = floatval(str_replace(',', '.', $item['price_gross']));
