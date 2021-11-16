@@ -168,7 +168,9 @@ class Cart {
         $item['hash'] = $itemHash;
         if(array_key_exists($item['hash'], $this->items)) {
             $quantity = $this->items[$itemHash]['quantity'];
-            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
+//            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
+            $newQuantity = $quantity + (int) $item['quantity'];
+            $this->updateItem($this->items[$itemHash], $newQuantity);
         } else {
             $this->items[$itemHash] = $item;
         }
@@ -255,7 +257,9 @@ class Cart {
         $item['hash'] = $itemHash;
         if(array_key_exists($item['hash'], $this->items)) {
             $quantity = $this->items[$itemHash]['quantity'];
-            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
+//            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
+            $newQuantity = $quantity + (int) $item['quantity'];
+            $this->updateItem($this->items[$itemHash], $newQuantity);
         } else {
             $this->items[$itemHash] = $item;
         }
