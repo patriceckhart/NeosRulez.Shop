@@ -237,23 +237,31 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion
 prototype(NeosRulez.Shop:Component.Product.Afx.Options) < prototype(Neos.Fusion:Component) {
 
     option_groups = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').get()}
-    options = ${q(documentNode).children('[instanceof NeosRulez.Shop:Document.Options]').sort('_index', 'ASC').children('[instanceof NeosRulez.Shop:Document.Option]').get()}
 
     renderer = afx`
         <Neos.Fusion:Loop @if.render={props.option_groups} items={props.option_groups} itemName="option_group">
             <div class="mb-3">
                 <label for={'option__' + option_group.identifier} >{option_group.properties.title}</label>
                 <Neos.Fusion.Form:Select attributes.id={'option__' + option_group.identifier} field.name="item[options][]" attributes.class="form-control form-select">
-                    <Neos.Fusion:Loop @if.render={props.options} items={props.options} itemName="optionItem">
-                        <Neos.Fusion.Form:Select.Option option.value={optionItem.identifier} >
-                            {optionItem.properties.title}
-                            <span @if.render={optionItem.properties.price} >
-                                    &nbsp;(+ <NeosRulez.Shop:Class.Currency float={optionItem.properties.price} currencySign="€" />)
-                                </span>
-                        </Neos.Fusion.Form:Select.Option>
-                    </Neos.Fusion:Loop>
+                    <NeosRulez.Shop:Component.Product.Afx.Options.Items optionGroup={option_group} />
                 </Neos.Fusion.Form:Select>
             </div>
+        </Neos.Fusion:Loop>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Options.Items) < prototype(Neos.Fusion:Component) {
+
+    options = ${q(this.optionGroup).children('[instanceof NeosRulez.Shop:Document.Option]').sort('_index', 'ASC').get()}
+
+    renderer = afx`
+        <Neos.Fusion:Loop @if.render={props.options} items={props.options} itemName="optionItem">
+            <Neos.Fusion.Form:Select.Option option.value={optionItem.identifier} >
+                {optionItem.properties.title}
+                <span @if.render={optionItem.properties.price} >
+                    &nbsp;(+ <NeosRulez.Shop:Class.Currency float={optionItem.properties.price} currencySign="€" />)
+                </span>
+            </Neos.Fusion.Form:Select.Option>
         </Neos.Fusion:Loop>
     `
 }
