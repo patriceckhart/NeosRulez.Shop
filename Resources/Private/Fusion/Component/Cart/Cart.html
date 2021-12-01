@@ -471,7 +471,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="email">{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
-                <f:form.textfield id="email" name="email" class="form-control" placeholder="{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.email}', then:'{order.email}', else:'{userdata.email}')}" />
+                <f:form.textfield type="email" id="email" name="email" class="form-control" placeholder="{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.email}', then:'{order.email}', else:'{userdata.email}')}" />
             </div>
         </div>
     </div>
