@@ -571,10 +571,10 @@
         <f:for each="{shippings.0.available_shippings}" as="available_shipping">
             <f:if condition="{available_shipping.full_shipping_price}">
                 <f:then>
-                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.full_shipping_price}</f:format.currency></option>
+                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}<f:comment>: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.full_shipping_price}</f:format.currency></f:comment></option>
                 </f:then>
                 <f:else>
-                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></option>
+                    <option value="{available_shipping.shipping.identifier}"{f:if(condition='{order.shipping}=={available_shipping.shipping.identifier}', then:' selected')}>{available_shipping.shipping.properties.title}<f:comment>: <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{available_shipping.float_price}</f:format.currency></f:comment></option>
                 </f:else>
             </f:if>
         </f:for>
