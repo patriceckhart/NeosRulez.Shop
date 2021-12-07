@@ -38,6 +38,7 @@ $(document).ready(function(){
     $(document).on('change', '#shipping', function(){
         $('body').toggleClass('body-hide');
         $('#updateOrder').submit();
+        // renderCart();
     });
 
     if($('.shipping_form').is(':visible')) {
@@ -46,6 +47,7 @@ $(document).ready(function(){
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
+            // renderCart();
         });
     } else {
         $(document).on('change', '#country', function(){
@@ -54,6 +56,7 @@ $(document).ready(function(){
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
+            // renderCart();
         });
     }
 
@@ -67,6 +70,7 @@ $(document).ready(function(){
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
+            // renderCart();
         }
     });
 
@@ -76,8 +80,28 @@ $(document).ready(function(){
             $('#selected_country').val(country);
             $('body').toggleClass('body-hide');
             $('#updateOrder').submit();
+            // renderCart();
         }
     });
+
+    if($('#country__modal').length) {
+        var countryModal = new bootstrap.Modal(document.getElementById('country__modal'), {
+            keyboard: false,
+            backdrop: 'static'
+        });
+
+        if($('.product_detail').length) {
+            countryModal.show();
+        }
+    }
+
+    if($('#country').val() === null) {
+        $('#country').prop('selectedIndex', 1).change();
+    } else {
+        if ($('#shipping').val() === null) {
+            $('#shipping').prop('selectedIndex', 1).change();
+        }
+    }
 
     setInterval(function() {
         $('.form-control').each(function() {
@@ -96,28 +120,4 @@ $(document).ready(function(){
             }
         });
     }, 500);
-
-    selectableCountries = $('#country').find('option[value]').length;
-    selectableCountriesValue = $('#country').val();
-    if(selectableCountries >= 1 && selectableCountriesValue === null) {
-        $('#country').prop('selectedIndex', 1).change();
-    }
-
-    selectableShippings = $('#shipping').find('option[value]').length;
-    selectableShippingsValue = $('#shipping').val();
-    if(selectableShippings >= 1 && selectableShippingsValue === null) {
-        $('#shipping').prop('selectedIndex', 1).change();
-    }
-
-    if($('#country__modal').length) {
-        var countryModal = new bootstrap.Modal(document.getElementById('country__modal'), {
-            keyboard: false,
-            backdrop: 'static'
-        });
-
-        if($('.product_detail').length) {
-            countryModal.show();
-        }
-    }
-
 });
