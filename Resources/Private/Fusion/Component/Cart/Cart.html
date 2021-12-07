@@ -480,8 +480,8 @@
         <f:form.textarea id="notes" name="notes" class="form-control" placeholder="{f:translate(id: 'order_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{order.notes}" />
     </div>
     <div class="custom-control custom-checkbox form-check">
-        <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="shipping_address" name="alternative_shipping_address" value="1" {f:if(condition='{order.alternative_shipping_address}', then:' checked="checked"')}>
-        <label class="custom-control-label form-check-label" for="shipping_address">{f:translate(id: 'differing_shipping_address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
+        <input type="checkbox" class="custom-control-input form-check-input" style="float:left!important;" id="shipping_address_checkbox" name="alternative_shipping_address" value="1" {f:if(condition='{order.alternative_shipping_address}', then:' checked="checked"')}>
+        <label class="custom-control-label form-check-label" for="shipping_address_checkbox">{f:translate(id: 'differing_shipping_address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
     </div>
 </f:section>
 

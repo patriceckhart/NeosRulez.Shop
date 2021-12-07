@@ -21,7 +21,7 @@ $(document).ready(function(){
         $('.shipping_form').find('.form-control').removeAttr('required');
     }
 
-    $(document).on('change', '#shipping_address', function(){
+    $(document).on('change', '#shipping_address_checkbox', function(){
         $('.shipping_form').slideToggle().removeClass('d-block');
         if(required_change==0) {
             $('.shipping_form').find('.form-control').attr('required', 'required');
