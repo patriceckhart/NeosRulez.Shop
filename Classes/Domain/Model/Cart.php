@@ -330,6 +330,7 @@ class Cart {
         $shipping = [];
         $free_from = 9999999999999;
         $weight = 0;
+        $pricekg = false;
         $itemweight = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
@@ -344,6 +345,7 @@ class Cart {
                 if (array_key_exists('price_kg', $shipping[0])) {
                     if($shipping[0]['price_kg']) {
                         $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+                        $pricekg = true;
                     }
                 }
             }
@@ -373,7 +375,7 @@ class Cart {
                     $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
                 }
             }
-            if($weight>0) {
+            if($pricekg) {
                 $shipping_weight = $shipping[0]['price'] * $weight;
 
                 $factor = floatval($shipping[0]['tax'] / 100 + 1);
