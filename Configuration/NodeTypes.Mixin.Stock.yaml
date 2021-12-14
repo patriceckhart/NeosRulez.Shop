@@ -2,11 +2,17 @@
   abstract: true
   ui:
     inspector:
+      tabs:
+        stock:
+          label: NeosRulez.Shop:NodeTypes.Mixin.Stock:stockManagement
+          icon: fas fa-pallet
+          position: 16
       groups:
         neosrulez_shop_product_stocklevel:
           label: NeosRulez.Shop:NodeTypes.Mixin.Stock:stockManagement
           icon: fas fa-pallet
           position: after document
+          tab: stock
   properties:
     stockManagement:
       type: boolean

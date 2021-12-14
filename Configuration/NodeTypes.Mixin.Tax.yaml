@@ -2,11 +2,17 @@
   abstract: true
   ui:
     inspector:
+      tabs:
+        tax:
+          label: NeosRulez.Shop:NodeTypes.Mixin.Tax:groups.tax
+          icon: fas fa-hand-holding-usd
+          position: 17
       groups:
         tax:
-          label: i18n
+          label: NeosRulez.Shop:NodeTypes.Mixin.Tax:groups.tax
           icon: fas fa-hand-holding-usd
           position: after document
+          tab: tax
   properties:
     taxClass:
       type: reference

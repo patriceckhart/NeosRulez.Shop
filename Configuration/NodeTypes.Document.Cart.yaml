@@ -9,7 +9,7 @@
   ui:
     label: i18n
     icon: 'icon-shopping-basket'
-    position: 1
+    position: end
     group: 'neosrulez_shop'
     inspector:
       tabs:
