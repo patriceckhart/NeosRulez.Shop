@@ -13,6 +13,11 @@
     position: 1
     group: 'neosrulez_shop'
     inspector:
+      tabs:
+        images:
+          label: NeosRulez.Shop:NodeTypes.Document.Product:properties.images
+          icon: far fa-images
+          position: 15
       groups:
         document:
           label: NeosRulez.Shop:NodeTypes.Document.Product:groups.neosrulez_shop_product
@@ -20,7 +25,13 @@
         neosrulez_shop_product:
           label: i18n
           icon: 'icon-shopping-cart'
+        images:
+          label: NeosRulez.Shop:NodeTypes.Document.Product:properties.images
+          icon: far fa-images
+          tab: images
   properties:
+    titleOverride:
+      ui: ~
     article_number:
       type: string
       ui:
@@ -70,14 +81,14 @@
         reloadIfChanged: true
         inspector:
           group: document
-          position: 5
+          position: start
     images:
       type: array<Neos\Media\Domain\Model\Asset>
       ui:
-        label: 'Bilder'
+        label: i18n
         inspector:
-          group: document
-          position: 6
+          group: images
+          position: 1
         reloadIfChanged: true
     description:
       type: string
@@ -159,6 +170,15 @@
           editorOptions:
             allowEmpty: true
             dataSourceIdentifier: neosrulez-shop-relays
+    freeShipping:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: document
+          position: end
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.FreeStyleTextOption': true

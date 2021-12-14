@@ -106,6 +106,10 @@ class Cart {
 
         $item['weight'] = $product_node->getProperty('weight');
 
+        if($product_node->hasProperty('freeShipping')) {
+            $item['freeShipping'] = $product_node->getProperty('freeShipping');
+        }
+
         if($min_quantity) {
             $item['min_quantity'] = $min_quantity;
         }
@@ -332,6 +336,7 @@ class Cart {
         $weight = 0;
         $pricekg = false;
         $itemweight = 0;
+        $freeShipping = true;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -351,6 +356,15 @@ class Cart {
             }
             $itemweight = $itemweight + intval($item['weight']);
             $itemweight = $itemweight * intval($item['quantity']);
+
+            if(array_key_exists('freeShipping', $item)) {
+                if($item['freeShipping'] === false) {
+                    $freeShipping = false;
+                }
+            } else {
+                $freeShipping = false;
+            }
+
         }
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
@@ -396,6 +410,10 @@ class Cart {
                 $total_shipping = $shipping[0]['price'];
             }
             if($free_from && $total_coupon>=$free_from) {
+                $total_shipping = 0;
+                $tax_shipping = 0;
+            }
+            if($freeShipping) {
                 $total_shipping = 0;
                 $tax_shipping = 0;
             }
