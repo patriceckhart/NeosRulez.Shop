@@ -1,0 +1,8 @@
+'Neos.Neos:Document':
+  constraints:
+    nodeTypes:
+      'NeosRulez.Shop:Document.Options': false
+      'NeosRulez.Shop:Document.Option': false
+      'NeosRulez.Shop:Document.FreeStyleTextOption': false
+      'NeosRulez.Shop:Document.Shipping': false
+      'NeosRulez.Shop:Document.Tax': false
