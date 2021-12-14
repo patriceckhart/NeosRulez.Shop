@@ -103,6 +103,10 @@ $(document).ready(function(){
         }
     }
 
+    $('#updateOrder').submit(function() {
+        $('#submit_btn').addClass('submitted');
+    });
+
     setInterval(function() {
         $('.form-control').each(function() {
             attr = $(this).attr('required');
