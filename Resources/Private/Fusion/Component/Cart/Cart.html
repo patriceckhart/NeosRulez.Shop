@@ -95,7 +95,7 @@
             <div class="col-md-2 font-weight-bold">
                 {f:translate(id: 'quantity', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
             </div>
-            <div class="col-md-2 text-right font-weight-bold">
+            <div class="col-md-2 text-end font-weight-bold">
                 {f:translate(id: 'total', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
             </div>
             <div class="col-md-1 font-weight-bold">
@@ -162,7 +162,7 @@
                     </select>
                 </f:form>
             </div>
-            <div class="col-md-2 col-4 text-right">
+            <div class="col-md-2 col-4 text-end">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.total}</f:format.currency>
                 <f:if condition="{taxcart}">
                     <small class="d-block">{f:translate(id: 'incl', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} {item.tax} % {f:translate(id: 'tax_short', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</small>
@@ -199,7 +199,7 @@
             <div class="col-7">
                 {f:translate(id: 'subtotal', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
             </div>
-            <div class="col-5 text-right font-weight-bold">
+            <div class="col-5 text-end font-weight-bold">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_tax}</f:format.currency>
             </div>
         </div>
@@ -210,7 +210,7 @@
                 <div class="col-7">
                     {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
                 </div>
-                <div class="col-5 text-right font-weight-bold">
+                <div class="col-5 text-end font-weight-bold">
                     <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax}</f:format.currency>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                 <div class="col-7">
                     {f:translate(id: 'shipping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
                 </div>
-                <div class="col-5 text-right font-weight-bold">
+                <div class="col-5 text-end font-weight-bold">
                     <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_shipping}</f:format.currency>
                 </div>
             </div>
@@ -235,7 +235,7 @@
                     <div class="col-7">
                         {f:translate(id: 'incl_tax', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'shipping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})
                     </div>
-                    <div class="col-5 text-right font-weight-bold">
+                    <div class="col-5 text-end font-weight-bold">
                         <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.tax_shipping}</f:format.currency>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                 <div class="col-7">
                     {f:translate(id: 'coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
                 </div>
-                <div class="col-5 text-right font-weight-bold">
+                <div class="col-5 text-end font-weight-bold">
                     - <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.discount}</f:format.currency>
                 </div>
             </div>
@@ -259,7 +259,7 @@
             <div class="col-7">
                 {f:translate(id: 'total', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
             </div>
-            <div class="col-5 text-right font-weight-bold">
+            <div class="col-5 text-end font-weight-bold">
                 <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total}</f:format.currency>
             </div>
         </div>
@@ -293,7 +293,7 @@
                                 </div>
                             </f:then>
                             <f:else>
-                                <div class="form-group mt-3">
+                                <div class="mb-3 mt-3">
                                     <f:form action="checkout" controller="Cart" arguments="{return: '{node -> neos:uri.node()}'}" package="NeosRulez.Shop">
                                         <button type="submit" class="btn btn-primary btn-block w-100"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                                     </f:form>
@@ -342,7 +342,7 @@
                         <f:else>
                             <f:form action="deleteCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
                                 <div class="d-block mt-3 coupon">
-                                    <div class="form-group">
+                                    <div class="mb-3">
                                         <i class="fas fa-percentage mr-2"></i> {coupons.0.name} <f:if condition="{coupons.0.value} == '0'"><f:else>{f:translate(id: 'in_the_value_of', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</f:else></f:if>
                                         <f:if condition="{coupons.0.percentual}">
                                             <f:then>
@@ -357,7 +357,7 @@
                                             </f:else>
                                         </f:if>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="mb-3">
                                         <button type="submit" class="btn btn-danger btn-block w-100"><i class="fas fa-times mr-2"></i> {f:translate(id: 'remove_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                                     </div>
                                 </div>
@@ -376,13 +376,13 @@
 <f:section name="coupon_form">
     <f:form action="validateCoupon" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
         <div class="d-block mt-3 coupon">
-            <div class="form-group">
+            <div class="mb-3">
                 <div class="d-block py-2 mb-2 border-bottom-strong font-weight-bold">
                     <i class="fas fa-percentage mr-2"></i> {f:translate(id: 'coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}
                 </div>
                 <f:form.textfield name="code" class="form-control" placeholder="{f:translate(id: 'coupon_code', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" />
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <button type="submit" class="btn btn-light btn-block w-100"><i class="fas fa-check mr-2"></i> {f:translate(id: 'apply_coupon', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
             </div>
         </div>
@@ -392,7 +392,7 @@
 <f:section name="cart_links">
     <div class="row align-items-center mt-4">
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <f:if condition="{return_page}">
                     <neos:link.node class="btn btn-outline-primary btn-block w-100" node="{return_page}">{f:translate(id: 'continue_shopping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</neos:link.node>
                 </f:if>
@@ -400,7 +400,7 @@
         </div>
         <div class="col-md-6">
             <f:form action="deleteCart" controller="Cart" arguments="{return: '{node -> neos:uri.node()}', update: true}" package="NeosRulez.Shop">
-                <div class="form-group">
+                <div class="mb-3">
                     <button type="submit" class="btn btn-danger btn-block w-100"><i class="fas fa-trash mr-2"></i> {f:translate(id: 'empty_cart', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                 </div>
             </f:form>
@@ -414,23 +414,23 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="firstname" name="firstname" class="form-control" placeholder="{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.firstname}', then:'{order.firstname}', else:'{userdata.firstname}')}" />
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="lastname">{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="lastname" name="lastname" class="form-control" placeholder="{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.lastname}', then:'{order.lastname}', else:'{userdata.lastname}')}" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="company">{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
         <f:form.textfield id="company" name="company" class="form-control" placeholder="{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{f:if(condition='{order.company}', then:'{order.company}', else:'{userdata.company}')}" />
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="country">{f:translate(id: 'country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
         <select id="country" name="country" class="form-control form-select" required>
             <f:if condition="!{order.country} || {order.country}==''">
@@ -443,19 +443,19 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="address">{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="address" name="address" class="form-control" placeholder="{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.address}', then:'{order.address}', else:'{userdata.address}')}" />
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="zip">{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="zip" name="zip" class="form-control" placeholder="{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.zip}', then:'{order.zip}', else:'{userdata.zip}')}" />
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="city">{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="city" name="city" class="form-control" placeholder="{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.city}', then:'{order.city}', else:'{userdata.city}')}" />
             </div>
@@ -463,19 +463,19 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="phone">{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="phone" name="phone" class="form-control" placeholder="{f:translate(id: 'phone', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{f:if(condition='{order.phone}', then:'{order.phone}', else:'{userdata.phone}')}" />
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="email">{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield type="email" id="email" name="email" class="form-control" placeholder="{f:translate(id: 'email', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{f:if(condition='{order.email}', then:'{order.email}', else:'{userdata.email}')}" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="notes">{f:translate(id: 'order_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
         <f:form.textarea id="notes" name="notes" class="form-control" placeholder="{f:translate(id: 'order_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{order.notes}" />
     </div>
@@ -491,23 +491,23 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="shipping_firstname">{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="shipping_firstname" name="shipping_firstname" class="form-control" placeholder="{f:translate(id: 'firstname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.shipping_firstname}" />
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="shipping_lastname">{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="shipping_lastname" name="shipping_lastname" class="form-control" placeholder="{f:translate(id: 'lastname', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.shipping_lastname}" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="shipping_company">{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
         <f:form.textfield id="shipping_company" name="shipping_company" class="form-control" placeholder="{f:translate(id: 'company', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" value="{order.shipping_company}" />
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="shipping_country">{f:translate(id: 'country', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
         <select id="shipping_country" name="shipping_country" class="form-control form-select" required>
             <f:if condition="!{order.shipping_country} || {order.shipping_country}==''">
@@ -520,25 +520,25 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="shipping_address">{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="shipping_address" name="shipping_address" class="form-control" placeholder="{f:translate(id: 'address', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.shipping_address}" />
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="shipping_zip">{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="shipping_zip" name="shipping_zip" class="form-control" placeholder="{f:translate(id: 'zip', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.shipping_zip}" />
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="shipping_city">{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</label>
                 <f:form.textfield id="shipping_city" name="shipping_city" class="form-control" placeholder="{f:translate(id: 'city', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}" required="true" value="{order.shipping_city}" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="shipping_notes">{f:translate(id: 'shipping_notes', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')} ({f:translate(id: 'optional', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')})</label>
         <f:form.textarea id="shipping_notes" name="shipping_notes" class="form-control" placeholder="Anmerkungen zur Lieferung" value="{order.shipping_notes}" />
     </div>

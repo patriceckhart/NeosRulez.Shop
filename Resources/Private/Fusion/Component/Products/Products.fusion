@@ -62,7 +62,7 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
                     <div class="col-5">
                         <small class="product-item-articlenumber">Art.Nr.: {item.node.properties.article_number}</small>
                     </div>
-                    <div class="col-7 text-right product-item-price">
+                    <div class="col-7 text-end product-item-price">
                         € {item.node.properties.price}
                     </div>
                 </div>

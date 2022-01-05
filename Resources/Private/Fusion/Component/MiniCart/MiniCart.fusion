@@ -39,7 +39,7 @@ prototype(NeosRulez.Shop:Component.MiniCart.CartItemHeader) < prototype(Neos.Fus
             <div class="col-2 text-center">
                 {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:quantity')}
             </div>
-            <div class="col-3 text-right">
+            <div class="col-3 text-end">
                 {I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:total')}
             </div>
             <div class="col-2">
@@ -64,7 +64,7 @@ prototype(NeosRulez.Shop:Component.MiniCart.CartItem) < prototype(Neos.Fusion:Co
             <div class="col-2 text-center">
                 {props.item.quantity}
             </div>
-            <div class="col-3 text-right">
+            <div class="col-3 text-end">
                 <NeosRulez.Shop:Class.Currency float={props.item.total} decimalSeparator="," thousandsSeparator="" decimals="2" currencySign="€" />
                 <small class="d-block">{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:incl')} {props.item.tax} % {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:tax_short')}</small>
             </div>
@@ -87,10 +87,10 @@ prototype(NeosRulez.Shop:Component.MiniCart.Summary) < prototype(Neos.Fusion:Com
 
     renderer = afx`
         <div @if.render={props.summary} class="row align-items-center py-2">
-            <div class="col-7 text-right">
+            <div class="col-7 text-end">
                 <strong>{I18n.translate('NeosRulez.Shop:NodeTypes.Component.MiniCart:total')}</strong>
             </div>
-            <div class="col-3 text-right">
+            <div class="col-3 text-end">
                 <strong>
                     <NeosRulez.Shop:Class.Currency float={props.summary.total} decimalSeparator="," thousandsSeparator="" decimals="2" currencySign="€" />
                 </strong>

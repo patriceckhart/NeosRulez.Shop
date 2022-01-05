@@ -9,49 +9,49 @@ prototype(NeosRulez.Shop:Content.CustomProduct) < prototype(Neos.Neos:ContentCom
         <NeosRulez.Shop:Component.AbstractContent>
             <Neos.Fusion.Form:Form form.target.action="addCustom" form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
                 <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" attributes.value={props.nodeuri} />
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="quantity">Quantity</label>
                     <Neos.Fusion.Form:Input attributes.id="quantity" attributes.class="form-control" field.name="item[quantity]" attributes.required="required" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="article_number">Article number</label>
                     <Neos.Fusion.Form:Input attributes.id="article_number" attributes.class="form-control" field.name="item[article_number]" attributes.required="required" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="title">Title</label>
                     <Neos.Fusion.Form:Input attributes.id="title" attributes.class="form-control" field.name="item[title]" attributes.required="required" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="price_gross">Price</label>
                     <Neos.Fusion.Form:Input attributes.id="price_gross" attributes.class="form-control" field.name="item[price_gross]" attributes.required="required" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="tax">Tax</label>
                     <Neos.Fusion.Form:Input attributes.id="tax" attributes.class="form-control" field.name="item[tax]" attributes.value="20" attributes.required="required" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="min_quantity">Min. quantity</label>
                     <Neos.Fusion.Form:Input attributes.id="min_quantity" attributes.class="form-control" field.name="item[min_quantity]" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="min_quantity">Max. quantity</label>
                     <Neos.Fusion.Form:Input attributes.id="max_quantity" attributes.class="form-control" field.name="item[max_quantity]" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="weight">Weight</label>
                     <Neos.Fusion.Form:Input attributes.id="weight" attributes.class="form-control" field.name="item[weight]" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="option1name">Option</label>
                     <Neos.Fusion.Form:Input attributes.id="option1name" attributes.class="form-control" field.name="item[options][0][name]" />
                     <Neos.Fusion.Form:Input attributes.id="option1price" attributes.class="form-control" field.name="item[options][0][price]" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="option2name">Option</label>
                     <Neos.Fusion.Form:Input attributes.id="option2name" attributes.class="form-control" field.name="item[options][1][name]" />
                     <Neos.Fusion.Form:Input attributes.id="option2price" attributes.class="form-control" field.name="item[options][1][price]" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <Neos.Fusion.Form:Button attributes.class="btn btn-primary" >Add to cart</Neos.Fusion.Form:Button>
                 </div>
                 <!-- + images array -->
