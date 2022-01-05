@@ -60,6 +60,18 @@ class Cart {
     protected $shippingService;
 
     /**
+     * @Flow\Inject
+     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
+     */
+    protected $persistenceManager;
+
+    /**
+     * @Flow\Inject
+     * @var \Neos\Media\Domain\Repository\AssetRepository
+     */
+    protected $assetRepository;
+
+    /**
      * @var array
      */
     protected $settings;
@@ -78,8 +90,8 @@ class Cart {
      * @return void
      * @Flow\Session(autoStart = TRUE)
      */
-    public function add($item) {
-        $cart = $this->items;
+    public function add(array $item):void
+    {
 
         $quantity = intval($item['quantity']);
 
@@ -122,7 +134,12 @@ class Cart {
             $item['max_quantity'] = $stockLevel;
         }
 
-        $item['images'] = $product_node->getProperty('images');
+        $images = $product_node->getProperty('images');
+        if(!empty($images)) {
+            foreach ($images as $image) {
+                $item['images'][] = $image->getIdentifier();
+            }
+        }
 
         $factor = floatval($item['tax'] / 100 + 1);
         $item['tax_value_price'] = $item['price_gross'] - ($item['price_gross'] / $factor);
@@ -132,16 +149,12 @@ class Cart {
         $item['total'] = $item['price_gross']*$quantity;
         $item['tax_value_total'] = $item['total'] / $factor;
 
-        $key = array_search($item['article_number'], array_column($cart, 'article_number'));
-
         $additional_price_gross = 0;
         $additional_tax_value_price = 0;
 
-        $option_key = false;
         $optionsT = '';
+        $combined_options = [];
         if (array_key_exists('options', $item)) {
-            $option_key = array_search($item['options'], array_column($cart, 'options'));
-            $combined_options = [];
             foreach ($item['options'] as $option) {
                 $option_node = $context->getNodeByIdentifier($option);
                 $option_price = floatval(str_replace(',', '.', str_replace('.', '', $option_node->getProperty('price'))));
@@ -170,14 +183,8 @@ class Cart {
 
         $itemHash = md5($item['article_number'] . $optionsT);
         $item['hash'] = $itemHash;
-        if(array_key_exists($item['hash'], $this->items)) {
-            $quantity = $this->items[$itemHash]['quantity'];
-//            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
-            $newQuantity = $quantity + (int) $item['quantity'];
-            $this->updateItem($this->items[$itemHash], $newQuantity);
-        } else {
-            $this->items[$itemHash] = $item;
-        }
+
+        $this->addItem($item, $itemHash);
 
     }
 
@@ -196,7 +203,7 @@ class Cart {
             if($productNode->hasProperty('images')) {
                 $images = $productNode->getProperty('images');
                 if(array_key_exists(0, $images)) {
-                    $item['images'][] = $images[0];
+                    $item['images'][] = $images[0]->getIdentifier();
                 }
             }
             if($productNode->hasProperty('itemCollection')) {
@@ -206,7 +213,7 @@ class Cart {
                     if($itemNode->hasProperty('images')) {
                         $images = $itemNode->getProperty('images');
                         if(array_key_exists(0, $images)) {
-                            $item['images'][] = $images[0];
+                            $item['images'][] = $images[0]->getIdentifier();
                         }
                     }
                 }
@@ -259,15 +266,25 @@ class Cart {
 
         $itemHash = md5($item['article_number'] . $optionsT);
         $item['hash'] = $itemHash;
+
+        $this->addItem($item, $itemHash);
+
+    }
+
+    /**
+     * @param array $item
+     * @param string $itemHash
+     * @return void
+     */
+    public function addItem(array $item, string $itemHash)
+    {
         if(array_key_exists($item['hash'], $this->items)) {
             $quantity = $this->items[$itemHash]['quantity'];
-//            $this->items[$itemHash]['quantity'] = $quantity + (int) $item['quantity'];
             $newQuantity = $quantity + (int) $item['quantity'];
             $this->updateItem($this->items[$itemHash], $newQuantity);
         } else {
             $this->items[$itemHash] = $item;
         }
-
     }
 
     /**
@@ -287,7 +304,20 @@ class Cart {
      */
     public function cart() {
         $cart = $this->items;
-        return $cart;
+        $items = [];
+        if(!empty($cart)) {
+            foreach ($cart as $item) {
+                $images = $item['images'];
+                if(!empty($images)) {
+                    $item['images'] = [];
+                    foreach ($images as $image) {
+                        $item['images'][] = $this->assetRepository->findByIdentifier($image);
+                    }
+                }
+                $items[] = $item;
+            }
+        }
+        return $items;
     }
 
     /**
@@ -363,6 +393,14 @@ class Cart {
                 }
             } else {
                 $freeShipping = false;
+            }
+
+            $images = $item['images'];
+            if(!empty($images)) {
+                $item['images'] = [];
+                foreach ($images as $image) {
+                    $item['images'][] = $this->assetRepository->findByIdentifier($image);
+                }
             }
 
         }
