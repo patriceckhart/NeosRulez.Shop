@@ -41,9 +41,10 @@ class PayPalApi {
      * @param array $payment
      * @param array $args
      * @param string $success_uri
-     * @return void
+     * @return string
      */
-    public function execute($payment, $args, $success_uri) {
+    public function execute(array $payment, array $args, string $success_uri):string
+    {
 
         return '
             <style>body { overflow-x: hidden; }</style>
@@ -61,9 +62,9 @@ class PayPalApi {
                     createOrder: function(data, actions) {
                         return actions.order.create({
                             purchase_units: [{
-                                custom_id: '.$args['order_number'].',
+                                custom_id: "'.$args['order_number'].'",
                                 amount: {
-                                    value: '.floatval($args['summary']['total']).'
+                                    value: "'.floatval($args['summary']['total']).'"
                                 }
                             }]
                         });
