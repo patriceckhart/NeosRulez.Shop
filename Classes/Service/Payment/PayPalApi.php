@@ -45,7 +45,6 @@ class PayPalApi {
      */
     public function execute(array $payment, array $args, string $success_uri):string
     {
-
         return '
             <style>body { overflow-x: hidden; }</style>
             <script src="https://www.paypal.com/sdk/js?client-id='.$this->settings['Payment']['paypalapi']['args']['client_id'].'&currency=EUR" ></script>
@@ -64,7 +63,7 @@ class PayPalApi {
                             purchase_units: [{
                                 custom_id: "'.$args['order_number'].'",
                                 amount: {
-                                    value: "'.floatval($args['summary']['total']).'"
+                                    value: "' . (float) number_format(floatval($args['summary']['total']), 2, '.', '') . '"
                                 }
                             }]
                         });
