@@ -1,24 +1,45 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<div style="float:left; width: 100%; min-width: 800px; max-width:1110px; margin:0 auto; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em; font-size:0.9em;">
-
-    <div style="width: 100%; min-width: 800px; margin:0 auto;">
-
-        <p>Hallo {args.firstname} {args.lastname}!</p>
-        <p>Im Anhang finden Sie die Rechnung zu Ihrer Bestellung.</p>
-        <p>Beste Grüße
-            <f:if condition="{args.cart_variables.invoice_address}">
-                <br />
-                <f:format.raw>{args.cart_variables.invoice_address}</f:format.raw>
-            </f:if>
-        </p>
-
-        <div style="float:left; width:100%;">
-            <small>-- <br />Dies ist ein automatisch generiertes E-Mail. Bitte antworten Sie nicht darauf.</small>
-        </div>
-
+<div role="article" aria-roledescription="email" lang="en" style="background-color: #f6f6f6;"><table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #f6f6f6;"><tbody><tr><td align="center">
+    <!--[if mso]><table role="presentation" align="center" style="width:660px" border="0" cellspacing="0" cellpadding="0"><tr><td style="padding:0px 0;background:#ffffff"><![endif]--><div class="outer" style="width: 96%; max-width: 660px; margin: 0px auto; background: #ffffff;"><div class="neos-contentcollection">
+    <div id="node__2b9430f4-7343-4055-8ee9-ee174e84954d" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">
+        <f:if condition="{args.cart_variables.mail_logo}">
+            <img src="{args.cart_variables.mail_logo}" style="width:250px;height:auto;" />
+        </f:if>
+    </p></div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
     </div>
-
-</div>
+    <div class="spacer" style="width: 100%; max-width: 630px; line-height: 10px; height: 10px; mso-line-height-rule: exactly;">&nbsp;</div>
+    <div id="node__fb9b606a-f222-4c05-a481-0bb799d0411f" class="neosrulez-directmail-content neosrulez-directmail-content-headline container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div><h2 style="margin: 0; font-weight: bold; font-size: 32px; line-height: 32px;">Ihre Rechnung</h2></div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+    <div id="node__c8c28899-5460-41d2-89ec-91e1549322d5" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">Im Anhang finden Sie die Rechnung zu Ihrer Bestellung.</p></div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+    <div id="node__392df643-cbae-4891-b65c-8aef98f522c7" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">Beste Grüße!</p></div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+    <div id="node__a714c6d9-cc35-40bb-9be3-3994143380ba" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">
+        <f:if condition="{args.cart_variables.invoice_address}">
+            <f:format.raw>{args.cart_variables.invoice_address}</f:format.raw>
+        </f:if>
+    </p></div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+    <div class="spacer" style="width: 100%; max-width: 630px; line-height: 10px; height: 10px; mso-line-height-rule: exactly;">&nbsp;</div>
+    <div id="node__9607a232-ae95-4164-aeeb-58a98831bed7" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
+        <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 11px;">
+        <p style="line-height: normal; margin: 0;">--</p>
+        <p style="line-height: normal; margin: 0;">Dies ist ein automatisch generiertes E-Mail. Bitte antworten Sie nicht darauf.</p>
+    </div></div>
+        <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+</div></div>
+    <!--[if mso]></td></tr></table><![endif]-->
+</td></tr></tbody></table></div>
