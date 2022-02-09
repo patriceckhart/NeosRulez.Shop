@@ -233,7 +233,9 @@
     <f:if condition="{args.payment}=='prepayment'">
         <div class="spacer" style="width: 100%; max-width: 630px; line-height: 10px; height: 10px; mso-line-height-rule: exactly;">&nbsp;</div>
         <div id="node__921d3790-a587-409b-99e6-c0adfa496656" class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
-            <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;"><strong>Vorauskassa: </strong><a href="%7Bargs.payment_url%7D">Zur Bankverbindung</a></p></div></div>
+            <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">
+            <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
+        </p></div></div>
             <!--[if mso]></td></tr></table><![endif]-->
         </div>
     </f:if>
@@ -242,7 +244,7 @@
         <div class="spacer" style="width: 100%; max-width: 630px; line-height: 10px; height: 10px; mso-line-height-rule: exactly;">&nbsp;</div>
         <div class="neosrulez-directmail-content neosrulez-directmail-content-text container" style="text-align: left; font-family: Arial;">
             <!--[if mso]><table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:left"><tr><td style="width:660px;padding:10px" valign="center"><![endif]--><div style="padding: 10px;"><div style="width: 100%; font-size: 14px;"><p style="line-height: normal; margin: 0;">
-            {args.cart_variables.footer_text -> f:format.raw()}
+            <f:format.raw>{args.cart_variables.footer_text}</f:format.raw>
         </p></div></div>
             <!--[if mso]></td></tr></table><![endif]-->
         </div>
