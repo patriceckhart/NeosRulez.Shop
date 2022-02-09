@@ -33,6 +33,14 @@
       type: boolean
       defaultValue: false
       ui: ~
+    cropImage:
+      type: boolean
+      defaultValue: true
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: 'neosrulez_shop_products'
 #         label: 'In den Warenkorb anzeigen'
 #         showInCreationDialog: true
 #         reloadIfChanged: true

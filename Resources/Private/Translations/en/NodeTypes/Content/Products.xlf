@@ -17,6 +17,9 @@
             <trans-unit id="properties.show_addto" xml:space="preserve">
                 <source>Show "Add to cart"</source>
             </trans-unit>
+            <trans-unit id="properties.cropImage" xml:space="preserve">
+                <source>Crop images</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
