@@ -24,7 +24,11 @@ readyNeosRulezShopDocument(() => {
             var request = new XMLHttpRequest();
             request.open('POST', postUrl);
             request.send(formData);
-            cartCount();
+            request.onreadystatechange = function() {
+                if (request.readyState === 4) {
+                    cartCount();
+                }
+            }
             if(document.querySelector('.cart-alert')) {
                 $('.cart-alert').slideDown();
             }
