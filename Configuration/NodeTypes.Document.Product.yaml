@@ -90,6 +90,15 @@
           group: images
           position: 1
         reloadIfChanged: true
+    dontCropImage:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: images
+          position: after images
     description:
       type: string
       ui:

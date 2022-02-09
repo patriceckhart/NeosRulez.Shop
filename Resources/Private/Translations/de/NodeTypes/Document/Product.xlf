@@ -41,6 +41,9 @@
             <trans-unit id="properties.freeShipping" xml:space="preserve">
                 <source>Versandkostenfrei</source>
             </trans-unit>
+            <trans-unit id="properties.dontCropImage" xml:space="preserve">
+                <source>Hauptbild nicht beschneiden</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

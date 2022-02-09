@@ -39,10 +39,12 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:C
     images = ${node.properties.images}
     title = ${node.properties.title}
 
+    dontCropImage = ${q(node).property('dontCropImage')}
+
     renderer = afx`
         <div class="product_image">
             <div @if.render={props.images} class="image lightbox">
-                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={props.images[0]} galleryId={'lightbox__' + props.galleryId} width={props.imageWidth} height={props.imageHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={props.title} class="img-fluid" />
+                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={props.images[0]} galleryId={'lightbox__' + props.galleryId} width={props.imageWidth} maximumWidth={props.imageWidth} height={props.dontCropImage ? false : props.imageHeight} allowCropping={props.dontCropImage ? false : true} allowUpScaling={true} alternativeText={node.properties.title} title={props.title} async={true} class="img-fluid" />
             </div>
         </div>
         <div @if.render={props.images} class="product_images">
@@ -51,7 +53,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:C
                     <Neos.Fusion:Loop items={props.images} itemName="image" iterationName="imagesIterator">
                         <div @if.render={imagesIterator.index != 0 ? true : false} class="col-md-3 col-6">
                             <div class="image lightbox">
-                                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={image} galleryId={'lightbox__' + props.galleryId} width={props.thumbWidth} height={props.thumbHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={props.title} class="img-fluid" />
+                                <NeosRulez.Bootstrap:Component.ImageTag.Lightbox image={image} galleryId={'lightbox__' + props.galleryId} width={props.thumbWidth} height={props.thumbHeight} allowCropping={true} allowUpScaling={true} alternativeText={node.properties.title} title={props.title} async={true} class="img-fluid" />
                             </div>
                         </div>
                     </Neos.Fusion:Loop>
