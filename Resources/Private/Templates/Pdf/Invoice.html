@@ -3,27 +3,27 @@
 {namespace media=Neos\Media\ViewHelpers}
 
 <f:if condition="{args.cart_variables.invoice_background}">
-    <div style="float:left; width:100%; position: absolute; left:0; top:0; ">
-        <img src="{args.cart_variables.invoice_background}" style="width:100%; height:auto;" />
+    <div style="float:left; width:.2in; position: absolute; left:0; top:0; ">
+        <img src="{args.cart_variables.invoice_background}" style="width:6.8in; height:auto;" />
     </div>
 </f:if>
-<div style="float:left; position:absolute; margin:0 auto; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em;">
+<div style="float:left; position:absolute; width:6.8in; margin:0 auto; margin-left:80px; margin-top:40px; margin-bottom:40px; font-family:Arial, Helvetica, sans-serif; line-height:1.6em;">
 
-    <div style="width: 100%; min-width: 800px; margin:0 auto;">
+    <div style="width:6.8in; margin:0 auto;">
 
-        <div style="float:left; width:100%; margin-bottom:50px;">
+        <div style="float:left; width:6.8in; margin-bottom:50px;">
             <div style="float:left; width:50%;">
                 <f:format.raw>{args.cart_variables.invoice_address}</f:format.raw>
             </div>
         </div>
 
-        <div style="float:left; width:100%; margin-top:70px;">
+        <div style="float:left; width:6.8in; margin-top:70px;">
             <div style="float:left; width:50%;">
                 <f:render section="invoiceAddress" arguments="{_all}" /><br />
             </div>
         </div>
 
-        <div style="float:left; width:100%; margin-top:60px; margin-bottom:60px;">
+        <div style="float:left; width:6.8in; margin-top:60px; margin-bottom:60px;">
             <div style="float:left; width:50%;">
                 <strong>Rechnung: {invoice_number}</strong>
             </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+        <div style="float:left; width:6.8in; margin-top:20px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
             <div style="float:left; width:50%;">
                 Produkt
             </div>
@@ -47,9 +47,9 @@
             </div>
         </div>
 
-        <div style="float:left; width:100%; margin-top:0; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
+        <div style="float:left; width:6.8in; margin-top:0; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #CCC;">
             <f:for each="{items}" as="item">
-                <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
+                <div style="float:left; width:6.8in; margin-top:20px; margin-bottom:20px;">
                     <div style="float:left; width:50%;">
                         <strong>{item.title}</strong><br />
                         <f:if condition="{item.combined_options}">
@@ -80,8 +80,8 @@
             </f:for>
         </div>
 
-        <div style="float:left; width:100%; margin-top:20px; margin-bottom:20px;">
-            <div style="float:left; width:100%; margin-top:20px; margin-bottom:10px;">
+        <div style="float:left; width:6.8in; margin-top:20px; margin-bottom:20px;">
+            <div style="float:left; width:6.8in; margin-top:20px; margin-bottom:10px;">
                 <div style="float:left; width:20%; text-align:right; float:right;">
                     {args.summary.subtotal -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
                 </div>
@@ -91,7 +91,7 @@
             </div>
 
             <f:if condition="{args.cart_variables.taxcart}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:6.8in; margin-bottom:10px;">
                     <div style="float:left; width:20%; text-align:right; float:right;">
                         {args.summary.tax -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
                     </div>
@@ -101,7 +101,7 @@
                 </div>
             </f:if>
 
-            <div style="float:left; width:100%; margin-bottom:10px;">
+            <div style="float:left; width:6.8in; margin-bottom:10px;">
                 <div style="float:left; width:20%; text-align:right; float:right;">
                     {args.summary.total_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
                 </div>
@@ -111,7 +111,7 @@
             </div>
 
             <f:if condition="{args.cart_variables.taxcart}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:6.8in; margin-bottom:10px;">
                     <div style="float:left; width:20%; text-align:right; float:right;">
                         {args.summary.tax_shipping -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
                     </div>
@@ -122,7 +122,7 @@
             </f:if>
 
             <f:if condition="{args.summary.discount}">
-                <div style="float:left; width:100%; margin-bottom:10px;">
+                <div style="float:left; width:6.8in; margin-bottom:10px;">
                     <div style="float:left; width:20%; text-align:right; float:right;">
                         - {args.summary.discount -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}
                     </div>
@@ -132,7 +132,7 @@
                 </div>
             </f:if>
 
-            <div style="float:left; width:100%; margin-bottom:10px;">
+            <div style="float:left; width:6.8in; margin-bottom:40px;">
                 <div style="float:left; width:20%; text-align:right; float:right;">
                     <strong>{args.summary.total -> f:format.currency(decimalSeparator: ',', thousandsSeparator: '.', decimals: '2', currencySign: '€')}</strong>
                 </div>
@@ -141,6 +141,22 @@
                 </div>
             </div>
         </div>
+
+        <f:if condition="{args.payment}=='prepayment'">
+            <div style="float:left; width:6.8in; margin-top:20px;">
+                <div style="float:left; width:6.8in;">
+                    <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
+                </div>
+            </div>
+        </f:if>
+
+        <f:if condition="{args.cart_variables.footer_text}">
+            <div style="float:left; width:6.8in; margin-top:20px;">
+                <div style="float:left; width:6.8in;">
+                    <f:format.raw>{args.cart_variables.footer_text}</f:format.raw>
+                </div>
+            </div>
+        </f:if>
 
     </div>
 
