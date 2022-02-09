@@ -21,7 +21,7 @@
                 <source>Steuer</source>
             </trans-unit>
             <trans-unit id="properties.stock" xml:space="preserve">
-                <source>Produkt verfügbar</source>
+                <source>Produkt ist verfügbar</source>
             </trans-unit>
             <trans-unit id="properties.images" xml:space="preserve">
                 <source>Produkt-Bilder</source>
