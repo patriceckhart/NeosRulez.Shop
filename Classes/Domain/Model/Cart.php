@@ -434,7 +434,7 @@ class Cart {
                 $tax_shipping = $shipping_weight - ($shipping_weight / $factor);
 
                 if($total_coupon<$free_from) {
-                    $total_coupon = $total_coupon + $shipping_weight;
+                    $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping_weight);
                 }
                 $total_shipping = $shipping_weight;
             } else {
@@ -443,7 +443,7 @@ class Cart {
                 $tax_shipping = $shipping[0]['price'] - ($shipping[0]['price'] / $factor);
 
                 if($total_coupon<$free_from) {
-                    $total_coupon = $total_coupon + $shipping[0]['price'];
+                    $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']);
                 }
                 $total_shipping = $shipping[0]['price'];
             }
