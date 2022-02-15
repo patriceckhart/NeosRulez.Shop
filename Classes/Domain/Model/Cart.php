@@ -358,6 +358,7 @@ class Cart {
         $subtotal = 0;
         $total = 0;
         $total_coupon = 0;
+        $total_primary = 0;
         $tax_shipping = 0;
         $discount = 0;
         $total_shipping = 0;
@@ -419,6 +420,7 @@ class Cart {
                 }
             }
         }
+        $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
                 if($shipping[0]['free_from'] == '') {
@@ -447,7 +449,7 @@ class Cart {
                 }
                 $total_shipping = $shipping[0]['price'];
             }
-            if($free_from && $total_coupon>=$free_from) {
+            if($free_from && $total_primary>=$free_from) {
                 $total_shipping = 0;
                 $tax_shipping = 0;
             }
