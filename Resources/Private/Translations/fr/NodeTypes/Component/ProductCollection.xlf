@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="fr" datatype="plaintext">
+        <body>
+            <trans-unit id="content.itemCollection" xml:space="preserve">
+				<source>comprend les produits suivants :</source>
+			</trans-unit>
+            <trans-unit id="content.product" xml:space="preserve">
+				<source>Aller au produit</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

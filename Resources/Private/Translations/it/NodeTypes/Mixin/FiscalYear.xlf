@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="groups.fiscalYear" xml:space="preserve">
+                <source>Fiscal year</source>
+            </trans-unit>
+            <trans-unit id="properties.fiscalYearStart" xml:space="preserve">
+                <source>Fiscal year: Start</source>
+            </trans-unit>
+            <trans-unit id="properties.fiscalYearEnd" xml:space="preserve">
+                <source>Fiscal year: Ende</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

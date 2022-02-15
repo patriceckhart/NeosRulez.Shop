@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="fr" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Des produits</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_products" xml:space="preserve">
+                <source>Des produits</source>
+            </trans-unit>
+			<trans-unit id="properties.selection" xml:space="preserve">
+            	<source>Sélectionnez des produits</source>
+            </trans-unit>
+            <trans-unit id="properties.startingPoint" xml:space="preserve">
+                <source>Point de départ</source>
+            </trans-unit>
+            <trans-unit id="properties.show_addto" xml:space="preserve">
+                <source>Afficher "Ajouter au panier"</source>
+            </trans-unit>
+            <trans-unit id="properties.cropImage" xml:space="preserve">
+                <source>Recadrer les images</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

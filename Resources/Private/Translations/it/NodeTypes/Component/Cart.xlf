@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="cart" xml:space="preserve">
+				<source>Carrello</source>
+			</trans-unit>
+            <trans-unit id="cart_empty" xml:space="preserve">
+				<source>il tuo carrello è vuoto</source>
+			</trans-unit>
+            <trans-unit id="checkout" xml:space="preserve">
+				<source>Guardare</source>
+			</trans-unit>
+            <trans-unit id="product" xml:space="preserve">
+				<source>Prodotto</source>
+			</trans-unit>
+            <trans-unit id="price" xml:space="preserve">
+				<source>Prezzo</source>
+			</trans-unit>
+            <trans-unit id="quantity" xml:space="preserve">
+				<source>Quantità</source>
+			</trans-unit>
+            <trans-unit id="total" xml:space="preserve">
+				<source>ToTotaletal</source>
+			</trans-unit>
+            <trans-unit id="excl" xml:space="preserve">
+				<source>esclusiva</source>
+			</trans-unit>
+            <trans-unit id="incl" xml:space="preserve">
+				<source>incluso</source>
+			</trans-unit>
+            <trans-unit id="tax_short" xml:space="preserve">
+				<source>Imposta</source>
+			</trans-unit>
+            <trans-unit id="summary" xml:space="preserve">
+				<source>Riepilogo</source>
+			</trans-unit>
+            <trans-unit id="subtotal" xml:space="preserve">
+				<source>totale parziale</source>
+			</trans-unit>
+            <trans-unit id="incl_tax" xml:space="preserve">
+				<source>Tasse incluse</source>
+			</trans-unit>
+            <trans-unit id="shipping" xml:space="preserve">
+				<source>Spedizione</source>
+			</trans-unit>
+            <trans-unit id="coupon" xml:space="preserve">
+				<source>Buona</source>
+			</trans-unit>
+            <trans-unit id="proceed_to_checkout" xml:space="preserve">
+				<source>Proceed to checkout</source>
+			</trans-unit>
+            <trans-unit id="coupon_invalid" xml:space="preserve">
+				<source>Procedere al checkout</source>
+			</trans-unit>
+            <trans-unit id="cart_min1" xml:space="preserve">
+				<source>Il valore del tuo carrello deve essere almeno</source>
+			</trans-unit>
+            <trans-unit id="cart_min2" xml:space="preserve">
+				<source>essere</source>
+			</trans-unit>
+            <trans-unit id="in_the_value_of" xml:space="preserve">
+				<source>nel valore di</source>
+			</trans-unit>
+            <trans-unit id="remove_coupon" xml:space="preserve">
+				<source>Rimuovi coupon</source>
+			</trans-unit>
+            <trans-unit id="apply_coupon" xml:space="preserve">
+				<source>Utilizza il coupon</source>
+			</trans-unit>
+            <trans-unit id="coupon_code" xml:space="preserve">
+				<source>Inserisci il codice coupon</source>
+			</trans-unit>
+            <trans-unit id="continue_shopping" xml:space="preserve">
+				<source>Continua a fare acquisti</source>
+			</trans-unit>
+            <trans-unit id="empty_cart" xml:space="preserve">
+				<source>Carrello vuoto</source>
+			</trans-unit>
+            <trans-unit id="billing_details" xml:space="preserve">
+				<source>Informazioni di fatturazione</source>
+			</trans-unit>
+			<trans-unit id="firstname" xml:space="preserve">
+				<source>nome</source>
+			</trans-unit>
+			<trans-unit id="lastname" xml:space="preserve">
+				<source>cognome</source>
+			</trans-unit>
+			<trans-unit id="company" xml:space="preserve">
+				<source>Società</source>
+			</trans-unit>
+			<trans-unit id="country" xml:space="preserve">
+				<source>Nazione</source>
+			</trans-unit>
+			<trans-unit id="please_select" xml:space="preserve">
+				<source>La tua selezione</source>
+			</trans-unit>
+			<trans-unit id="address" xml:space="preserve">
+				<source>Indirizzo</source>
+			</trans-unit>
+			<trans-unit id="zip" xml:space="preserve">
+				<source>Cap</source>
+			</trans-unit>
+			<trans-unit id="city" xml:space="preserve">
+				<source>Città</source>
+			</trans-unit>
+			<trans-unit id="phone" xml:space="preserve">
+				<source>Telefono</source>
+			</trans-unit>
+			<trans-unit id="email" xml:space="preserve">
+				<source>e-mail</source>
+			</trans-unit>
+			<trans-unit id="order_notes" xml:space="preserve">
+				<source>note d'ordine</source>
+			</trans-unit>
+			<trans-unit id="differing_shipping_address" xml:space="preserve">
+				<source>Indirizzo di spedizione diverso</source>
+			</trans-unit>
+			<trans-unit id="optional" xml:space="preserve">
+				<source>opzionale</source>
+			</trans-unit>
+			<trans-unit id="shipping_details" xml:space="preserve">
+				<source>Informazioni sulla spedizione</source>
+			</trans-unit>
+			<trans-unit id="shipping_notes" xml:space="preserve">
+				<source>Note di spedizione</source>
+			</trans-unit>
+			<trans-unit id="payment_method" xml:space="preserve">
+				<source>Metodo di pagamento</source>
+			</trans-unit>
+			<trans-unit id="shipping_method" xml:space="preserve">
+				<source>Metodo di spedizione</source>
+			</trans-unit>
+			<trans-unit id="newsletter" xml:space="preserve">
+				<source>Sì, desidero ricevere la newsletter</source>
+			</trans-unit>
+			<trans-unit id="accept_privacy1" xml:space="preserve">
+				<source>Sì, accetto il trattamento e la conservazione dei dati di cui sopra ai fini dell'evasione dell'ordine ai sensi dell'art</source>
+			</trans-unit>
+			<trans-unit id="accept_privacy2" xml:space="preserve">
+				<source>Informativa sulla privacy</source>
+			</trans-unit>
+			<trans-unit id="accept_terms1" xml:space="preserve">
+				<source>Sì, accetto il</source>
+			</trans-unit>
+			<trans-unit id="accept_terms2" xml:space="preserve">
+				<source>Termini di servizio</source>
+			</trans-unit>
+			<trans-unit id="complete_order" xml:space="preserve">
+				<source>Ordine completo</source>
+			</trans-unit>
+			<trans-unit id="edit_order" xml:space="preserve">
+				<source>Modifica ordine</source>
+			</trans-unit>
+			<trans-unit id="min_quantity11" xml:space="preserve">
+				<source>Deve essere almeno</source>
+			</trans-unit>
+			<trans-unit id="min_quantity12" xml:space="preserve">
+				<source>Deve essere almeno</source>
+			</trans-unit>
+			<trans-unit id="min_quantity21" xml:space="preserve">
+				<source>Prodotto nel carrello.</source>
+			</trans-unit>
+			<trans-unit id="min_quantity22" xml:space="preserve">
+				<source>I prodotti sono nel carrello.</source>
+			</trans-unit>
+			<trans-unit id="select_country" xml:space="preserve">
+				<source>Per favore seleziona un paese</source>
+			</trans-unit>
+			<trans-unit id="per_kg" xml:space="preserve">
+				<source>al kg</source>
+			</trans-unit>
+			<trans-unit id="free_from" xml:space="preserve">
+				<source>Spedizione gratuita da</source>
+			</trans-unit>
+			<trans-unit id="min_weight11" xml:space="preserve">
+				<source>Hai</source>
+			</trans-unit>
+			<trans-unit id="min_weight12" xml:space="preserve">
+				<source>kg nel carrello. Hai bisogno almeno</source>
+			</trans-unit>
+			<trans-unit id="min_weight13" xml:space="preserve">
+				<source>kg</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

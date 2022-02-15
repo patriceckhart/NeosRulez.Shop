@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="invoice" xml:space="preserve">
+				<source>Fattura</source>
+			</trans-unit>
+            <trans-unit id="doNotCloseWindow" xml:space="preserve">
+				<source>Non chiudere questa finestra!</source>
+			</trans-unit>
+            <trans-unit id="properties.free_from" xml:space="preserve">
+                <source>Spedizione gratuita da</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

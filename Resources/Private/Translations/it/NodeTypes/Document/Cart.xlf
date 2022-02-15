@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Carrello</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart" xml:space="preserve">
+                <source>Carrello</source>
+            </trans-unit>
+            <trans-unit id="tabs.neosrulez_shop_cart" xml:space="preserve">
+                <source>Fattura</source>
+            </trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart_invoice" xml:space="preserve">
+                <source>Fattura</source>
+            </trans-unit>
+            <trans-unit id="properties.recipient_mail" xml:space="preserve">
+                <source>Destinatario dell'email</source>
+            </trans-unit>
+            <trans-unit id="properties.order_subject" xml:space="preserve">
+                <source>Oggetto della posta</source>
+            </trans-unit>
+            <trans-unit id="properties.mail_logo" xml:space="preserve">
+                <source>Logo della posta</source>
+            </trans-unit>
+            <trans-unit id="properties.return_page" xml:space="preserve">
+                <source>Pagina di destinazione "Continua lo shopping"</source>
+            </trans-unit>
+            <trans-unit id="properties.privacy_page" xml:space="preserve">
+                <source>Pagina di destinazione "Privacy"</source>
+            </trans-unit>
+            <trans-unit id="properties.terms_page" xml:space="preserve">
+                <source>Pagina di destinazione "Condizioni"</source>
+            </trans-unit>
+            <trans-unit id="properties.min_quantity" xml:space="preserve">
+                <source>Numero minimo</source>
+            </trans-unit>
+            <trans-unit id="properties.min_weight" xml:space="preserve">
+                <source>Peso minimo</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_background" xml:space="preserve">
+                <source>Documento (Formato: DIN A4)</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number" xml:space="preserve">
+                <source>Numero fattura Inizio</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number_prefix" xml:space="preserve">
+                <source>Prefisso numero fattura</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice" xml:space="preserve">
+                <source>Inviare la fattura</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_address" xml:space="preserve">
+                <source>Indirizzo aziendale</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_info_prepayment" xml:space="preserve">
+                <source>Informazioni sul pagamento anticipato</source>
+            </trans-unit>
+            <trans-unit id="properties.mailFooterText" xml:space="preserve">
+                <source>Testo del piè di pagina dell'e-mail</source>
+            </trans-unit>
+            <trans-unit id="content.freeShipping" xml:space="preserve">
+                <source>Spedizione gratuita</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

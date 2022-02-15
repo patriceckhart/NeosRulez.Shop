@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Cart</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart" xml:space="preserve">
+                <source>Cart</source>
+            </trans-unit>
+            <trans-unit id="tabs.neosrulez_shop_cart" xml:space="preserve">
+                <source>Invoice</source>
+            </trans-unit>
+            <trans-unit id="groups.neosrulez_shop_cart_invoice" xml:space="preserve">
+                <source>Invoice</source>
+            </trans-unit>
+            <trans-unit id="properties.recipient_mail" xml:space="preserve">
+                <source>Recipient Mail address</source>
+            </trans-unit>
+            <trans-unit id="properties.order_subject" xml:space="preserve">
+                <source>Mail subject</source>
+            </trans-unit>
+            <trans-unit id="properties.mail_logo" xml:space="preserve">
+                <source>Mail logo</source>
+            </trans-unit>
+            <trans-unit id="properties.return_page" xml:space="preserve">
+                <source>Target page "Continue shopping"</source>
+            </trans-unit>
+            <trans-unit id="properties.privacy_page" xml:space="preserve">
+                <source>Target page "Privacy"</source>
+            </trans-unit>
+            <trans-unit id="properties.terms_page" xml:space="preserve">
+                <source>Target page "Conditions"</source>
+            </trans-unit>
+            <trans-unit id="properties.min_quantity" xml:space="preserve">
+                <source>Min. Anzahl</source>
+            </trans-unit>
+            <trans-unit id="properties.min_weight" xml:space="preserve">
+                <source>Min. weight</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_background" xml:space="preserve">
+                <source>Document (Format: DIN A4)</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number" xml:space="preserve">
+                <source>Invoicenumber Start</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_number_prefix" xml:space="preserve">
+                <source>Invoicenumber Prefix</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice" xml:space="preserve">
+                <source>Send Invoice</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_address" xml:space="preserve">
+                <source>Company address</source>
+            </trans-unit>
+            <trans-unit id="properties.invoice_info_prepayment" xml:space="preserve">
+                <source>Prepayment information</source>
+            </trans-unit>
+            <trans-unit id="properties.mailFooterText" xml:space="preserve">
+                <source>Mail footer text</source>
+            </trans-unit>
+            <trans-unit id="content.freeShipping" xml:space="preserve">
+                <source>Free shipping</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

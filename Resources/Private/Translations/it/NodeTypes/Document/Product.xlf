@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Prodotto</source>
+			</trans-unit>
+            <trans-unit id="groups.neosrulez_shop_product" xml:space="preserve">
+                <source>Prodotto</source>
+            </trans-unit>
+            <trans-unit id="properties.article_number" xml:space="preserve">
+                <source>Numero dell'articolo</source>
+            </trans-unit>
+            <trans-unit id="properties.price" xml:space="preserve">
+                <source>Prezzo</source>
+            </trans-unit>
+            <trans-unit id="properties.old_price" xml:space="preserve">
+                <source>Vecchio prezzo</source>
+            </trans-unit>
+            <trans-unit id="properties.tax" xml:space="preserve">
+                <source>tasse</source>
+            </trans-unit>
+            <trans-unit id="properties.stock" xml:space="preserve">
+                <source>Prodotto disponibile</source>
+            </trans-unit>
+            <trans-unit id="properties.images" xml:space="preserve">
+                <source>Immagini del prodotto</source>
+            </trans-unit>
+            <trans-unit id="properties.min_quantity" xml:space="preserve">
+                <source>Min. quantity</source>
+            </trans-unit>
+            <trans-unit id="properties.max_quantity" xml:space="preserve">
+                <source>Max. quantity</source>
+            </trans-unit>
+            <trans-unit id="properties.weight" xml:space="preserve">
+                <source>Peso in chilogrammi</source>
+            </trans-unit>
+            <trans-unit id="properties.relay" xml:space="preserve">
+                <source>Single product only in a package</source>
+            </trans-unit>
+            <trans-unit id="properties.freeShipping" xml:space="preserve">
+                <source>Free shipping</source>
+            </trans-unit>
+            <trans-unit id="properties.dontCropImage" xml:space="preserve">
+                <source>Non ritagliare l'immagine principale</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

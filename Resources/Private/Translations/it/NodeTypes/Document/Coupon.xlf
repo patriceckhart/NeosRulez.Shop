@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Buona</source>
+			</trans-unit>
+            <trans-unit id="groups.document" xml:space="preserve">
+                <source>Buona</source>
+            </trans-unit>
+            <trans-unit id="properties.code" xml:space="preserve">
+                <source>Buona code</source>
+            </trans-unit>
+            <trans-unit id="properties.percentual" xml:space="preserve">
+                <source>Percentuale</source>
+            </trans-unit>
+            <trans-unit id="properties.value" xml:space="preserve">
+                <source>Valore</source>
+            </trans-unit>
+            <trans-unit id="properties.min_cart_value" xml:space="preserve">
+                <source>Valore del carrello</source>
+            </trans-unit>
+            <trans-unit id="properties.quantity_restriction" xml:space="preserve">
+                <source>Limite</source>
+            </trans-unit>
+            <trans-unit id="properties.quantity" xml:space="preserve">
+                <source>Quantità</source>
+            </trans-unit>
+            <trans-unit id="properties.redeemed" xml:space="preserve">
+                <source>redento</source>
+            </trans-unit>
+            <trans-unit id="properties.isShippingCoupon" xml:space="preserve">
+                <source>Spedizione gratuita</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

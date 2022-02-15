@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Opzione per testo personalizzato</source>
+			</trans-unit>
+            <trans-unit id="groups.document" xml:space="preserve">
+                <source>Option for custom text</source>
+            </trans-unit>
+            <trans-unit id="properties.isRequired" xml:space="preserve">
+                <source>Il campo è obbligatiorio</source>
+            </trans-unit>
+            <trans-unit id="properties.isMultiline" xml:space="preserve">
+                <source>Il campo è multilinea</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
