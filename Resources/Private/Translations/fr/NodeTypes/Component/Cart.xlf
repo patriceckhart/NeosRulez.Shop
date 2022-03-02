@@ -165,7 +165,7 @@
 				<source>Les produits sont dans le panier.</source>
 			</trans-unit>
 			<trans-unit id="select_country" xml:space="preserve">
-				<source>Veuillez sélectionner un pays/source>
+				<source>Veuillez sélectionner un pays</source>
 			</trans-unit>
 			<trans-unit id="per_kg" xml:space="preserve">
 				<source>par kg</source>
