@@ -11,6 +11,12 @@
             <trans-unit id="tabs.neosrulez_shop_cart" xml:space="preserve">
                 <source>Invoice</source>
             </trans-unit>
+            <trans-unit id="groups.mailing" xml:space="preserve">
+                <source>Envoi de courrier</source>
+            </trans-unit>
+            <trans-unit id="tabs.mailing" xml:space="preserve">
+                <source>Envoi de courrier</source>
+            </trans-unit>
             <trans-unit id="groups.neosrulez_shop_cart_invoice" xml:space="preserve">
                 <source>Invoice</source>
             </trans-unit>
