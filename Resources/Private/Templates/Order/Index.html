@@ -2,79 +2,81 @@
 {namespace fusion=Neos\Fusion\ViewHelpers}
 <f:if condition="{orders}">
     <f:then>
-        <table class="neos-table" style="margin:0;">
-            <thead>
-            <tr>
-                <td>Bestell-Nr.:</td>
-                <td>Besteller</td>
-                <td>Datum</td>
-                <td>Zahlung</td>
-                <td>&nbsp;</td>
-            </tr>
-            </thead>
-            <tbody>
-            <f:for each="{orders}" as="order">
-                <tr style="{f:if(condition='{order.order.canceled}', then:'opacity:0.4;')}">
-                    <td>{order.order.ordernumber}</td>
-                    <td>{order.order.firstname} {order.order.lastname} ({order.order.email})</td>
-                    <td><f:format.date format="d.m.Y, H:i">{order.order.created}</f:format.date></td>
-                    <td>
-                        <span style="margin-right:10px;">{order.payment}</span>
-                        <f:if condition="{order.order.paid}">
-                            <f:then>
-                                <span class="neos-badge neos-badge-success">Zahlung abgeschlossen</span>
-                            </f:then>
-                            <f:else>
-                                <span class="neos-badge neos-badge-danger">Zahlung ausständig</span>
-                            </f:else>
-                        </f:if>
-                        <f:if condition="{order.order.canceled}">
-                            <span class="neos-badge neos-badge-warning" style="margin-left:10px;">Storniert</span>
-                        </f:if>
-                    </td>
-                    <td class="neos-action">
-                        <div class="neos-pull-right">
+        <f:widget.paginate objects="{orders}" as="paginatedOders" configuration="{itemsPerPage: 50}">
+            <table class="neos-table" style="margin:0;">
+                <thead>
+                <tr>
+                    <td>Bestell-Nr.:</td>
+                    <td>Rechnungs-Nr.:</td>
+                    <td>Besteller</td>
+                    <td>Datum</td>
+                    <td>Zahlung</td>
+                    <td>&nbsp;</td>
+                </tr>
+                </thead>
+                <tbody>
+                <f:for each="{paginatedOders}" as="order">
+                    <tr style="{f:if(condition='{order.order.canceled}', then:'opacity:0.4;')}">
+                        <td>{order.order.ordernumber}</td>
+                        <td>{order.invoice.invoicenumber}</td>
+                        <td>{order.order.firstname} {order.order.lastname} ({order.order.email})</td>
+                        <td><f:format.date format="d.m.Y, H:i">{order.order.created}</f:format.date></td>
+                        <td>
+                            <span style="margin-right:10px;">{order.paymentLabel}</span>
+                            <f:if condition="{order.order.paid}">
+                                <f:then>
+                                    <span class="neos-badge neos-badge-success">Zahlung abgeschlossen</span>
+                                </f:then>
+                                <f:else>
+                                    <span class="neos-badge neos-badge-danger">Zahlung ausständig</span>
+                                </f:else>
+                            </f:if>
+                            <f:if condition="{order.order.canceled}">
+                                <span class="neos-badge neos-badge-warning" style="margin-left:10px;">Storniert</span>
+                            </f:if>
+                        </td>
+                        <td class="neos-action">
+                            <div class="neos-pull-right">
 
-                            <f:comment>
                                 <f:if condition="{order.payment} == 'prepayment'">
                                     <f:link.action class="neos-button neos-button-primary" action="reminder" arguments="{order: order.order}"><i class="fas fa-bell"></i></f:link.action>
                                 </f:if>
-                            </f:comment>
 
-                            <f:if condition="{order.order.canceled}">
-                                <f:else>
-                                    <f:link.action class="neos-button neos-button-primary" action="show" arguments="{order: order.order}"><i class="fas fa-eye"></i></f:link.action>
-                                </f:else>
-                            </f:if>
+                                <f:if condition="{order.order.canceled}">
+                                    <f:else>
+                                        <f:link.action class="neos-button neos-button-primary" action="show" arguments="{order: order.order}"><i class="fas fa-eye"></i></f:link.action>
+                                    </f:else>
+                                </f:if>
 
-                            <f:if condition="{order.order.canceled}">
-                                <f:else>
-                                    <f:if condition="{order.order.paid}">
-                                        <f:then>
-                                            <f:link.action class="neos-button neos-button-danger" action="paid" arguments="{order: order.order}"><i class="fas fa-times"></i></f:link.action>
-                                        </f:then>
-                                        <f:else>
-                                            <f:link.action class="neos-button neos-button-success" action="paid" arguments="{order: order.order}"><i class="fas fa-check"></i></f:link.action>
-                                        </f:else>
-                                    </f:if>
-                                </f:else>
-                            </f:if>
+                                <f:if condition="{order.order.canceled}">
+                                    <f:else>
+                                        <f:if condition="{order.order.paid}">
+                                            <f:then>
+                                                <f:link.action class="neos-button neos-button-danger" action="paid" arguments="{order: order.order}"><i class="fas fa-times"></i></f:link.action>
+                                            </f:then>
+                                            <f:else>
+                                                <f:link.action class="neos-button neos-button-success" action="paid" arguments="{order: order.order}"><i class="fas fa-check"></i></f:link.action>
+                                            </f:else>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
 
-                            <f:if condition="{order.order.canceled}">
-                                <f:then>
-                                    <f:link.action class="neos-button neos-button-success" action="cancel" arguments="{order: order.order}"><i class="fas fa-check-circle"></i></f:link.action>
-                                </f:then>
-                                <f:else>
-                                    <f:link.action class="neos-button neos-button-danger" action="cancel" arguments="{order: order.order}"><i class="fas fa-ban"></i></f:link.action>
-                                </f:else>
-                            </f:if>
+                                <f:if condition="{order.order.canceled}">
+                                    <f:then>
+                                        <f:link.action class="neos-button neos-button-success" action="cancel" arguments="{order: order.order}"><i class="fas fa-check-circle"></i></f:link.action>
+                                    </f:then>
+                                    <f:else>
+                                        <f:link.action class="neos-button neos-button-danger" action="cancel" arguments="{order: order.order}"><i class="fas fa-ban"></i></f:link.action>
+                                    </f:else>
+                                </f:if>
 
-                        </div>
-                    </td>
-                </tr>
-            </f:for>
-            </tbody>
-        </table>
+                            </div>
+                        </td>
+                    </tr>
+                </f:for>
+                </tbody>
+            </table>
+        </f:widget.paginate>
     </f:then>
     <f:else>
         <p>Keine Bestellungen vorhanden</p>

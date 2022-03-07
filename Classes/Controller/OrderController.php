@@ -78,9 +78,13 @@ class OrderController extends ActionController
                 $payment_label = $order->getPayment();
             }
             $invoice = $this->invoiceRepository->findByOrdernumber($order->getOrdernumber())->getFirst();
-            $result[] = ['order' => $order, 'payment' => $payment_label, 'invoice' => $invoice];
+//            $result[] = ['order' => $order, 'payment' => $payment_label, 'invoice' => $invoice];
+
+            $order->order = $order;
+            $order->paymentLabel = $payment_label;
+            $order->invoice = $invoice;
         }
-        $this->view->assign('orders', $result);
+        $this->view->assign('orders', $orders);
     }
 
     /**
@@ -168,19 +172,20 @@ class OrderController extends ActionController
         $this->invoiceService->createInvoice($invoiceData, false, true);
     }
 
-//    /**
-//     * @param \NeosRulez\Shop\Domain\Model\Order $order
-//     * @return void
-//     */
-//    public function reminderAction(\NeosRulez\Shop\Domain\Model\Order $order) {
-//        $variables['args'] = json_decode($order->getInvoicedata(), true);
-//        $variables['items'] = json_decode($order->getCart(), true);
-//        $variables['header'] = 'Erinnerung: ';
-//        $variables['payment_service'] = [];
-//        $variables['url'] = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://'.$_SERVER['HTTP_HOST'];
-//
-//        $this->mailService->send($variables, $variables['header'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $variables['args']['email']) => $variables['args']['firstname'].' '.$variables['args']['lastname']], $variables['args']);
-//        $this->redirect('index');
-//    }
+    /**
+     * @param \NeosRulez\Shop\Domain\Model\Order $order
+     * @return void
+     */
+    public function reminderAction(\NeosRulez\Shop\Domain\Model\Order $order) {
+        $variables['args'] = json_decode($order->getInvoicedata(), true);
+        $variables['items'] = json_decode($order->getCart(), true);
+        $variables['args']['summary'] = json_decode($order->getSummary(), true);
+        $variables['header'] = 'Erinnerung: Es ist noch eine Zahlung offen';
+        $variables['payment_service'] = [];
+        $variables['url'] = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://'.$_SERVER['HTTP_HOST'];
+
+        $this->mailService->send($variables, $variables['header'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $variables['args']['email']) => $variables['args']['firstname'].' '.$variables['args']['lastname']], $variables['args']);
+        $this->redirect('index');
+    }
 
 }
