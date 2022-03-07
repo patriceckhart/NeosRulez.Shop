@@ -6,6 +6,7 @@
     'Neos.Seo:CanonicalLinkMixin': false
     'Neos.Seo:OpenGraphMixin': false
     'Neos.Seo:XmlSitemapMixin': false
+    'NeosRulez.Shop:Mixin.FiscalYear': true
   ui:
     label: i18n
     icon: 'icon-shopping-basket'
@@ -17,6 +18,10 @@
           label: i18n
           icon: 'fas fa-file-invoice-dollar'
           position: 12
+        mailing:
+          label: i18n
+          icon: 'fas fa-envelope'
+          position: 13
       groups:
         document:
           label: NeosRulez.Shop:NodeTypes.Document.Cart:groups.neosrulez_shop_cart
@@ -28,6 +33,10 @@
           label: i18n
           icon: 'fas fa-file-invoice-dollar'
           tab: 'neosrulez_shop_cart'
+        mailing:
+          label: i18n
+          icon: 'fas fa-envelope'
+          tab: mailing
   properties:
     uriPathSegment:
       ui:
@@ -62,8 +71,8 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
-          group: document
-          position: 3
+          group: mailing
+          position: 1
     order_subject:
       type: string
       ui:
@@ -71,16 +80,16 @@
         showInCreationDialog: true
         reloadIfChanged: true
         inspector:
-          group: document
-          position: 4
+          group: mailing
+          position: 2
     mail_logo:
       type: 'Neos\Media\Domain\Model\ImageInterface'
       ui:
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: document
-          position: 5
+          group: mailing
+          position: 3
           editorOptions:
             features:
               mediaBrowser: true
@@ -243,8 +252,8 @@
         label: i18n
         reloadIfChanged: true
         inspector:
-          group: document
-          position: 'after terms_page'
+          group: mailing
+          position: 'end'
           editor: 'Neos.Neos/Inspector/Editors/RichTextEditor'
           editorOptions:
             placeholder: ''

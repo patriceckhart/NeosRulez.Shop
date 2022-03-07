@@ -1,0 +1,36 @@
+'NeosRulez.Shop:Mixin.FiscalYear':
+  abstract: true
+  ui:
+    inspector:
+      tabs:
+        fiscalYear:
+          label: NeosRulez.Shop:NodeTypes.Mixin.FiscalYear:groups.fiscalYear
+          icon: fas fa-calendar
+          position: 18
+      groups:
+        fiscalYear:
+          label: NeosRulez.Shop:NodeTypes.Mixin.FiscalYear:groups.fiscalYear
+          icon: fas fa-calendar
+          position: after tax
+          tab: fiscalYear
+  properties:
+    fiscalYearStart:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: fiscalYear
+          position: 1
+          editorOptions:
+            format: 'd.m.'
+    fiscalYearEnd:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          hidden: 'ClientEval:node.properties.invoice ? false : true'
+          group: fiscalYear
+          position: 2
+          editorOptions:
+            format: 'd.m.'
