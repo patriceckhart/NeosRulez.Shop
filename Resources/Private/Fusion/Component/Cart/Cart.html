@@ -44,6 +44,9 @@
                     <f:form.hidden name="cart_variables[invoice_info_prepayment]" value="{cart_variables.0.invoice_info_prepayment}" />
                     <f:form.hidden name="cart_variables[invoice_address]" value="{cart_variables.0.invoice_address}" />
                     <f:form.hidden name="cart_variables[footer_text]" value="{footer_text -> f:format.raw()}" />
+
+                    <f:form.hidden name="cart_variables[fiscal_year_start]" value="{cart_variables.0.fiscal_year_start -> f:format.date(format: 'm-d')}" />
+                    <f:form.hidden name="cart_variables[fiscal_year_end]" value="{cart_variables.0.fiscal_year_end -> f:format.date(format: 'm-d')}" />
                 </f:form>
             </f:then>
             <f:else>

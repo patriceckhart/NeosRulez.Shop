@@ -123,7 +123,9 @@ class MailService {
         $pdf = $this->invoiceService->execute($args, $create);
         $prefix = $args['cart_variables']['invoice_number_prefix'];
         $start = intval($args['cart_variables']['invoice_number']);
-        $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+        $fiscalYearStart = $args['cart_variables']['fiscal_year_start'];
+        $fiscalYearEnd = $args['cart_variables']['fiscal_year_end'];
+        $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start, $fiscalYearStart, $fiscalYearEnd);
 
         $mail = new \Neos\SwiftMailer\Message();
         $mail

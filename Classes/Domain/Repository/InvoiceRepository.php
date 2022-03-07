@@ -9,13 +9,39 @@ use Neos\Flow\Persistence\Repository;
  */
 class InvoiceRepository extends Repository {
 
-    public function countInvoices($start) {
-        $class = '\NeosRulez\Shop\Domain\Model\Invoice';
-        $query = $this->persistenceManager->createQueryForType($class);
+    public function countInvoices($start, $fiscalYearStart, $fiscalYearEnd) {
+
+        $now = new \DateTime();
+        $next = new \DateTime();
+
+        if($fiscalYearStart == '') {
+            $fiscalYearStart = new \DateTime();
+        }
+
+        if($fiscalYearEnd == '') {
+            $fiscalYearEnd = new \DateTime();
+            $fiscalYearEnd = $fiscalYearEnd->modify('+1 year');
+        }
+
+        $fiscalYearStartNew = $now->format('Y') . '-' . $fiscalYearStart;
+        $fiscalYearEndNew = $next->modify('+1 year')->format('Y') . '-' . $fiscalYearEnd;
+
+        $fiscalYearStartDate = new \DateTime($fiscalYearStartNew);
+        $fiscalYearEndDate = new \DateTime($fiscalYearEndNew);
+
+        $query = $this->createQuery();
+        $query->matching(
+            $query->logicalAnd(
+                $query->greaterThanOrEqual('created', $fiscalYearStartDate),
+                $query->lessThanOrEqual('created', $fiscalYearEndDate)
+            )
+        );
         $result = $query->execute();
-        $count_result = count($result);
-        $new_result = $start + intval($count_result);
-        return $new_result;
+        $resultCount = count($result);
+
+        $count = ((int)$start + $resultCount);
+
+        return $count;
     }
 
 }

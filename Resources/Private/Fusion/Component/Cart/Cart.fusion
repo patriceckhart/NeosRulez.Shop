@@ -27,6 +27,9 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
         invoice_number_prefix = ${q(documentNode).property('invoice_number_prefix')}
         invoice_address = ${q(documentNode).property('invoice_address')}
         invoice_info_prepayment = ${q(documentNode).property('invoice_info_prepayment')}
+
+        fiscal_year_start = ${q(documentNode).property('fiscalYearStart')}
+        fiscal_year_end = ${q(documentNode).property('fiscalYearEnd')}
     }
     max_quantity = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
     full_quantity = ${Array.range(0, 999, 1)}

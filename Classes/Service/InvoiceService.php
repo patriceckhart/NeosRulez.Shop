@@ -75,12 +75,16 @@ class InvoiceService {
         $variables['args']['cart_variables']['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
+
+        $fiscalYearStart = $variables['args']['cart_variables']['fiscal_year_start'];
+        $fiscalYearEnd = $variables['args']['cart_variables']['fiscal_year_end'];
+
         if(!$start) {
             $start = 1;
         }
 
         if($create) {
-            $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+            $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start, $fiscalYearStart, $fiscalYearEnd);
 
             $invoice = new \NeosRulez\Shop\Domain\Model\Invoice();
             $invoice->setOrdernumber($variables['args']['order_number']);
@@ -93,7 +97,7 @@ class InvoiceService {
             $rInvoice = $this->invoiceRepository->findByOrdernumber($variables['args']['order_number'])->getFirst();
 
             if(empty($rInvoice) || $rInvoice == null) {
-                $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start);
+                $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start, $fiscalYearStart, $fiscalYearEnd);
                 $invoice = new \NeosRulez\Shop\Domain\Model\Invoice();
                 $invoice->setOrdernumber($variables['args']['order_number']);
                 $invoice->setInvoicenumber($invoice_number);
