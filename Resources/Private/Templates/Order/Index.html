@@ -34,16 +34,18 @@
                     </td>
                     <td class="neos-action">
                         <div class="neos-pull-right">
+
+                            <f:comment>
+                                <f:if condition="{order.payment} == 'prepayment'">
+                                    <f:link.action class="neos-button neos-button-primary" action="reminder" arguments="{order: order.order}"><i class="fas fa-bell"></i></f:link.action>
+                                </f:if>
+                            </f:comment>
+
                             <f:if condition="{order.order.canceled}">
                                 <f:else>
                                     <f:link.action class="neos-button neos-button-primary" action="show" arguments="{order: order.order}"><i class="fas fa-eye"></i></f:link.action>
                                 </f:else>
                             </f:if>
-
-                            <f:comment>
-                                <f:link.action class="neos-button neos-button-primary" action="show" arguments="{data: data}"><i class="fas fa-file-invoice-dollar"></i></f:link.action>
-                                <f:link.action class="neos-button neos-button-primary" action="show" arguments="{data: data}"><i class="fas fa-paper-plane"></i></f:link.action>
-                            </f:comment>
 
                             <f:if condition="{order.order.canceled}">
                                 <f:else>
