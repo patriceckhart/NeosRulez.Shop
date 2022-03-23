@@ -76,8 +76,13 @@ class InvoiceService {
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
         $start = intval($variables['args']['cart_variables']['invoice_number']);
 
-        $fiscalYearStart = $variables['args']['cart_variables']['fiscal_year_start'];
-        $fiscalYearEnd = $variables['args']['cart_variables']['fiscal_year_end'];
+        if(array_key_exists('fiscal_year_start', $variables['args']['cart_variables']) && array_key_exists('fiscal_year_end', $variables['args']['cart_variables'])) {
+            $fiscalYearStart = $variables['args']['cart_variables']['fiscal_year_start'];
+            $fiscalYearEnd = $variables['args']['cart_variables']['fiscal_year_end'];
+        } else {
+            $fiscalYearStart = '01-01';
+            $fiscalYearEnd = '12-31';
+        }
 
         if(!$start) {
             $start = 1;
