@@ -24,7 +24,7 @@ class ProductByUriPathSegmentFusion extends AbstractFusionObject {
         $result = [];
         if($uriPathSegment) {
             $context = $this->contextFactory->create();
-            $product = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Product]')->context(array('workspaceName' => 'live'))->filter('[uriPathSegment *= ' . $uriPathSegment . ']')->sort('_index', 'ASC')->get(0);
+            $product = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Product]')->context(array('workspaceName' => 'live'))->filter('[uriPathSegment *= "' . $uriPathSegment . '"]')->sort('_index', 'ASC')->get(0);
             $result = [
                 'item' => $product,
                 'cart' => (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Cart]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get(0)

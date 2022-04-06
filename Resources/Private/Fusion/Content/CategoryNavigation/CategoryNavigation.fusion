@@ -135,6 +135,31 @@ prototype(NeosRulez.Category:Document.Category) {
         httpResponseHead {
             statusCode = 200
         }
+        head {
+
+            titleTag {
+                @context.product = NeosRulez.Shop:Class.ProductByUriPathSegment {
+                    uriPathSegment = ${request.arguments.product}
+                }
+                content {
+                    @process.productTitle = ${(product ? product.item.properties.title + ' - ' : '') + value}
+                }
+                @cache {
+                    mode = 'dynamic'
+                    entryIdentifier {
+                        node = ${node}
+                    }
+                    entryDiscriminator = ${request.arguments.product}
+                    context {
+                        1 = 'node'
+                        2 = 'documentNode'
+                    }
+                    entryTags {
+                        1 = ${Neos.Caching.nodeTag(node)}
+                    }
+                }
+            }
+        }
         body.content = Neos.Fusion:Component {
 
             isProduct = ${request.arguments.product ? true : false}
