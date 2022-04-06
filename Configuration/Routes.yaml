@@ -109,3 +109,15 @@
     '@package': 'NeosRulez.Shop'
     '@action': 'selectCountry'
   appendExceedingArguments: 'true'
+-
+  name: 'category navigation detail view'
+  uriPattern: '{node}/detail/{product}'
+  defaults:
+    '@package': 'Neos.Neos'
+    '@controller': 'Frontend\Node'
+    '@format': 'html'
+    '@action': 'show'
+  routeParts:
+    node:
+      handler: Neos\Neos\Routing\FrontendNodeRoutePartHandlerInterface
+  appendExceedingArguments: true

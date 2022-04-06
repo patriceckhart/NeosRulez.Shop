@@ -1,0 +1,184 @@
+prototype(NeosRulez.Shop:Content.CategoryNavigation) < prototype(Neos.Neos:ContentComponent) {
+
+    renderer = afx`
+        <NeosRulez.Shop:Component.CategoryNavigation />
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <NeosRulez.Shop:Component.AbstractContent>
+            <div class="row">
+                <div class="col-md-3">
+                    <NeosRulez.Shop:Component.CategoryNavigation.Navigation />
+                </div>
+                <div class="col-md-9">
+                    <NeosRulez.Shop:Component.CategoryNavigation.Products />
+                </div>
+            </div>
+        </NeosRulez.Shop:Component.AbstractContent>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation.Navigation) < prototype(Neos.Fusion:Component) {
+
+    categories = Neos.Neos:MenuItems {
+        startingPoint = ${Configuration.setting('NeosRulez.Shop.categoryNavigation.startingPoint') ? q(site).find('#' + Configuration.setting('NeosRulez.Shop.categoryNavigation.startingPoint')).get(0) : false}
+        filter = 'NeosRulez.Category:Document.Category'
+        renderHiddenInIndex = true
+        maximumLevels = 9
+    }
+
+    className = 'nav flex-column category-navigation'
+
+    renderer = afx`
+        <ul @if.render={props.categories} class={props.className} >
+            <Neos.Fusion:Loop items={props.categories} >
+                <NeosRulez.Shop:Component.CategoryNavigation.Navigation.Item />
+            </Neos.Fusion:Loop>
+        </ul>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation.Navigation.Item) < prototype(Neos.Fusion:Component) {
+
+    liClassName = 'nav-item'
+    aClassName = 'nav-link'
+
+    products = NeosRulez.Shop:Class.ProductsByCategory {
+        identifier = ${item.node.identifier}
+    }
+
+    renderer = afx`
+        <li class={props.liClassName} >
+            <Neos.Neos:NodeLink node={item.node} attributes.class={props.aClassName + (documentNode.identifier == item.node.identifier ? ' active' : '')} >
+                {item.node.properties.title} {props.products.count ? ('(' + props.products.count + ')') : false}
+            </Neos.Neos:NodeLink>
+            <NeosRulez.Shop:Component.CategoryNavigation.Navigation @if.render={item.subItems} categories={item.subItems} className="nav-sub-items" />
+        </li>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation.Products) < prototype(Neos.Fusion:Component) {
+
+    products = NeosRulez.Shop:Class.ProductsByCategory {
+        identifier = ${documentNode.identifier}
+    }
+
+    renderer = afx`
+        <div @if.render={Array.length(props.products.items) > 0} class="row">
+            <Neos.Fusion:Loop items={props.products.items} >
+                <NeosRulez.Shop:Component.CategoryNavigation.Products.Product />
+            </Neos.Fusion:Loop>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation.Products.Product) < prototype(Neos.Fusion:Component) {
+
+    imageWidth = 400
+    imageHeight = 320
+    showArticleNumber = true
+
+    documentNodeUri = Neos.Neos:NodeUri {
+        node = ${documentNode}
+    }
+
+    renderer = afx`
+        <div class="col-md-4">
+            <div class="category-nav-product-item">
+                <a href={props.documentNodeUri + '/detail/' + item.properties.uriPathSegment} class="category-nav-product-item-link">
+                    <NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body showArticleNumber={props.showArticleNumber} imageWidth={props.imageWidth} imageHeight={props.imageHeight} />
+                </a>
+            </div>
+        </div>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div class="category-nav-product-item-top">
+            <div @if.render={item.properties.images} class="category-nav-product-item-image">
+                <Neos.Neos:ImageTag asset={item.properties.images[0]} attributes.class="img-fluid" width={props.imageWidth} allowUpScaling={true} attributes.alt={item.properties.title} attributes.title={item.properties.title} async={true} />
+            </div>
+        </div>
+        <div class="category-nav-product-item-bottom">
+            <div class="category-nav-product-item-title">
+                {item.properties.title}
+            </div>
+            <div class="row align-items-end mt-2">
+                <div @if.render={props.showArticleNumber} class="col-md-4">
+                    <small class="category-nav-product-item-articlenumber">
+                        {item.properties.article_number}
+                    </small>
+                </div>
+                <div class={props.showArticleNumber ? 'col-md-8 text-end' : 'col-12'} >
+                    <NeosRulez.Shop:Component.Product.Afx.Content.Price @context.node={item} />
+                </div>
+            </div>
+        </div>
+    `
+    renderer {
+        prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) {
+            renderer >
+            renderer = afx`
+                <NeosRulez.Shop:Class.Currency float={props.floatPrice} currencySign="€" />
+            `
+        }
+    }
+}
+
+prototype(NeosRulez.Category:Document.Category) {
+    default = NeosRulez.Shop:Document.Product {
+        httpResponseHead {
+            statusCode = 200
+        }
+        body.content = Neos.Fusion:Component {
+
+            isProduct = ${request.arguments.product ? true : false}
+
+            @context.product = NeosRulez.Shop:Class.ProductByUriPathSegment {
+                uriPathSegment = ${request.arguments.product}
+            }
+
+            renderer = afx`
+                <NeosRulez.Shop:Component.CategoryNavigation @if.render={!props.isProduct} />
+                <NeosRulez.Shop:Component.Product.Afx @if.render={props.isProduct} @context.node={product.item} @context.documentNode={product.item} />
+            `
+            renderer {
+                prototype(NeosRulez.Shop:Component.CategoryNavigation) {
+                    prototype(NeosRulez.Shop:Component.AbstractContent) {
+                        containerType = 'container'
+                    }
+                }
+                prototype(NeosRulez.Shop:Component.CartAlert) {
+                    cart = ${product.cart}
+                }
+                prototype(NeosRulez.Shop:Component.Product.Afx) {
+
+                    @context.breadcrumb = Neos.Neos:BreadcrumbMenu {
+                        renderHiddenInIndex = true
+                        maximumLevels = 99
+                    }
+                    renderer.@process.breadcrumb = ${(Configuration.setting('NeosRulez.Shop.categoryNavigation.showBreadcrumb') ? breadcrumb : '') + value}
+                }
+            }
+            @cache {
+                mode = 'dynamic'
+                entryIdentifier {
+                    node = ${node}
+                }
+                entryDiscriminator = ${request.arguments.product}
+                context {
+                    1 = 'node'
+                    2 = 'documentNode'
+                }
+                entryTags {
+                    1 = ${Neos.Caching.nodeTag(node)}
+                }
+            }
+        }
+    }
+}

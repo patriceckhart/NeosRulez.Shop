@@ -1,0 +1,4 @@
+prototype(NeosRulez.Shop:Class.ProductsByCategory) {
+    @class = 'NeosRulez\\Shop\\Fusion\\ProductsByCategoryFusion'
+    identifier = false
+}

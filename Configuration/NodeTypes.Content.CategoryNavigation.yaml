@@ -1,0 +1,12 @@
+'NeosRulez.Shop:Content.CategoryNavigation':
+  superTypes:
+    'NeosRulez.Shop:Component.AbstractContent': true
+  ui:
+    label: i18n
+    group: neosrulez_shop
+    icon: fas fa-sitemap
+    inspector:
+      groups:
+        categoryNavigation:
+          label: i18n
+          icon: fas fa-sitemap

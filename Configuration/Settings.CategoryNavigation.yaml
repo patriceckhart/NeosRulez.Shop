@@ -1,0 +1,5 @@
+NeosRulez:
+  Shop:
+    categoryNavigation:
+      showBreadcrumb: false
+#      startingPoint: 'c30f71a9-362f-40a4-aebd-2a990c39f4cf'
