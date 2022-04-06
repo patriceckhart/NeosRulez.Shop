@@ -8,6 +8,9 @@
             <trans-unit id="groups.categoryNavigation" xml:space="preserve">
 				<source>Navigation par catégorie</source>
 			</trans-unit>
+            <trans-unit id="properties.products" xml:space="preserve">
+				<source>Produits dans la catégorie principale</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

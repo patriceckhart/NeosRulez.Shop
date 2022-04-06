@@ -62,14 +62,17 @@ prototype(NeosRulez.Shop:Component.CategoryNavigation.Navigation.Item) < prototy
 
 prototype(NeosRulez.Shop:Component.CategoryNavigation.Products) < prototype(Neos.Fusion:Component) {
 
-    products = NeosRulez.Shop:Class.ProductsByCategory {
+    productsByCategory = NeosRulez.Shop:Class.ProductsByCategory {
         identifier = ${documentNode.identifier}
     }
+    products = ${Array.length(this.productsByCategory.items) > 0 ? this.productsByCategory.items : (q(node).property('products') ? q(node).property('products') : this.productsByCategory.items)}
+
+    isMain = ${q(node).property('products') ? true : false}
 
     renderer = afx`
-        <div @if.render={Array.length(props.products.items) > 0} class="row">
-            <Neos.Fusion:Loop items={props.products.items} >
-                <NeosRulez.Shop:Component.CategoryNavigation.Products.Product />
+        <div @if.render={Array.length(props.products) > 0} class="row">
+            <Neos.Fusion:Loop items={props.products} >
+                <NeosRulez.Shop:Component.CategoryNavigation.Products.Product isMain={props.isMain} />
             </Neos.Fusion:Loop>
         </div>
     `
@@ -88,9 +91,12 @@ prototype(NeosRulez.Shop:Component.CategoryNavigation.Products.Product) < protot
     renderer = afx`
         <div class="col-md-4">
             <div class="category-nav-product-item">
-                <a href={props.documentNodeUri + '/detail/' + item.properties.uriPathSegment} class="category-nav-product-item-link">
+                <a @if.render={!props.isMain} href={props.documentNodeUri + '/detail/' + item.properties.uriPathSegment} class="category-nav-product-item-link">
                     <NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body showArticleNumber={props.showArticleNumber} imageWidth={props.imageWidth} imageHeight={props.imageHeight} />
                 </a>
+                <Neos.Neos:NodeLink @if.render={props.isMain} node={item} attributes.class="category-nav-product-item-link">
+                    <NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body showArticleNumber={props.showArticleNumber} imageWidth={props.imageWidth} imageHeight={props.imageHeight} />
+                </Neos.Neos:NodeLink>
             </div>
         </div>
     `
@@ -153,6 +159,7 @@ prototype(NeosRulez.Category:Document.Category) {
                     context {
                         1 = 'node'
                         2 = 'documentNode'
+                        3 = 'site'
                     }
                     entryTags {
                         1 = ${Neos.Caching.nodeTag(node)}
@@ -199,6 +206,7 @@ prototype(NeosRulez.Category:Document.Category) {
                 context {
                     1 = 'node'
                     2 = 'documentNode'
+                    3 = 'site'
                 }
                 entryTags {
                     1 = ${Neos.Caching.nodeTag(node)}

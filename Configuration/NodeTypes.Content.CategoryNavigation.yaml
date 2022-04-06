@@ -10,3 +10,14 @@
         categoryNavigation:
           label: i18n
           icon: fas fa-sitemap
+  properties:
+    products:
+      type: references
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: categoryNavigation
+          editorOptions:
+            nodeTypes: [ 'NeosRulez.Shop:Document.Product' ]
