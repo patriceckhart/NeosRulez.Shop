@@ -172,7 +172,6 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     customPrice = ${isCollection ? Configuration.setting('NeosRulez.Shop.oneStopShop') ? (String.toFloat(String.replace(this.price, ',', '.'))) : String.toFloat(String.replace(this.price, ',', '.')) : false}
 
     renderer = afx`
-
         <Neos.Fusion.Form:Form @if.render={props.stock} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
             <div class="row align-items-center add_to_cart">
                 <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants />
@@ -189,6 +188,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
             </div>
             <Neos.Fusion.Form:Hidden field.name="item[nodeUri]" field.value={props.nodeUri} />
             <Neos.Fusion.Form:Hidden field.name="item[node]" field.value={node.identifier} />
+            <Neos.Fusion.Form:Hidden field.name="item[nodeLanguage]" field.value={node.context.targetDimensions.language} />
 
             <Neos.Fusion.Form:Hidden @if.render={props.getTaxClass} field.name="item[taxClass]" field.value={props.getTaxClass} />
 

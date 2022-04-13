@@ -84,7 +84,6 @@ class Cart {
         $this->settings = $settings;
     }
 
-
     /**
      * @param array $item
      * @return void
@@ -92,10 +91,17 @@ class Cart {
      */
     public function add(array $item):void
     {
+        $context = $this->contextFactory->create();
+
+        if(array_key_exists('nodeLanguage', $item)) {
+            $context = $this->contextFactory->create(
+                array(
+                    'dimensions' => array('language' => array($item['nodeLanguage'], $item['nodeLanguage']))
+                ));
+        }
 
         $quantity = intval($item['quantity']);
 
-        $context = $this->contextFactory->create();
         $product_node = $context->getNodeByIdentifier($item['node']);
 
         $item['tstamp'] = time();
