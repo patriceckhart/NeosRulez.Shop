@@ -1,0 +1,5 @@
+prototype(NeosRulez.Shop:Class.Stock) {
+    @class = 'NeosRulez\\Shop\\Fusion\\StockFusion'
+    product = false
+    stockLevel = false
+}

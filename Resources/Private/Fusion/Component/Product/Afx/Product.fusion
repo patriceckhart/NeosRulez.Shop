@@ -156,7 +156,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
         absolute = true
     }
 
-    stock = ${q(node).property('stock')}
+//    stock = ${q(node).property('stock')}
 //    stock = ${q(node).property('stock') ? q(node).property('stock') : (isCollection ? this.productCollection.stock : false)}
 
     getTaxClass = NeosRulez.Shop:Class.TaxClass {
@@ -170,6 +170,13 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     oldPrice = ${isCollection ? false : node.properties.old_price}
 
     customPrice = ${isCollection ? Configuration.setting('NeosRulez.Shop.oneStopShop') ? (String.toFloat(String.replace(this.price, ',', '.'))) : String.toFloat(String.replace(this.price, ',', '.')) : false}
+
+    quantityInStock = NeosRulez.Shop:Class.Stock {
+        product = ${documentNode}
+        stockLevel = ${documentNode.properties.stockManagement ? documentNode.properties.stockLevel : false}
+    }
+
+    stock = ${q(documentNode).property('stockManagement') ? this.quantityInStock : q(node).property('stock')}
 
     renderer = afx`
         <Neos.Fusion.Form:Form @if.render={props.stock} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
@@ -199,7 +206,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
             <Neos.Fusion.Form:Hidden @if.render={props.customPrice} field.name="item[weight]" field.value={props.productCollection.weight} />
 
         </Neos.Fusion.Form:Form>
-        <div @if.render={!props.stock} class="alert alert-danger">
+        <div @if.render={!props.stock} id="stockAlert" class="alert alert-danger">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:notInStock')}
         </div>
     `
@@ -225,7 +232,15 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion
     product_max_quantity = ${q(node).property('max_quantity')}
     array_min_quantity = ${this.product_min_quantity ? String.toInteger(this.product_min_quantity) : 0}
     stockManagement = ${documentNode.properties.stockManagement ? documentNode.properties.stockLevel : false}
-    max_quantity = ${this.stockManagement ? Array.range(this.product_max_quantity, this.stockManagement, 1) : (this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1))}
+
+    quantityInStock = NeosRulez.Shop:Class.Stock {
+        product = ${documentNode}
+        stockLevel = ${documentNode.properties.stockManagement ? documentNode.properties.stockLevel : false}
+    }
+
+    stockLevel = ${String.toInteger(this.quantityInStock) < String.toInteger(this.stockManagement) ? String.toInteger(this.quantityInStock) : String.toInteger(this.stockManagement)}
+
+    max_quantity = ${this.stockManagement ? Array.range(this.product_max_quantity, this.stockLevel, 1) : (this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1))}
 
     renderer = afx`
         <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control form-select product-quantity">

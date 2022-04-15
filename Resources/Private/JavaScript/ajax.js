@@ -26,7 +26,19 @@ readyNeosRulezShopDocument(() => {
             request.send(formData);
             request.onreadystatechange = function() {
                 if (request.readyState === 4) {
-                    cartCount();
+                    if(request.status == 200) {
+                        let parser = new DOMParser();
+                        let doc = parser.parseFromString(request.responseText, 'text/html');
+                        let refreshedProductForm = doc.getElementById('product_form');
+                        let productForm = document.getElementById('product_form');
+                        if(refreshedProductForm) {
+                            productForm.innerHTML = refreshedProductForm.innerHTML;
+                        } else {
+                            productForm.remove();
+                        }
+                        cartCount();
+                    }
+
                 }
             }
             if(document.querySelector('.cart-alert')) {
