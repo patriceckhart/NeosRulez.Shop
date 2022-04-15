@@ -35,7 +35,10 @@ class StockFusion extends AbstractFusionObject {
     private function handleStockManagement(string $nodeIdentifier, int $stockLevel):int
     {
         $result = $stockLevel;
-        $items = $this->cart->items;
+        $items = [];
+        if(property_exists($this->cart, 'items')) {
+            $items = $this->cart->items;
+        }
         if(!empty($items)) {
             foreach ($items as $item) {
                 if($item['node'] == $nodeIdentifier) {
