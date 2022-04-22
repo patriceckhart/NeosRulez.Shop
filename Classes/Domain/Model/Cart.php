@@ -108,6 +108,9 @@ class Cart {
         $item['article_number'] = $product_node->getProperty('article_number');
         $item['title'] = $product_node->getProperty('title');
         $item['price_gross'] = floatval(str_replace(',', '.', $product_node->getProperty('price')));
+        if(array_key_exists('customPrice', $item)) {
+            $item['price_gross'] = floatval(str_replace(',', '.', $item['customPrice']));
+        }
         $item['tax'] = floatval(str_replace(',', '.', $product_node->getProperty('tax')));
         if(array_key_exists('taxClass', $item)) {
             $item['tax'] = (float) $item['taxClass'];
