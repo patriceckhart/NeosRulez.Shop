@@ -316,11 +316,13 @@ class Cart {
         $items = [];
         if(!empty($cart)) {
             foreach ($cart as $item) {
-                $images = $item['images'];
-                if(!empty($images)) {
-                    $item['images'] = [];
-                    foreach ($images as $image) {
-                        $item['images'][] = $this->assetRepository->findByIdentifier($image);
+                if(array_key_exists('images', $item)) {
+                    $images = $item['images'];
+                    if(!empty($images)) {
+                        $item['images'] = [];
+                        foreach ($images as $image) {
+                            $item['images'][] = $this->assetRepository->findByIdentifier($image);
+                        }
                     }
                 }
                 $items[] = $item;
@@ -405,11 +407,13 @@ class Cart {
                 $freeShipping = false;
             }
 
-            $images = $item['images'];
-            if(!empty($images)) {
-                $item['images'] = [];
-                foreach ($images as $image) {
-                    $item['images'][] = $this->assetRepository->findByIdentifier($image);
+            if(array_key_exists('images', $item)) {
+                $images = $item['images'];
+                if(!empty($images)) {
+                    $item['images'] = [];
+                    foreach ($images as $image) {
+                        $item['images'][] = $this->assetRepository->findByIdentifier($image);
+                    }
                 }
             }
 
