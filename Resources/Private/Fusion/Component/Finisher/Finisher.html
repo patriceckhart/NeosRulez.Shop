@@ -1,1 +1,49 @@
 {main_content -> f:format.raw()}
+
+<f:if condition="{order}">
+    <div class="payment-information">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>{f:translate(id: 'content.yourOrder', package: 'NeosRulez.Shop', source: 'Main')} #{order.ordernumber}</h4>
+                    <f:if condition="{cart}">
+                        <f:for each="{cart}" as="item">
+                            <div class="row my-3">
+                                <div class="col-1">
+                                    {item.quantity}
+                                </div>
+                                <div class="col-8">
+                                    {item.title}
+                                    <small class="d-block">{item.article_number}</small>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{item.price_gross}</f:format.currency>
+                                </div>
+                            </div>
+                        </f:for>
+                    </f:if>
+                    <f:if condition="{summary}">
+                        <div class="row my-3">
+                            <div class="col-1">&nbsp;</div>
+                            <div class="col-8 text-end">{f:translate(id: 'shipping', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</div>
+                            <div class="col-3 text-end">
+                                <strong>
+                                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_shipping}</f:format.currency>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-1">&nbsp;</div>
+                            <div class="col-8 text-end"><strong>{f:translate(id: 'total', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</strong></div>
+                            <div class="col-3 text-end">
+                                <strong>
+                                    <f:format.currency decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€">{summary.total_shipping + summary.total}</f:format.currency>
+                                </strong>
+                            </div>
+                        </div>
+                    </f:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:if>

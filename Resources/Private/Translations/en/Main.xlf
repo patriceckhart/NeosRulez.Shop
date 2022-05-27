@@ -11,6 +11,9 @@
             <trans-unit id="properties.free_from" xml:space="preserve">
                 <source>Free shipping from</source>
             </trans-unit>
+            <trans-unit id="content.yourOrder" xml:space="preserve">
+                <source>Your order</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

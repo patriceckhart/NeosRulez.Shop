@@ -263,6 +263,10 @@ class CartController extends ActionController
                     $this->persistenceManager->persistAll();
                 }
             }
+
+            $this->view->assign('order', $order);
+            $this->view->assign('cart', json_decode($order->getCart(), true));
+            $this->view->assign('summary', json_decode($order->getSummary(), true));
         }
         $this->cart->deleteCart();
     }

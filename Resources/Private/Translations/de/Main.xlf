@@ -11,6 +11,9 @@
             <trans-unit id="content.freeShipping" xml:space="preserve">
                 <source>Versandkostenfrei</source>
             </trans-unit>
+            <trans-unit id="content.yourOrder" xml:space="preserve">
+                <source>Ihre Bestellung</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
