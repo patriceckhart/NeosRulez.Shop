@@ -265,6 +265,7 @@ class CartController extends ActionController
             }
 
             $this->view->assign('order', $order);
+            $this->view->assign('invoicedata', json_decode($order->getInvoicedata(), true));
             $this->view->assign('cart', json_decode($order->getCart(), true));
             $this->view->assign('summary', json_decode($order->getSummary(), true));
         }
