@@ -62,7 +62,7 @@ class MailService {
     }
 
     /**
-     * @param string $args
+     * @param array $args
      * @return void
      */
     public function execute($args) {
