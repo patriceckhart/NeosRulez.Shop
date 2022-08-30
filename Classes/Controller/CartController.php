@@ -246,21 +246,22 @@ class CartController extends ActionController
                     $order->setPaid(1);
                     $order->setCanceled(0);
 
-                    $args = $this->cart->arguments;
-
-                    if($this->settings['Mail']['debugMode']) {
-                        return $this->mailService->execute($args);
-                    } else {
-                        if (!$this->settings['debugMode']) {
-                            $this->stockService->execute();
-                            $this->mailService->execute($args);
-                            $this->cart->refreshCoupons();
-                        }
-                    }
-
                     $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
+
                     $this->orderRepository->update($order);
                     $this->persistenceManager->persistAll();
+                }
+            }
+
+            $args = $this->cart->arguments;
+
+            if($this->settings['Mail']['debugMode']) {
+                return $this->mailService->execute($args);
+            } else {
+                if (!$this->settings['debugMode']) {
+                    $this->stockService->execute();
+                    $this->mailService->execute($args);
+                    $this->cart->refreshCoupons();
                 }
             }
 
