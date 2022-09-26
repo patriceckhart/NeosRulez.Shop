@@ -271,6 +271,7 @@ class CartController extends ActionController
             $this->view->assign('summary', json_decode($order->getSummary(), true));
         }
         $this->cart->deleteCart();
+        $this->persistenceManager->persistAll();
     }
 
     /**
