@@ -208,6 +208,12 @@ class Cart {
         $item['images'] = [];
         if(array_key_exists('node', $item)) {
             $context = $this->contextFactory->create();
+            if(array_key_exists('nodeLanguage', $item)) {
+                $context = $this->contextFactory->create(
+                    array(
+                        'dimensions' => array('language' => array($item['nodeLanguage'], $item['nodeLanguage']))
+                    ));
+            }
             $productNode = $context->getNodeByIdentifier($item['node']);
             if($productNode->hasProperty('images')) {
                 $images = $productNode->getProperty('images');
