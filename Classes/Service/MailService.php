@@ -90,7 +90,7 @@ class MailService {
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'].' '.$args['lastname']], $args);
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [$args['cart_variables']['recipient_mail'] => $args['cart_variables']['recipient_mail']], $args);
                 if($send_invoice) {
-                    $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']]);
+                    $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, [$args['cart_variables']['recipient_mail'] => $args['cart_variables']['recipient_mail']]);
                 }
             }
         }
