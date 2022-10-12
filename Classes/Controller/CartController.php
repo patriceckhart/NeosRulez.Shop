@@ -251,16 +251,23 @@ class CartController extends ActionController
                     $this->orderRepository->update($order);
                     $this->persistenceManager->persistAll();
                 }
+
+                $args = $this->cart->arguments;
+
+                if($this->settings['Mail']['debugMode']) {
+                    return $this->mailService->execute($args);
+                } else {
+                    if (!$this->settings['debugMode']) {
+                        $this->mailService->execute($args);
+                    }
+                }
             }
 
-            $args = $this->cart->arguments;
-
             if($this->settings['Mail']['debugMode']) {
-                return $this->mailService->execute($args);
+
             } else {
                 if (!$this->settings['debugMode']) {
                     $this->stockService->execute();
-                    $this->mailService->execute($args);
                     $this->cart->refreshCoupons();
                 }
             }
