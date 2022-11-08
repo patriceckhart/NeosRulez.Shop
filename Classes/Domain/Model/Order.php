@@ -194,6 +194,28 @@ class Order
     }
 
     /**
+     * @var boolean
+     */
+    protected $done = false;
+
+    /**
+     * @return boolean
+     */
+    public function getDone()
+    {
+        return $this->done;
+    }
+
+    /**
+     * @param boolean $done
+     * @return void
+     */
+    public function setDone($done)
+    {
+        $this->done = $done;
+    }
+
+    /**
      * @var \DateTime
      */
     protected $created;

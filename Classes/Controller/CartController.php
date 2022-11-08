@@ -234,6 +234,7 @@ class CartController extends ActionController
      */
     public function finishAction() {
         $this->view->assign('main_content',$this->request->getInternalArgument('__main_content'));
+        $paid = 0;
         if (array_key_exists('paid', $_GET)) {
             $paid = isset($_GET['paid']) ? $_GET['paid']:NULL;
         }
@@ -241,27 +242,33 @@ class CartController extends ActionController
             $order_number = isset($_GET['order']) ? $_GET['order']:NULL;
             $order = $this->orderRepository->findByOrderNumber($order_number);
             $orderPaid = $order->getPaid();
-            if(!$orderPaid) {
-                if($paid == 1) {
-                    $order->setPaid(1);
-                    $order->setCanceled(0);
+            $orderDone = $order->getDone();
 
-                    $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
+            if(!$orderDone) {
+                if(!$orderPaid) {
+                    if($paid == 1) {
+                        $order->setPaid(1);
+                        $order->setCanceled(0);
 
-                    $this->orderRepository->update($order);
-                    $this->persistenceManager->persistAll();
+                        $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
+                    }
                 }
-            }
 
-            $args = $this->cart->arguments;
+                $order->setDone(true);
 
-            if($this->settings['Mail']['debugMode']) {
-                return $this->mailService->execute($args);
-            } else {
-                if (!$this->settings['debugMode']) {
-                    $this->stockService->execute();
-                    $this->cart->refreshCoupons();
-                    $this->mailService->execute($args);
+                $this->orderRepository->update($order);
+                $this->persistenceManager->persistAll();
+
+                $args = $this->cart->arguments;
+
+                if($this->settings['Mail']['debugMode']) {
+                    return $this->mailService->execute($args);
+                } else {
+                    if (!$this->settings['debugMode']) {
+                        $this->stockService->execute();
+                        $this->cart->refreshCoupons();
+                        $this->mailService->execute($args);
+                    }
                 }
             }
 
