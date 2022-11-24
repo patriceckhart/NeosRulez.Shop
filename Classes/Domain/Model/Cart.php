@@ -442,7 +442,7 @@ class Cart {
         $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
-                if($shipping[0]['free_from'] == '') {
+                if($shipping[0]['free_from'] == '' || $shipping[0]['free_from'] == null) {
                     $free_from = 9999999999999;
                 } else {
                     $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
