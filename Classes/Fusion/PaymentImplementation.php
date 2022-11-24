@@ -32,11 +32,14 @@ class PaymentImplementation extends AbstractFusionObject {
      */
     public function evaluate() {
         $context = $this->contextFactory->create();
-        $payments = $this->settings['Payment'];
-        foreach ($payments as $key => $payment) {
-            $success_page = $context->getNodeByIdentifier($payment['props']['success_page']);
-            $failure_page = $context->getNodeByIdentifier($payment['props']['failure_page']);
-            $available_payments[] = ['identifier' => $key, 'label' => $payment['props']['label'], 'icon' => $payment['props']['icon'], 'success_page' => $success_page, 'failure_page' => $failure_page];
+        $available_payments = [];
+        if(array_key_exists('Payment', $this->settings)) {
+            $payments = $this->settings['Payment'];
+            foreach ($payments as $key => $payment) {
+                $success_page = $context->getNodeByIdentifier(array_key_exists('success_page', $payment['props']) ? $payment['props']['success_page'] : false);
+                $failure_page = $context->getNodeByIdentifier(array_key_exists('failure_page', $payment['props']) ? $payment['props']['failure_page'] : false);
+                $available_payments[] = ['identifier' => $key, 'label' => $payment['props']['label'], 'icon' => $payment['props']['icon'], 'success_page' => $success_page, 'failure_page' => $failure_page];
+            }
         }
         return $available_payments;
     }

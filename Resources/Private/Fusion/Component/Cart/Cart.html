@@ -557,8 +557,36 @@
                 <input type="radio" id="payment_{iterator.index}" name="payment" class="custom-control-input form-check-input" style="float:left!important" value="{payment.identifier}" required="required"{f:if(condition='{order.payment}=={payment.identifier}', then:' checked="checked"')}>
                 <label class="custom-control-label form-check-label" for="payment_{iterator.index}">{payment.label} <i class="{payment.icon} ml-2"></i></label>
             </div>
-            <f:form.hidden name="{payment.identifier}_success" value="{neos:uri.node(node: payment.success_page, absolute: true)}" />
-            <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: payment.failure_page, absolute: true)}" />
+            <f:if condition="{payment.success_page}">
+                <f:then>
+                    <f:form.hidden name="{payment.identifier}_success" value="{neos:uri.node(node: payment.success_page, absolute: true)}" />
+                </f:then>
+                <f:else>
+                    <f:if condition="{successNode}">
+                        <f:then>
+                            <f:form.hidden name="{payment.identifier}_success" value="{neos:uri.node(node: successNode.0, absolute: true)}" />
+                        </f:then>
+                        <f:else>
+                            <code class="d-block my-2">There is no order <strong>success page</strong> in your node tree.</code>
+                        </f:else>
+                    </f:if>
+                </f:else>
+            </f:if>
+            <f:if condition="{payment.failure_page}">
+                <f:then>
+                    <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: payment.failure_page, absolute: true)}" />
+                </f:then>
+                <f:else>
+                    <f:if condition="{failureNode}">
+                        <f:then>
+                            <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: failureNode.0, absolute: true)}" />
+                        </f:then>
+                        <f:else>
+                            <code class="d-block my-2">There is no order <strong>failure page</strong> in your node tree.</code>
+                        </f:else>
+                    </f:if>
+                </f:else>
+            </f:if>
         </f:for>
     </div>
 </f:section>
