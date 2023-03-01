@@ -19,7 +19,6 @@
         label: i18n
         inspector:
           group: document
-          position: 'before isMultiline'
     isMultiline:
       type: boolean
       defaultValue: false
