@@ -44,6 +44,9 @@
             <trans-unit id="properties.dontCropImage" xml:space="preserve">
                 <source>Don't crop main image</source>
             </trans-unit>
+            <trans-unit id="properties.graduatedShippings" xml:space="preserve">
+                <source>Tiered shipping costs</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

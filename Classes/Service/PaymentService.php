@@ -5,6 +5,8 @@ use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations;
+use Neos\Flow\ObjectManagement\ObjectManagerInterface;
+use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
 
 /**
  * Class Payment
@@ -14,13 +16,13 @@ use Neos\Eel\FlowQuery\Operations;
 class PaymentService {
 
     /**
-     * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
 
     /**
      * @Flow\Inject
-     * @var \Neos\ContentRepository\Domain\Service\ContextFactoryInterface
+     * @var ContextFactoryInterface
      */
     protected $contextFactory;
 
@@ -33,11 +35,12 @@ class PaymentService {
      * @param array $settings
      * @return void
      */
-    public function injectSettings(array $settings) {
+    public function injectSettings(array $settings): void
+    {
         $this->settings = $settings;
     }
 
-    public function __construct(\Neos\Flow\ObjectManagement\ObjectManagerInterface $objectManager) {
+    public function __construct(ObjectManagerInterface $objectManager) {
         $this->objectManager = $objectManager;
     }
 
@@ -45,26 +48,53 @@ class PaymentService {
      * @param array $args
      * @return string
      */
-    public function initPayment($args) {
+    public function initPayment(array $args): string
+    {
         $payment = $this->getPaymentByIdentifier($args['payment']);
-        $payment_class = $this->objectManager->get($payment['class']);
-        if($payment['props']['payment_status']=='1') {
-            $success_uri = $args['success_uri'].'?order='.$args['order_number'].'&paid='.$payment['props']['payment_status'];
+        $paymentClass = false;
+        if(array_key_exists('class', $payment)) {
+            $paymentClass = $this->objectManager->get($payment['class']);
         } else {
-            $success_uri = $args['success_uri'];
+            $payments = $this->settings['Payment']['payments'];
+            foreach ($payments as $item) {
+                if($item['nodeType'] === $payment['nodeType']) {
+                    $paymentClass = $this->objectManager->get($item['class']);
+                }
+            }
         }
-        $failure_uri = $args['failure_uri'];
-        return $payment_class->execute($payment, $args, $success_uri, $failure_uri);
+        $successUri = $args['success_uri'];
+        $failureUri = $args['failure_uri'];
+        if($paymentClass) {
+            if(array_key_exists('props', $payment)) {
+                if($payment['props']['payment_status'] == '1') {
+                    $successUri = $args['success_uri'] . '?order=' . $args['order_number'] . '&paid=' . $payment['props']['payment_status'];
+                }
+            } else {
+                $paymentStatus = array_key_exists('paymentStatus', $payment) && (bool) $payment['paymentStatus'];
+                if($paymentStatus) {
+                    $successUri = $args['success_uri'] . '?order=' . $args['order_number'] . '&paid=1';
+                }
+            }
+        }
+        return $paymentClass->execute($payment, $args, $successUri, $failureUri);
     }
 
     /**
      * @param string $identifier
      * @return array
      */
-    public function getPaymentByIdentifier($identifier) {
+    public function getPaymentByIdentifier(string $identifier): array
+    {
         $payments = $this->settings['Payment'];
-        $selected_payment = $payments[$identifier];
-        return $selected_payment;
+        if(array_key_exists($identifier, $payments)) {
+            $selectedPayment = $payments[$identifier];
+        } else {
+            $context = $this->contextFactory->create();
+            $paymentNode = $context->getNodeByIdentifier($identifier);
+            $selectedPayment = (array) $paymentNode->getProperties();
+            $selectedPayment['nodeType'] = $paymentNode->getNodeType()->getName();
+        }
+        return $selectedPayment;
     }
 
 }

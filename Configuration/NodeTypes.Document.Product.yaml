@@ -190,6 +190,17 @@
         inspector:
           group: document
           position: end
+    graduatedShippings:
+      type: references
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.freeShipping ? true : false'
+          group: document
+          position: after freeShipping
+          editorOptions:
+            nodeTypes: [ 'NeosRulez.Shop:Document.Shipping.Graduated' ]
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.FreeStyleTextOption': true

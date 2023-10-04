@@ -581,9 +581,11 @@
                         <f:then>
                             <f:form.hidden name="{payment.identifier}_failure" value="{neos:uri.node(node: failureNode.0, absolute: true)}" />
                         </f:then>
-                        <f:else>
-                            <code class="d-block my-2">There is no order <strong>failure page</strong> in your node tree.</code>
-                        </f:else>
+						<f:comment>
+							<f:else>
+								<code class="d-block my-2">There is no order <strong>failure page</strong> in your node tree.</code>
+							</f:else>
+						</f:comment>
                     </f:if>
                 </f:else>
             </f:if>

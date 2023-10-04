@@ -1,28 +1,35 @@
 <?php
 namespace NeosRulez\Shop\Domain\Model;
 
+use Neos\ContentRepository\Domain\Model\Node;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations;
+use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
+use Neos\Flow\I18n\Translator;
+use NeosRulez\Shop\Service\ShippingService;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Media\Domain\Repository\AssetRepository;
 
 /**
  * @Flow\Scope("session")
  */
-class Cart {
+class Cart
+{
 
     /**
      * @var array
      */
-    public $items = array();
+    public $items = [];
 
     /**
      * @var array
      */
-    protected $coupons = array();
+    protected $coupons = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $checkout = false;
 
@@ -34,40 +41,40 @@ class Cart {
     /**
      * @var array
      */
-    protected $order = array();
+    protected $order = [];
 
     /**
      * @var array
      */
-    public $arguments = array();
+    public $arguments = [];
 
     /**
      * @Flow\Inject
-     * @var \Neos\ContentRepository\Domain\Service\ContextFactoryInterface
+     * @var ContextFactoryInterface
      */
     protected $contextFactory;
 
     /**
      * @Flow\Inject
-     * @var \Neos\Flow\I18n\Translator
+     * @var Translator
      */
     protected $translator;
 
     /**
      * @Flow\Inject
-     * @var \NeosRulez\Shop\Service\ShippingService
+     * @var ShippingService
      */
     protected $shippingService;
 
     /**
      * @Flow\Inject
-     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
+     * @var PersistenceManagerInterface
      */
     protected $persistenceManager;
 
     /**
      * @Flow\Inject
-     * @var \Neos\Media\Domain\Repository\AssetRepository
+     * @var AssetRepository
      */
     protected $assetRepository;
 
@@ -80,7 +87,8 @@ class Cart {
      * @param array $settings
      * @return void
      */
-    public function injectSettings(array $settings) {
+    public function injectSettings(array $settings): void
+    {
         $this->settings = $settings;
     }
 
@@ -89,7 +97,7 @@ class Cart {
      * @return void
      * @Flow\Session(autoStart = TRUE)
      */
-    public function add(array $item):void
+    public function add(array $item): void
     {
         $context = $this->contextFactory->create();
 
@@ -202,7 +210,8 @@ class Cart {
      * @return void
      * @Flow\Session(autoStart = TRUE)
      */
-    public function addCustom($item) {
+    public function addCustom(array $item): void
+    {
         $cart = $this->items;
 
         $item['images'] = [];
@@ -291,7 +300,7 @@ class Cart {
      * @param string $itemHash
      * @return void
      */
-    public function addItem(array $item, string $itemHash)
+    public function addItem(array $item, string $itemHash): void
     {
         if(array_key_exists($item['hash'], $this->items)) {
             $quantity = $this->items[$itemHash]['quantity'];
@@ -304,10 +313,11 @@ class Cart {
 
     /**
      * @param array $item
-     * @param integer $quantity
+     * @param int $quantity
      * @return void
      */
-    public function updateItem($item, $quantity) {
+    public function updateItem(array $item, int $quantity): void
+    {
         $this->items[$item['hash']]['quantity'] = $quantity;
         $total = $item['price_gross']*$quantity;
         $this->items[$item['hash']]['price'] = $item['price_gross'] - $item['tax_value_price'];
@@ -317,7 +327,8 @@ class Cart {
     /**
      * @return array
      */
-    public function cart() {
+    public function cart(): array
+    {
         $cart = $this->items;
         $items = [];
         if(!empty($cart)) {
@@ -331,6 +342,7 @@ class Cart {
                         }
                     }
                 }
+                $item['foobar'] = 'foo';
                 $items[] = $item;
             }
         }
@@ -340,23 +352,24 @@ class Cart {
     /**
      * @return array
      */
-    public function coupons() {
-        $coupons = $this->coupons;
-        return $coupons;
+    public function coupons(): array
+    {
+        return $this->coupons;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function checkout() {
-        $checkout = $this->checkout;
-        return $checkout;
+    public function checkout(): bool
+    {
+        return $this->checkout;
     }
 
     /**
      * @return float
      */
-    public function weight() {
+    public function weight(): float
+    {
         $weight = 0;
         $summary = $this->items;
         foreach ($summary as $item) {
@@ -368,7 +381,8 @@ class Cart {
     /**
      * @return array
      */
-    public function summary() {
+    public function summary(): array
+    {
         $summary = $this->items;
         $coupons = $this->coupons;
         $order = $this->order;
@@ -385,6 +399,8 @@ class Cart {
         $pricekg = false;
         $itemweight = 0;
         $freeShipping = true;
+        $graduatedShippingCosts = 0;
+        $context = $this->contextFactory->create();
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -423,7 +439,27 @@ class Cart {
                 }
             }
 
+            if($shipping) {
+                if (array_key_exists('node', $item)) {
+                    $productNode = $context->getNodeByIdentifier($item['node']);
+                    $quantity = (float)$item['quantity'];
+                    if ($productNode->hasProperty('graduatedShippings')) {
+                        $graduatedShippings = $productNode->getProperty('graduatedShippings');
+                        if (count($graduatedShippings) > 0) {
+                            foreach ($graduatedShippings as $graduatedShipping) {
+                                foreach ($shipping as $shippingItem) {
+                                    if($graduatedShipping->getParent()->getIdentifier() === $shippingItem['identifier']) {
+                                        $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
+
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
                 if ($coupons[0]['percentual']) {
@@ -442,7 +478,7 @@ class Cart {
         $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
-                if($shipping[0]['free_from'] == '' || $shipping[0]['free_from'] == null) {
+                if($shipping[0]['free_from'] === '' || $shipping[0]['free_from'] === null) {
                     $free_from = 9999999999999;
                 } else {
                     $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
@@ -477,6 +513,7 @@ class Cart {
                 $tax_shipping = 0;
             }
         }
+        $total_shipping = $total_shipping + $graduatedShippingCosts;
         $cart_count = 0;
         if($summary) {
             foreach ($summary as $summaryitem) {
@@ -484,14 +521,67 @@ class Cart {
                 $cart_count = $cart_count+$summaryquantity;
             }
         }
-        $result = ['subtotal' => $subtotal, 'tax' => $total-$subtotal, 'total_tax' => $subtotal + ($total-$subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
+        if($free_from === 0.00) {
+            $free_from = 9999999999999;
+        }
+        $result = ['subtotal' => $subtotal, 'tax' => ($total - $subtotal), 'total_tax' => $subtotal + ($total - $subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
         return $result;
+    }
+
+    /**
+     * @param string $price
+     * @return float
+     */
+    private function convertStringToFloat(string $price): float
+    {
+        return (float) str_replace(',', '.', $price);
+    }
+
+    /**
+     * @param Node $graduatedShippingNode
+     * @param int $quantity
+     * @return float
+     */
+    public function getGraduatedShipping(Node $graduatedShippingNode, int $quantity): float
+    {
+        $operator = $graduatedShippingNode->getProperty('operator');
+        $price = $graduatedShippingNode->getProperty('price');
+        $fromQuantity = (int) $graduatedShippingNode->getProperty('quantity');
+
+        if($operator === '=') {
+            if($quantity === $fromQuantity) {
+                return $this->convertStringToFloat($price);
+            }
+        }
+        if($operator === '>') {
+            if($quantity > $fromQuantity) {
+                return $this->convertStringToFloat($price);
+            }
+        }
+        if($operator === '<') {
+            if($quantity < $fromQuantity) {
+                return $this->convertStringToFloat($price);
+            }
+        }
+        if($operator === '>=') {
+            if($quantity >= $fromQuantity) {
+                return $this->convertStringToFloat($price);
+            }
+        }
+        if($operator === '<=') {
+            if($quantity <= $fromQuantity) {
+                return $this->convertStringToFloat($price);
+            }
+        }
+
+        return 0.00;
     }
 
     /**
      * @return float
      */
-    public function getCartTotal() {
+    public function getCartTotal(): float
+    {
         $total = 0;
         $summary = $this->items;
         foreach ($summary as $item) {
@@ -504,14 +594,16 @@ class Cart {
      * @param array $item
      * @return void
      */
-    public function deleteItem($item) {
+    public function deleteItem(array $item): void
+    {
         unset($this->items[$item['hash']]);
     }
 
     /**
      * @return void
      */
-    public function deleteCart() {
+    public function deleteCart(): void
+    {
         foreach ($this->items as $item) {
             unset($this->items[$item['hash']]);
         }
@@ -523,18 +615,20 @@ class Cart {
     /**
      * @param string $name
      * @param float $value
-     * @param boolean $percentual
-     * @param boolean $isShippingCoupon
+     * @param bool $percentual
+     * @param bool $isShippingCoupon
      * @return void
      */
-    public function applyCoupon($name, $value, $percentual, $isShippingCoupon = false) {
+    public function applyCoupon(string $name, float $value, bool $percentual, bool $isShippingCoupon = false): void
+    {
         $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
     }
 
     /**
      * @return void
      */
-    public function deleteCoupons() {
+    public function deleteCoupons(): void
+    {
         $coupons = $this->coupons;
         $coupons_count = count($coupons);
         for ($i = 0; $i < $coupons_count; $i++) {
@@ -545,7 +639,8 @@ class Cart {
     /**
      * @return void
      */
-    public function deleteOrder() {
+    public function deleteOrder(): void
+    {
         $order = $this->order;
         $order_count = count($order);
         for ($i = 0; $i < $order_count; $i++) {
@@ -554,10 +649,11 @@ class Cart {
     }
 
     /**
-     * @param boolean $status
+     * @param bool $status
      * @return void
      */
-    public function setCheckout($status) {
+    public function setCheckout(bool $status): void
+    {
         if($status) {
             $this->checkout = true;
         } else {
@@ -570,24 +666,26 @@ class Cart {
      * @return void
      * @Flow\Session(autoStart = TRUE)
      */
-    public function setCountry($country) {
+    public function setCountry(string $country): void
+    {
         $this->country = $country;
     }
 
     /**
-     * @return string
+     * @return mixed
      * @Flow\Session(autoStart = TRUE)
      */
-    public function getCountry() {
-        $country = $this->country;
-        return $country;
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     /**
      * @param array $args
      * @return void
      */
-    public function setOrder($args) {
+    public function setOrder(array $args): void
+    {
         unset($this->order[0]);
         $this->order[0] = $args;
     }
@@ -595,15 +693,16 @@ class Cart {
     /**
      * @return array
      */
-    public function getOrder() {
-        $order = $this->order;
-        return $order;
+    public function getOrder(): array
+    {
+        return $this->order;
     }
 
     /**
      * @return void
      */
-    public function unsetShipping() {
+    public function unsetShipping(): void
+    {
         unset($this->order[0]['shipping']);
     }
 
@@ -611,11 +710,12 @@ class Cart {
      * @param string $identifier
      * @return array
      */
-    public function findShipping($identifier) {
+    public function findShipping(string $identifier): array
+    {
         $result = [];
 
         if($identifier == '1') {
-            $result[] = ['name' => $this->translator->translateById('content.freeShipping', [], null, null, $sourceName = 'Main', $packageKey = 'NeosRulez.Shop'), 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
+            $result[] = ['identifier' => false, 'name' => $this->translator->translateById('content.freeShipping', [], null, null, $sourceName = 'Main', $packageKey = 'NeosRulez.Shop'), 'price' => 0.00, 'tax' => 0.00, 'price_kg' => 0.00, 'free_from' => 0.00];
         } else {
             $context = $this->contextFactory->create();
             $shipping_node = $context->getNodeByIdentifier($identifier);
@@ -625,7 +725,7 @@ class Cart {
                     $result[] = $this->shippingService->execute();
                 }
             } else {
-                $result[] = ['name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
+                $result[] = ['identifier' => $shipping_node->getIdentifier(), 'name' => $shipping_node->getProperty('title'), 'price' => floatval(str_replace(',', '.', $shipping_node->getProperty('price'))), 'tax' => floatval(str_replace(',', '.', $shipping_node->getProperty('tax'))), 'price_kg' => $shipping_node->getProperty('price_kg'), 'free_from' => floatval(str_replace(',', '.', $shipping_node->getProperty('free_from')))];
             }
 
         }
@@ -634,9 +734,10 @@ class Cart {
 
     /**
      * @param array $args
-     * @return boolean
+     * @return bool
      */
-    public function checkRequiredArgs($args) {
+    public function checkRequiredArgs(array $args): bool
+    {
         $result = false;
         if (array_key_exists('firstname', $args) && array_key_exists('lastname', $args) && array_key_exists('country', $args) && array_key_exists('address', $args) && array_key_exists('zip', $args) && array_key_exists('city', $args) /*&& array_key_exists('phone', $args)*/ && array_key_exists('email', $args) && array_key_exists('shipping', $args) && array_key_exists('payment', $args) && array_key_exists('accept_terms', $args) && array_key_exists('accept_privacy', $args)) {
             if($args['firstname'] && $args['lastname'] && $args['country'] && $args['address'] && $args['zip'] && $args['city'] /*&& $args['phone']*/ && $args['email'] && $args['shipping'] && $args['payment'] && $args['accept_terms'] && $args['accept_privacy']) {
@@ -649,7 +750,8 @@ class Cart {
     /**
      * @return void
      */
-    public function refreshCoupons() {
+    public function refreshCoupons(): void
+    {
         $coupons = $this->coupons();
         $context = $this->contextFactory->create();
         $all_coupons = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Coupon]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();

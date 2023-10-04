@@ -58,3 +58,6 @@
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             dataSourceIdentifier: neosrulez-countries
+  constraints:
+    nodeTypes:
+      'NeosRulez.Shop:Document.Shipping.Graduated': true

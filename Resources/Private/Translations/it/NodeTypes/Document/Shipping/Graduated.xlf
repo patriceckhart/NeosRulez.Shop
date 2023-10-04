@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Shop" source-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="ui.label" xml:space="preserve">
+				<source>Tiered shipping costs</source>
+			</trans-unit>
+            <trans-unit id="groups.document" xml:space="preserve">
+                <source>Tiered shipping costs</source>
+            </trans-unit>
+            <trans-unit id="groups.graduated" xml:space="preserve">
+                <source>Relay</source>
+            </trans-unit>
+            <trans-unit id="properties.additive" xml:space="preserve">
+                <source>Additive</source>
+            </trans-unit>
+            <trans-unit id="properties.price" xml:space="preserve">
+                <source>Price</source>
+            </trans-unit>
+            <trans-unit id="properties.tax" xml:space="preserve">
+                <source>Tax</source>
+            </trans-unit>
+            <trans-unit id="properties.quantity" xml:space="preserve">
+                <source>Quantity</source>
+            </trans-unit>
+            <trans-unit id="properties.operator" xml:space="preserve">
+                <source>Operator</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

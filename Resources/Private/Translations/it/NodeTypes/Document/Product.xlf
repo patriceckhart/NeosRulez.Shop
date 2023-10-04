@@ -44,6 +44,9 @@
             <trans-unit id="properties.dontCropImage" xml:space="preserve">
                 <source>Non ritagliare l'immagine principale</source>
             </trans-unit>
+            <trans-unit id="properties.graduatedShippings" xml:space="preserve">
+                <source>Costi di spedizione scaglionati</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
