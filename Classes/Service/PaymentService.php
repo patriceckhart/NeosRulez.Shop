@@ -91,6 +91,10 @@ class PaymentService {
         } else {
             $context = $this->contextFactory->create();
             $paymentNode = $context->getNodeByIdentifier($identifier);
+            if($paymentNode === null) {
+                $selectedPayment['props']['label'] = $identifier;
+                return $selectedPayment;
+            }
             $selectedPayment = (array) $paymentNode->getProperties();
             $selectedPayment['nodeType'] = $paymentNode->getNodeType()->getName();
             $selectedPayment['props']['label'] = $paymentNode->getProperty('title');

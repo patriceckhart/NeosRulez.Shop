@@ -23,7 +23,10 @@ class PaymentViewHelper extends \Neos\FluidAdaptor\Core\ViewHelper\AbstractViewH
      */
     public function render(): string
     {
-        return $this->paymentService->getPaymentByIdentifier($this->arguments['string'])['title'];
+        if(array_key_exists('title', $this->paymentService->getPaymentByIdentifier($this->arguments['string']))) {
+            return $this->paymentService->getPaymentByIdentifier($this->arguments['string'])['title'];
+        }
+        return $this->arguments['string'];
     }
 
 }

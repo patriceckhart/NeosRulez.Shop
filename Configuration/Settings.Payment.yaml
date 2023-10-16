@@ -1,6 +1,6 @@
-#NeosRulez:
-#  Shop:
-#    Payment:
+NeosRulez:
+  Shop:
+    Payment:
 #      Use this for test payments
 #      testpayment:
 #        class: NeosRulez\Shop\Service\Payment\TestPayment
@@ -40,7 +40,7 @@
 #          label: 'Vorauskassa'
 #          icon: 'fas fa-money-bill-alt'
 #          success_page: '455a33ab-4b1b-4871-9e77-9210692d05f3'
-#          failure_page: '90c7a6e1-8ca6-4403-ae46-c9f5cc93d5b6'
+#          failure_page: '455a33ab-4b1b-4871-9e77-9210692d05f3'
 #          payment_status: 0
 #       creditcard:
 #         class: NeosRulez\Shop\Service\Payment\Stripe
