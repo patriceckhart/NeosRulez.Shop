@@ -316,10 +316,14 @@ class CartController extends ActionController
         } else {
             $success_page = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]".$args[$args['payment'].'_success'];
         }
-        if (strpos($args[$args['payment'].'_failure'], 'http') !== false) {
+        if(array_key_exists(($args['payment'] . '_failure'), $args) && strpos($args[$args['payment'].'_failure'], 'http') !== false) {
             $failure_page = $args[$args['payment'].'_failure'];
         } else {
-            $failure_page = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]".$args[$args['payment'].'_failure'];
+            if(array_key_exists(($args['payment'] . '_failure'), $args)) {
+                $failure_page = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]".$args[$args['payment'].'_failure'];
+            } else {
+                $failure_page = $success_page;
+            }
         }
         $args['success_uri'] = $success_page;
         $args['failure_uri'] = $failure_page;
