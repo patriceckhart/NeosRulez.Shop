@@ -93,6 +93,8 @@ class PaymentService {
             $paymentNode = $context->getNodeByIdentifier($identifier);
             $selectedPayment = (array) $paymentNode->getProperties();
             $selectedPayment['nodeType'] = $paymentNode->getNodeType()->getName();
+            $selectedPayment['props']['label'] = $paymentNode->getProperty('title');
+            $selectedPayment['props']['payment_status'] = '0';
         }
         return $selectedPayment;
     }
