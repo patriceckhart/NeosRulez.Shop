@@ -1,5 +1,6 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace fusion=Neos\Fusion\ViewHelpers}
+{namespace nrshop=NeosRulez\Shop\ViewHelpers}
 <f:if condition="{order}">
 
     <style>
@@ -52,7 +53,9 @@
         <fieldset class="neos-span5 neos-offset1" style="float: right;">
             <legend>Zahlung</legend>
             <p>
-                <span style="margin-right:10px;">{payment}</span>
+                <span style="margin-right:10px;">
+					{nrshop:payment(string: payment)}
+				</span>
                 <f:if condition="{order.paid}">
                     <f:then>
                         <span class="neos-badge neos-badge-success">Zahlung abgeschlossen</span>
