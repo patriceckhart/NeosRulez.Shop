@@ -1,6 +1,6 @@
-NeosRulez:
-  Shop:
-    Payment:
+#NeosRulez:
+#  Shop:
+#    Payment:
 #      Use this for test payments
 #      testpayment:
 #        class: NeosRulez\Shop\Service\Payment\TestPayment
