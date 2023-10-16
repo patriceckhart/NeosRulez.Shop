@@ -23,8 +23,8 @@ class InvoiceRepository extends Repository {
             $fiscalYearEnd = $fiscalYearEnd->modify('+1 year');
         }
 
-        $fiscalYearStartNew = $now->format('Y') . '-' . $fiscalYearStart;
-        $fiscalYearEndNew = $next->modify('+1 year')->format('Y') . '-' . $fiscalYearEnd;
+        $fiscalYearStartNew = $now->format('Y') . '-' . $fiscalYearStart->format('m-d');
+        $fiscalYearEndNew = $next->modify('+1 year')->format('Y') . '-' . $fiscalYearEnd->format('m-d');
 
         $fiscalYearStartDate = new \DateTime($fiscalYearStartNew);
         $fiscalYearEndDate = new \DateTime($fiscalYearEndNew);
