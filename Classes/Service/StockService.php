@@ -5,6 +5,7 @@ use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
 use NeosRulez\Shop\Domain\Model\Cart;
 use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
 
@@ -25,6 +26,12 @@ class StockService
      * @var ContextFactoryInterface
      */
     protected $contextFactory;
+
+    /**
+     * @Flow\Inject
+     * @var PersistenceManagerInterface
+     */
+    protected $persistenceManager;
 
     /**
      * @return void
@@ -48,6 +55,7 @@ class StockService
                             if($newQuantity <= 0) {
                                 $node->setProperty('stock', false);
                             }
+                            $this->persistenceManager->persistAll();
                         }
                     }
                 }
