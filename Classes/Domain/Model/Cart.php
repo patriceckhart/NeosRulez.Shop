@@ -501,6 +501,8 @@ class Cart
 
                 if($total_coupon<$free_from) {
                     $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']);
+                } else {
+                    $total_coupon = $total_coupon + $shipping[0]['price'] + $graduatedShippingCosts;
                 }
                 $total_shipping = $shipping[0]['price'];
             }
