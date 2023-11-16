@@ -110,7 +110,7 @@ class InvoiceService {
                 $this->persistenceManager->persistAll();
                 $variables['invoice_date'] = new \DateTime();
             } else {
-                $invoice_number = $prefix . $rInvoice->getInvoicenumber();
+                $invoice_number = $rInvoice->getInvoicenumber();
                 $variables['invoice_date'] = $rInvoice->getCreated();
             }
         }
