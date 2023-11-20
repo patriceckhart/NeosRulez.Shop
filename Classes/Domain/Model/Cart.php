@@ -401,6 +401,7 @@ class Cart
         $freeShipping = true;
         $graduatedShippingCosts = 0;
         $context = $this->contextFactory->create();
+        $rateOnlyOnce = [];
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -449,7 +450,14 @@ class Cart
                             foreach ($graduatedShippings as $graduatedShipping) {
                                 foreach ($shipping as $shippingItem) {
                                     if($graduatedShipping->getParent()->getIdentifier() === $shippingItem['identifier']) {
-                                        $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                        if($graduatedShipping->hasProperty('rateOnlyOnce') && $graduatedShipping->getProperty('rateOnlyOnce')) {
+                                            if(in_array($graduatedShipping->getIdentifier(), $rateOnlyOnce) === false) {
+                                                $rateOnlyOnce[] = $graduatedShipping->getIdentifier();
+                                                $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                            }
+                                        } else {
+                                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                        }
                                     }
                                 }
                             }
@@ -457,6 +465,7 @@ class Cart
                     }
                 }
             }
+
 
         }
 
