@@ -41,7 +41,9 @@ class RelayImplementation extends AbstractFusionObject {
             }
             foreach ($items as $item) {
                 if(!is_null($item['relay'])) {
-                    $results[$item['relay']]['quantity'] = $results[$item['relay']]['quantity'] + $item['quantity'];
+                    if(array_key_exists($item['relay'], $results)) {
+                        $results[$item['relay']]['quantity'] = $results[$item['relay']]['quantity'] + $item['quantity'];
+                    }
                 }
             }
             foreach ($results as $i => $result) {
