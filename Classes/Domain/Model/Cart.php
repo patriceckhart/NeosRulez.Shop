@@ -535,7 +535,6 @@ class Cart
                 $tax_shipping = 0;
             }
         }
-        $total_shipping = $total_shipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
         $cart_count = 0;
         if($summary) {
             foreach ($summary as $summaryitem) {
@@ -546,6 +545,7 @@ class Cart
         if($free_from === 0.00) {
             $free_from = 9999999999999;
         }
+        $total_shipping = $total_shipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
         $result = ['subtotal' => $subtotal, 'tax' => ($total - $subtotal), 'total_tax' => $subtotal + ($total - $subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
         return $result;
     }
