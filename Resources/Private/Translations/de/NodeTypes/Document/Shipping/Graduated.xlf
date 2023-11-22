@@ -29,6 +29,9 @@
             <trans-unit id="properties.rateOnlyOnce" xml:space="preserve">
                 <source>Im Warenkorb nur einmal werten</source>
             </trans-unit>
+            <trans-unit id="properties.rateCollected" xml:space="preserve">
+                <source>Auf alle Produkte ausweiten</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

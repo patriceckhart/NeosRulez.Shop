@@ -402,6 +402,7 @@ class Cart
         $graduatedShippingCosts = 0;
         $context = $this->contextFactory->create();
         $rateOnlyOnce = [];
+        $rateCollected = [];
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -451,10 +452,14 @@ class Cart
                                 foreach ($shipping as $shippingItem) {
                                     if($graduatedShipping->getParent()->getIdentifier() === $shippingItem['identifier']) {
                                         if($graduatedShipping->hasProperty('rateOnlyOnce') && $graduatedShipping->getProperty('rateOnlyOnce')) {
-                                            if(in_array($graduatedShipping->getIdentifier(), $rateOnlyOnce) === false) {
+                                            if (in_array($graduatedShipping->getIdentifier(), $rateOnlyOnce) === false) {
                                                 $rateOnlyOnce[] = $graduatedShipping->getIdentifier();
                                                 $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
                                             }
+                                        } else if($graduatedShipping->hasProperty('rateCollected') && $graduatedShipping->getProperty('rateCollected')) {
+                                            $graduatedShippingCosts = 0;
+                                            $rateCollected[$graduatedShipping->getIdentifier()]['graduatedShipping'] = $graduatedShipping;
+                                            $rateCollected[$graduatedShipping->getIdentifier()]['quantity'][] = $quantity;
                                         } else {
                                             $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
                                         }
@@ -465,8 +470,14 @@ class Cart
                     }
                 }
             }
+        }
 
-
+        foreach ($rateCollected as $rateCollectedItem) {
+            $quantity = 0;
+            foreach ($rateCollectedItem['quantity'] as $quantityItem) {
+                $quantity = $quantity + (int) $quantityItem;
+            }
+            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($rateCollectedItem['graduatedShipping'], $quantity);
         }
 
         if($coupons) {
@@ -524,7 +535,7 @@ class Cart
                 $tax_shipping = 0;
             }
         }
-        $total_shipping = $total_shipping + $graduatedShippingCosts;
+        $total_shipping = $total_shipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
         $cart_count = 0;
         if($summary) {
             foreach ($summary as $summaryitem) {

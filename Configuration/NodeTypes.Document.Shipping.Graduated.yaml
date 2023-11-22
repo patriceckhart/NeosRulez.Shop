@@ -62,5 +62,15 @@
         label: i18n
         reloadIfChanged: true
         inspector:
+          hidden: 'ClientEval:node.properties.rateCollected ? true : false'
           group: graduated
           position: 3
+    rateCollected:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval:node.properties.rateOnlyOnce ? true : false'
+          group: graduated
+          position: 4
