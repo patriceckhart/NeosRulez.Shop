@@ -498,7 +498,7 @@ class Cart
         $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
-                if($shipping[0]['free_from'] === '' || $shipping[0]['free_from'] === null) {
+                if($shipping[0]['free_from'] === 0.00 || $shipping[0]['free_from'] === '' || $shipping[0]['free_from'] === null) {
                     $free_from = 9999999999999;
                 } else {
                     $free_from = floatval(str_replace(',', '.', $shipping[0]['free_from']));
@@ -510,7 +510,7 @@ class Cart
                 $factor = floatval($shipping[0]['tax'] / 100 + 1);
                 $tax_shipping = $shipping_weight - ($shipping_weight / $factor);
 
-                if($total_coupon<$free_from) {
+                if($total_coupon < $free_from) {
                     $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping_weight);
                 }
                 $total_shipping = $shipping_weight;
@@ -518,11 +518,10 @@ class Cart
 
                 $factor = floatval($shipping[0]['tax'] / 100 + 1);
                 $tax_shipping = $shipping[0]['price'] - ($shipping[0]['price'] / $factor);
-
-                if($total_coupon<$free_from) {
-                    $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']);
+                if($total_coupon < $free_from) {
+                    $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']) + $graduatedShippingCosts;
                 } else {
-                    $total_coupon = $total_coupon + $shipping[0]['price'] + $graduatedShippingCosts;
+                    $total_coupon = $total_coupon;
                 }
                 $total_shipping = $shipping[0]['price'];
             }
