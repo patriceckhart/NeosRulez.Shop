@@ -445,7 +445,7 @@ class Cart
                 if (array_key_exists('node', $item)) {
                     $productNode = $context->getNodeByIdentifier($item['node']);
                     $quantity = (float)$item['quantity'];
-                    if ($productNode->hasProperty('graduatedShippings')) {
+                    if ($productNode !== null && $productNode->hasProperty('graduatedShippings')) {
                         $graduatedShippings = $productNode->getProperty('graduatedShippings');
                         if (count($graduatedShippings) > 0) {
                             foreach ($graduatedShippings as $graduatedShipping) {
