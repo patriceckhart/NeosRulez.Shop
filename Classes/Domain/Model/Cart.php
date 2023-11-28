@@ -520,6 +520,10 @@ class Cart
                 $tax_shipping = $shipping[0]['price'] - ($shipping[0]['price'] / $factor);
                 if($total_coupon < $free_from) {
                     $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']) + $graduatedShippingCosts;
+
+                    if($shipping[0]['price'] === 0.00 && $graduatedShippingCosts !== 0.00) {
+                        $tax_shipping = $graduatedShippingCosts - ($graduatedShippingCosts / $factor);
+                    }
                 } else {
                     $total_coupon = $total_coupon;
                 }
