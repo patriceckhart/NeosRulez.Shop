@@ -480,21 +480,7 @@ class Cart
             $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($rateCollectedItem['graduatedShipping'], $quantity);
         }
 
-        if($coupons) {
-            if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
-                if ($coupons[0]['percentual']) {
-                    $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
-                    $total_coupon = $total_coupon - $discount;
-                } else {
-                    if($coupons[0]['name'] != 'NaN_') {
-                        $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
-                    } else {
-                        $discount = 0;
-                    }
-                    $total_coupon = $total_coupon - $discount;
-                }
-            }
-        }
+
         $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
@@ -545,12 +531,30 @@ class Cart
                 $cart_count = $cart_count+$summaryquantity;
             }
         }
+
         if($free_from === 0.00) {
             $free_from = 9999999999999;
         }
+
         $total_shipping = $total_shipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
-        $result = ['subtotal' => $subtotal, 'tax' => ($total - $subtotal), 'total_tax' => $subtotal + ($total - $subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
-        return $result;
+
+        if($coupons) {
+            if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
+                if ($coupons[0]['percentual']) {
+                    $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
+                    $total_coupon = $total_coupon - $discount;
+                } else {
+                    if($coupons[0]['name'] != 'NaN_') {
+                        $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
+                    } else {
+                        $discount = 0;
+                    }
+                    $total_coupon = $total_coupon - $discount;
+                }
+            }
+        }
+
+        return ['subtotal' => $subtotal, 'tax' => ($total - $subtotal), 'total_tax' => $subtotal + ($total - $subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
     }
 
     /**
