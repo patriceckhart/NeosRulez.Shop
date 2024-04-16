@@ -552,6 +552,11 @@ class Cart
                     $total_coupon = $total_coupon - $discount;
                 }
             }
+            if($coupons[0]['isShippingCoupon'] === true) {
+                $total_coupon = $total_coupon - $total_shipping;
+                $total_shipping = 0;
+                $tax_shipping = 0;
+            }
         }
 
         return ['subtotal' => $subtotal, 'tax' => ($total - $subtotal), 'total_tax' => $subtotal + ($total - $subtotal), 'total_shipping' => $total_shipping, 'tax_shipping' => $tax_shipping, 'discount' => $discount, 'total' => $total_coupon, 'cartcount' => intval($cart_count), 'weight' => $itemweight, 'free_from' => $free_from];
