@@ -2,22 +2,17 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
     selection = Neos.Neos:MenuItems {
         itemCollection = ${q(node).property('selection')}
     }
+    selection.@if.condition = ${q(node).property('selection') && Array.length(q(node).property('selection')) > 0 ? true : false}
     startingPoint = Neos.Neos:MenuItems {
         startingPoint = ${q(node).property('startingPoint')}
         filter = 'NeosRulez.Shop:Document.Product'
     }
+    selection.@if.condition = ${q(node).property('startingPoint') ? true : false}
     products = ${this.startingPoint ? this.startingPoint : this.selection}
-    show_addto = ${q(node).property('show_addto')}
-    quantity = Neos.Fusion:Loop {
-        items = ${Array.range(0, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1)}
-        itemName = 'quantity'
-        itemRenderer = afx`
-            <Neos.Fusion.Form:Select.Option @if.render={quantity != 0} option.value={quantity} >{quantity}</Neos.Fusion.Form:Select.Option>
-        `
-    }
+
     renderer = afx`
         <NeosRulez.Shop:Component.AbstractContent>
-            <div class="products filtered">
+            <div @if.render={props.products && Array.length(props.products) > 0} class="products filtered">
                 <div class="row">
                     <Neos.Fusion:Loop items={props.products} item="item">
                         <NeosRulez.Shop:Content.Products.Item />
@@ -26,7 +21,6 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
             </div>
         </NeosRulez.Shop:Component.AbstractContent>
     `
-
     @cache {
         mode = 'dynamic'
         entryIdentifier {
@@ -52,7 +46,7 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
             <Neos.Neos:NodeLink node={item.node} attributes.class="d-block product-item-link">
                 <div class="row">
                     <div class="col-12">
-                        <Neos.Fusion:Loop items={item.node.properties.images} itemName="asset" itemKey="assetKey">
+                        <Neos.Fusion:Loop @if.render={item.node.properties.images && Array.length(item.node.properties.images) > 0} items={item.node.properties.images} itemName="asset" itemKey="assetKey">
                             <Neos.Neos:ImageTag @if.render={assetKey == 0} asset={asset} allowUpScaling="true" allowCropping={props.cropImage ? true : false} width="800" height={props.cropImage ? 560 : false} attributes.class="img-fluid product-item-image" />
                         </Neos.Fusion:Loop>
                         <div class="d-block mt-2 product-item-title">
