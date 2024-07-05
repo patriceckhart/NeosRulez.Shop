@@ -69,18 +69,6 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
                     </div>
                 </div>
             </Neos.Neos:NodeLink>
-            <Neos.Fusion.Form:Form @if.render={props.show_addto} form.target.action="add" form.target.controller="Cart" form.data.item={item} >
-                <div class="row align-items-center mt-3">
-                    <div class="col-md-4">
-                        <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control">
-                            {props.quantity}
-                        </Neos.Fusion.Form:Select>
-                    </div>
-                    <div class="col-md-8">
-                        <Neos.Fusion.Form:Button attributes.class="btn btn-primary btn-block w-100">In den Warenkorb</Neos.Fusion.Form:Button>
-                    </div>
-                </div>
-            </Neos.Fusion.Form:Form>
         </div>
     `
 }
