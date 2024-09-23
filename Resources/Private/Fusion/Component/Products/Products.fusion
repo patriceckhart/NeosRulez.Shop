@@ -40,6 +40,7 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
 prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Component) {
 
     cropImage = ${q(node).property('cropImage')}
+    useImageSourceSet = ${Configuration.setting('NeosRulez.Shop.useImageSourceSet')}
 
     renderer = afx`
         <div class={'col-md-4 mix' + (q(item.node).property('categories')[0].identifier ? ' category-' + q(item.node).property('categories')[0].identifier : '')}>
@@ -47,7 +48,8 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
                 <div class="row">
                     <div class="col-12">
                         <Neos.Fusion:Loop @if.render={item.node.properties.images && Array.length(item.node.properties.images) > 0} items={item.node.properties.images} itemName="asset" itemKey="assetKey">
-                            <Neos.Neos:ImageTag @if.render={assetKey == 0} asset={asset} allowUpScaling="true" allowCropping={props.cropImage ? true : false} width="400" height={props.cropImage ? 280 : false} attributes.class="img-fluid product-item-image" async={true} />
+                            <Neos.Neos:ImageTag @if.render={assetKey == 0 && !props.useImageSourceSet} asset={asset} allowUpScaling="true" allowCropping={props.cropImage ? true : false} width="400" height={props.cropImage ? 280 : false} attributes.class="img-fluid product-item-image" async={true} />
+                            <NeosRulez.Bootstrap:Component.ImageTag @if.render={assetKey == 0 && props.useImageSourceSet} image={asset} width="400" height={props.cropImage ? 280 : false} allowCropping={props.cropImage ? true : false} allowUpScaling={true} async={true} />
                         </Neos.Fusion:Loop>
                         <div class="d-block mt-2 product-item-title">
                             {item.node.properties.title}

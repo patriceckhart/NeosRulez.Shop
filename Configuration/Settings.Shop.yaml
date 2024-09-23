@@ -6,3 +6,4 @@ NeosRulez:
     debugMode: false
     useFeLogin: false # The package NeosRulez.FrontendLogin is required!
     oneStopShop: false
+    useImageSourceSet: false
