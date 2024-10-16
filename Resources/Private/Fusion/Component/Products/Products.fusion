@@ -22,17 +22,19 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
         </NeosRulez.Shop:Component.AbstractContent>
     `
     @cache {
-        mode = 'dynamic'
+        mode = 'cached'
         entryIdentifier {
             node = ${node}
         }
         context {
-            1 = 'node'
-            2 = 'documentNode'
+            1 = 'site'
+            2 = 'node'
+            3 = 'documentNode'
         }
         entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.nodeTag(documentNode)}
+            1 = ${Neos.Caching.nodeTypeTag('NeosRulez.Shop:Document.Product', node)}
+            2 = ${Neos.Caching.nodeTypeTag('NeosRulez.Category:Document.Category', node)}
+            3 = ${Neos.Caching.nodeTag(node)}
         }
     }
 }
