@@ -205,6 +205,8 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
             <Neos.Fusion.Form:Hidden @if.render={props.customPrice} field.name="item[article_number]" field.value={node.properties.article_number} />
             <Neos.Fusion.Form:Hidden @if.render={props.customPrice} field.name="item[weight]" field.value={props.productCollection.weight} />
 
+            <NeosRulez.Shop:Component.Product.Afx.Add.CustomFormFields />
+
         </Neos.Fusion.Form:Form>
         <div @if.render={!props.stock} id="stockAlert" class="alert alert-danger">
             {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Product:notInStock')}
@@ -225,6 +227,8 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
         }
     }
 }
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Add.CustomFormFields) < prototype(Neos.Fusion:Component)
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion:Component) {
 
