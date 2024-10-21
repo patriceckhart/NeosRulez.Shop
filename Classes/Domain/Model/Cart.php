@@ -403,6 +403,7 @@ class Cart
         $context = $this->contextFactory->create();
         $rateOnlyOnce = [];
         $rateCollected = [];
+        $customShipping = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -470,6 +471,9 @@ class Cart
                     }
                 }
             }
+            if(array_key_exists('customShipping', $item)) {
+                $customShipping = $customShipping + (float)$item['customShipping'];
+            }
         }
 
         foreach ($rateCollected as $rateCollectedItem) {
@@ -536,7 +540,7 @@ class Cart
             $free_from = 9999999999999;
         }
 
-        $total_shipping = $total_shipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
+        $total_shipping = $total_shipping + $customShipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
 
         if($coupons) {
             if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
