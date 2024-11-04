@@ -404,6 +404,7 @@ class Cart
         $rateOnlyOnce = [];
         $rateCollected = [];
         $customShipping = 0;
+        $customShippingTax = 0;
         if (array_key_exists(0, $order)) {
             if (array_key_exists('shipping', $order[0])) {
                 $shipping = $this->findShipping($order[0]['shipping']);
@@ -473,6 +474,10 @@ class Cart
             }
             if(array_key_exists('customShipping', $item)) {
                 $customShipping = $customShipping + (float)$item['customShipping'];
+                if(array_key_exists('customShippingTax', $item)) {
+                    $tax_shipping = $tax_shipping + (($customShipping / 100) * (float)$item['customShippingTax']);
+                }
+                $total_coupon = $total_coupon + $customShipping;
             }
         }
 
