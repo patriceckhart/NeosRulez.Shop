@@ -228,7 +228,12 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     }
 }
 
-prototype(NeosRulez.Shop:Component.Product.Afx.Add.CustomFormFields) < prototype(Neos.Fusion:Component)
+prototype(NeosRulez.Shop:Component.Product.Afx.Add.CustomFormFields) < prototype(Neos.Fusion:Component) {
+    
+    renderer = afx`
+
+    `
+}
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion:Component) {
 
