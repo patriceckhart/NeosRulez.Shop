@@ -7,7 +7,7 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
         startingPoint = ${q(node).property('startingPoint')}
         filter = 'NeosRulez.Shop:Document.Product'
     }
-    selection.@if.condition = ${q(node).property('startingPoint') ? true : false}
+    startingPoint.@if.condition = ${q(node).property('startingPoint') ? true : false}
     products = ${this.startingPoint ? this.startingPoint : this.selection}
 
     renderer = afx`
