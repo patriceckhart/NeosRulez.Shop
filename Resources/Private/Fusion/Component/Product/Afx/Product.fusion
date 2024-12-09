@@ -4,6 +4,24 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
         nodePath = 'main'
     }
 
+    parentNode = ${node.parent.nodeType.name == 'NeosRulez.Shop:Document.Product' ? node.parent : false}
+    contentNodes = ${q(node).children('main').find('[instanceof Neos.Neos:Content]').get()}
+    parentContentNodes = ${this.parentNode ? q(this.parentNode).children('main').find('[instanceof Neos.Neos:Content]').get() : false}
+    @context.parentContentNodes = ${this.parentContentNodes}
+    inBackend = ${site.context.inBackend}
+    parentContentNodesRenderer = Neos.Fusion:Loop {
+        items = ${parentContentNodes}
+        itemRenderer = Neos.Neos:ContentCase
+        itemName = 'node'
+        prototype(Neos.Neos:ContentElementWrapping) {
+            @if.render = false
+        }
+        prototype(Neos.Neos:Editable) {
+            renderer.editable.condition = false
+        }
+    }
+    parentContentNodesRenderer.@if.condition = ${parentContentNodes && Array.length(parentContentNodes) > 0 ? true : false}
+
     renderer = afx`
         <NeosRulez.Shop:Component.CountrySelection />
         <div class="product_detail">
@@ -20,10 +38,37 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
                 </div>
             </div>
         </div>
-        {props.main}
+        <Neos.Fusion:Fragment @if.render={props.inBackend || (props.contentNodes && Array.length(props.contentNodes) > 0)}>
+            {props.main}
+        </Neos.Fusion:Fragment>
+        <NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection contentNodes={props.contentNodes} parentContentNodes={props.parentContentNodes} parentContentNodesRenderer={props.parentContentNodesRenderer} />
     `
     renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
         node = ${documentNode}
+    }
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <Neos.Fusion:Fragment @if.render={!props.contentNodes && props.parentContentNodes && Array.length(props.parentContentNodes) > 0 && props.parentContentNodesRenderer}>
+            {props.parentContentNodesRenderer}
+        </Neos.Fusion:Fragment>
+    `
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        context {
+            1 = 'site'
+            2 = 'node'
+            3 = 'documentNode'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTypeTag('Neos.Neos:Content', node)}
+        }
     }
 }
 
@@ -36,8 +81,12 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:C
     thumbWidth = 150
     thumbHeight = 150
 
-    images = ${node.properties.images}
-    title = ${node.properties.title}
+    images = ${q(node).property('images')}
+
+    parentNode = ${node.parent.nodeType.name == 'NeosRulez.Shop:Document.Product' ? node.parent : false}
+    @context.node = ${this.images && Array.length(this.images) > 0 ? node : this.parentNode}
+
+    title = ${q(node).property('title')}
 
     dontCropImage = ${q(node).property('dontCropImage')}
 
@@ -65,6 +114,11 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Images) < prototype(Neos.Fusion:C
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Content) < prototype(Neos.Fusion:Component) {
 
+    parentNode = ${node.parent.nodeType.name == 'NeosRulez.Shop:Document.Product' ? node.parent : false}
+    inBackend = ${site.context.inBackend}
+    description = ${q(node).property('description')}
+    parentDescription = ${this.parentNode ? q(this.parentNode).property('description') : false}
+
     renderer = afx`
         <div class="product_content">
             <div class="row">
@@ -81,7 +135,12 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Content) < prototype(Neos.Fusion:
                 </div>
             </div>
             <div class="my-3 description">
-                <Neos.Neos:Editable property="description" />
+                <Neos.Fusion:Fragment @if.render={!props.description && props.parentDescription}>
+                    {props.parentDescription}
+                </Neos.Fusion:Fragment>
+                <Neos.Fusion:Fragment @if.render={props.inBackend || props.description}>
+                    <Neos.Neos:Editable property="description" />
+                </Neos.Fusion:Fragment>
             </div>
         </div>
     `
@@ -178,8 +237,10 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
 
     stock = ${q(documentNode).property('stockManagement') ? this.quantityInStock : q(node).property('stock')}
 
+    disableCartForm = ${q(node).property('disableCartForm')}
+
     renderer = afx`
-        <Neos.Fusion.Form:Form @if.render={props.stock} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
+        <Neos.Fusion.Form:Form @if.render={props.stock && !props.disableCartForm} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
             <div class="row align-items-center add_to_cart">
                 <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants />
                 <NeosRulez.Shop:Component.Product.Afx.Options />
@@ -229,7 +290,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Add.CustomFormFields) < prototype(Neos.Fusion:Component) {
-    
+
     renderer = afx`
 
     `
@@ -352,10 +413,13 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants.Variant) 
 
     price = ${Configuration.setting('NeosRulez.Shop.oneStopShop') ? (String.toFloat(String.replace(node.properties.price, ',', '.')) * ((String.toFloat(this.getTaxClass) / 100) + 1)) : String.toFloat(String.replace(node.properties.price, ',', '.'))}
 
+    parentNode = ${this.product.parent.nodeType.name == 'NeosRulez.Shop:Document.Product' ? this.product.parent : false}
+    images = ${q(this.product).property('images') && Array.length(q(this.product).property('images')) > 0 ? q(this.product).property('images') : q(this.parentNode).property('images')}
+
     renderer = afx`
         <div @if.render={props.product.identifier != documentNode.identifier || props.self ? true : false} class="row align-items-center">
             <div class="col-2">
-                <NeosRulez.Bootstrap:Component.ImageTag @if.render={props.product.properties.images} image={props.product.properties.images[0]} width="60" height="60" allowCropping={true} allowUpScaling={true} alternativeText={props.product.properties.title} title={props.product.properties.title} />
+                <NeosRulez.Bootstrap:Component.ImageTag @if.render={props.images && Array.length(props.images) > 0} image={props.images[0]} width="60" height="60" allowCropping={true} allowUpScaling={true} alternativeText={props.product.properties.title} title={props.product.properties.title} />
             </div>
             <div class="col-10">
                 {props.product.properties.title}

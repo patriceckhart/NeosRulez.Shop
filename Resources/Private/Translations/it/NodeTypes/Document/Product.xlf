@@ -47,6 +47,9 @@
             <trans-unit id="properties.graduatedShippings" xml:space="preserve">
                 <source>Costi di spedizione scaglionati</source>
             </trans-unit>
+            <trans-unit id="properties.disableCartForm" xml:space="preserve">
+                <source>Disattiva "Aggiungi al carrello"</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

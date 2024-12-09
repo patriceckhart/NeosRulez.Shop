@@ -201,6 +201,14 @@
           position: after freeShipping
           editorOptions:
             nodeTypes: [ 'NeosRulez.Shop:Document.Shipping.Graduated' ]
+    disableCartForm:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: document
+          position: end
   constraints:
     nodeTypes:
       'NeosRulez.Shop:Document.FreeStyleTextOption': true
