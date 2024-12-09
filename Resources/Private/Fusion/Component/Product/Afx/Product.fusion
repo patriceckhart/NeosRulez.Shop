@@ -5,14 +5,14 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
     }
 
     parentNode = ${node.parent.nodeType.name == 'NeosRulez.Shop:Document.Product' ? node.parent : false}
-    contentNodes = ${q(node).children('main').find('[instanceof Neos.Neos:Content]').get()}
-    parentContentNodes = ${this.parentNode ? q(this.parentNode).children('main').find('[instanceof Neos.Neos:Content]').get() : false}
-    @context.parentContentNodes = ${this.parentContentNodes}
+    @context.parentNode = ${this.parentNode}
+    contentNodes = ${q(node).children('main').find('[instanceof Neos.Neos:Content]').filter('[_hidden=false]').get()}
     inBackend = ${site.context.inBackend}
-    parentContentNodesRenderer = Neos.Fusion:Loop {
-        items = ${parentContentNodes}
-        itemRenderer = Neos.Neos:ContentCase
-        itemName = 'node'
+
+    parent = Neos.Neos:ContentCollection {
+        nodePath = ${q(parentNode).children('main').property('_path')}
+        collection = ${q(parentNode).children('main').children()}
+
         prototype(Neos.Neos:ContentElementWrapping) {
             @if.render = false
         }
@@ -20,7 +20,6 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
             renderer.editable.condition = false
         }
     }
-    parentContentNodesRenderer.@if.condition = ${parentContentNodes && Array.length(parentContentNodes) > 0 ? true : false}
 
     renderer = afx`
         <NeosRulez.Shop:Component.CountrySelection />
@@ -41,7 +40,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
         <Neos.Fusion:Fragment @if.render={props.inBackend || (props.contentNodes && Array.length(props.contentNodes) > 0)}>
             {props.main}
         </Neos.Fusion:Fragment>
-        <NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection contentNodes={props.contentNodes} parentContentNodes={props.parentContentNodes} parentContentNodesRenderer={props.parentContentNodesRenderer} />
+        <NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection @if.render={props.parentNode && !props.contentNodes} parent={props.parent} />
     `
     renderer.@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
         node = ${documentNode}
@@ -50,9 +49,11 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
 
 prototype(NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection) < prototype(Neos.Fusion:Component) {
 
+    parent = false
+
     renderer = afx`
-        <Neos.Fusion:Fragment @if.render={!props.contentNodes && props.parentContentNodes && Array.length(props.parentContentNodes) > 0 && props.parentContentNodesRenderer}>
-            {props.parentContentNodesRenderer}
+        <Neos.Fusion:Fragment @if.render={props.parent}>
+            {props.parent}
         </Neos.Fusion:Fragment>
     `
     @cache {
