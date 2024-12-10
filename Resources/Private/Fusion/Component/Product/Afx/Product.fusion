@@ -311,7 +311,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Quantity) < prototype(Neos.Fusion
 
     stockLevel = ${String.toInteger(this.quantityInStock) < String.toInteger(this.stockManagement) ? String.toInteger(this.quantityInStock) : String.toInteger(this.stockManagement)}
 
-    max_quantity = ${this.stockManagement ? Array.range(this.product_max_quantity, this.stockLevel, 1) : (this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1))}
+    max_quantity = ${this.stockManagement ? Array.range(String.toInteger(this.product_max_quantity), this.stockLevel, 1) : (this.product_max_quantity ? Array.range(String.toInteger(this.array_min_quantity), String.toInteger(this.product_max_quantity), 1) : Array.range(this.array_min_quantity, String.toInteger(Configuration.setting('NeosRulez.Shop.Product.max_quantity')), 1))}
 
     renderer = afx`
         <Neos.Fusion.Form:Select field.name="item[quantity]" attributes.class="form-control form-select product-quantity">
