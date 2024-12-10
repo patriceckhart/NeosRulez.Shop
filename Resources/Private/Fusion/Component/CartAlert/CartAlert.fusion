@@ -1,6 +1,6 @@
 prototype(NeosRulez.Shop:Component.CartAlert) < prototype(Neos.Neos:ContentComponent) {
 
-    cart = ${q(site).children('[instanceof NeosRulez.Shop:Document.Cart]').sort('_index', 'ASC').get(0)}
+    cart = ${q(site).find('[instanceof NeosRulez.Shop:Document.Cart]').sort('_index', 'ASC').get(0)}
 
     renderer = afx`
         <div @if.render={props.cart} class="alert alert-success mt-5 cart-alert" role="alert">
