@@ -489,7 +489,6 @@ class Cart
             $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($rateCollectedItem['graduatedShipping'], $quantity);
         }
 
-
         $total_primary = $total_coupon;
         if($shipping) {
             if (array_key_exists('free_from', $shipping[0])) {
@@ -512,12 +511,13 @@ class Cart
             } else {
 
                 $factor = floatval($shipping[0]['tax'] / 100 + 1);
-                $tax_shipping = $shipping[0]['price'] - ($shipping[0]['price'] / $factor);
+                $tax_shipping = $tax_shipping + ($shipping[0]['price'] - ($shipping[0]['price'] / $factor));
+
                 if($total_coupon < $free_from) {
                     $total_coupon = $total_coupon + ($freeShipping ? 0 : $shipping[0]['price']) + $graduatedShippingCosts;
 
                     if($shipping[0]['price'] === 0.00 && $graduatedShippingCosts !== 0.00) {
-                        $tax_shipping = $graduatedShippingCosts - ($graduatedShippingCosts / $factor);
+                        $tax_shipping = $tax_shipping + ($graduatedShippingCosts - ($graduatedShippingCosts / $factor));
                     }
                 } else {
                     $total_coupon = $total_coupon;
@@ -533,6 +533,8 @@ class Cart
                 $tax_shipping = 0;
             }
         }
+
+
         $cart_count = 0;
         if($summary) {
             foreach ($summary as $summaryitem) {
