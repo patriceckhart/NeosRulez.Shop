@@ -2,9 +2,7 @@
 namespace NeosRulez\Shop\Service;
 
 use Neos\Flow\Annotations as Flow;
-use Doctrine\ORM\Mapping as ORM;
-use Neos\Eel\FlowQuery\FlowQuery;
-use Neos\Eel\FlowQuery\Operations;
+use Doctrine\ORM\EntityManagerInterface;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use NeosRulez\Shop\Domain\Model\Cart;
 use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
@@ -17,15 +15,21 @@ class StockService
 
     /**
      * @Flow\Inject
+     * @var ContextFactoryInterface
+     */
+    protected $contextFactory;
+
+    /**
+     * @Flow\Inject
      * @var Cart
      */
     protected $cart;
 
     /**
      * @Flow\Inject
-     * @var ContextFactoryInterface
+     * @var EntityManagerInterface
      */
-    protected $contextFactory;
+    protected $entityManager;
 
     /**
      * @Flow\Inject
@@ -40,25 +44,31 @@ class StockService
     {
         $items = $this->cart->items;
         $context = $this->contextFactory->create();
+        $connection = $this->entityManager->getConnection();
         foreach ($items as $item) {
-            if(array_key_exists('node', $item)) {
+            if (array_key_exists('node', $item)) {
                 $nodeIdentifier = $item['node'];
                 $node = $context->getNodeByIdentifier($nodeIdentifier);
-                if($node !== null) {
-                    if($node->hasProperty('stockLevel')) {
-                        $stockLevel = $node->getProperty('stockLevel');
-                        $stockManagement = (int) $node->getProperty('stockManagement');
-                        if($stockManagement) {
-                            $orderedQuantity = (int) $item['quantity'];
-                            $newQuantity = ($stockLevel - $orderedQuantity);
-                            $node->setProperty('stockLevel', $newQuantity);
-                            if($newQuantity <= 0) {
-                                $node->setProperty('stock', false);
+                $rows = $connection->executeQuery('select * from neos_contentrepository_domain_model_nodedata where identifier="' . $node->getIdentifier() . '"')->fetchAllAssociative();
+                foreach ($rows as $row) {
+                    $dimensionNode = $this->persistenceManager->getObjectByIdentifier($row['persistence_object_identifier'], 'Neos\ContentRepository\Domain\Model\NodeData');
+                    if($dimensionNode !== null) {
+                        if($dimensionNode->hasProperty('stockLevel')) {
+                            $stockLevel = $dimensionNode->getProperty('stockLevel');
+                            $stockManagement = (int) $dimensionNode->getProperty('stockManagement');
+                            if($stockManagement) {
+                                $orderedQuantity = (int) $item['quantity'];
+                                $newQuantity = ($stockLevel - $orderedQuantity);
+                                $dimensionNode->setProperty('stockLevel', $newQuantity);
+                                if($newQuantity <= 0) {
+                                    $dimensionNode->setProperty('stock', false);
+                                }
+                                $this->persistenceManager->persistAll();
                             }
-                            $this->persistenceManager->persistAll();
                         }
                     }
                 }
+
             }
         }
     }
