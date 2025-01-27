@@ -241,6 +241,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     disableCartForm = ${q(node).property('disableCartForm')}
 
     renderer = afx`
+        <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants @if={props.disableCartForm} />
         <Neos.Fusion.Form:Form @if.render={props.stock && !props.disableCartForm} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
             <div class="row align-items-center add_to_cart">
                 <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants />
