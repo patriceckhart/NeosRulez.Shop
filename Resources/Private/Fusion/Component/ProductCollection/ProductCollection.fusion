@@ -1,46 +1,76 @@
 prototype(NeosRulez.Shop:Component.Product.Afx.Content) {
 
-    @context.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
-
     @context.collectionItems = NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items
-
-    renderer.@process.isCollection = ${isCollection ? value + collectionItems : value}
-
+    renderer.@process.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? value + collectionItems : value}
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items) < prototype(Neos.Fusion:Component) {
 
-    itemCollection = ${node.properties.itemCollection}
+    renderer = afx`
+        <NeosRulez.Shop:Component.Product.Afx.Add>
+            <div @if={q(node).property('itemCollection')} class="d-block my-4 product-item-collection">
+                <h5>{node.properties.title} {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.itemCollection')}</h5>
+                <div class="row">
+                    <Neos.Fusion:Loop items={q(node).property('itemCollection')} >
+                        <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item includeVariants={q(node).property('includeVariants')} renderOptions={q(node).property('renderOptions')} renderNodeLinks={q(node).property('renderNodeLinks')} item={item} />
+                    </Neos.Fusion:Loop>
+                </div>
+            </div>
+        </NeosRulez.Shop:Component.Product.Afx.Add>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.SubItems) < prototype(Neos.Fusion:Component) {
+
+    item = false
+    subItems = ${this.item ? q(this.item).find('[instanceof NeosRulez.Shop:Document.Product]').filter('[_hidden=false]').get() : false}
+    renderOptions = false
+    renderNodeLinks = false
 
     renderer = afx`
-        <div @if.render={props.itemCollection} class="d-block my-4 product-item-collection">
-            <h5>{node.properties.title} {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.itemCollection')}</h5>
-            <div class="row">
-                <Neos.Fusion:Loop items={props.itemCollection} >
-                    <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item />
-                </Neos.Fusion:Loop>
-            </div>
+        <div @if={props.subItems && Array.length(props.subItems) > 0} class="row">
+            <Neos.Fusion:Loop items={props.subItems} itemName="subItem" >
+                <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item item={subItem} colClassName="col mb-4" renderOptions={props.renderOptions} renderNodeLinks={props.renderNodeLinks} />
+            </Neos.Fusion:Loop>
         </div>
     `
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item) < prototype(Neos.Fusion:Component) {
 
+    includeVariants = false
+    renderOptions = false
+    renderNodeLinks = false
+    colClassName = 'col-md-4 mb-4'
+
+    imageWidth = 400
+    imageHeight = 280
+
+    @context.item = ${this.item}
+
     renderer = afx`
-        <div class="col-md-4 mb-4">
-            <div @if.render={item.properties.images} class="product-image">
-                <Neos.Neos:NodeLink node={item} attributes.class="d-block">
-                    <Neos.Neos:ImageTag asset={item.properties.images[0]} allowUpScaling="true" allowCropping="true" width="400" height="280" attributes.class="img-fluid product-item-image" />
+        <div class={props.colClassName}>
+            <div @if.render={props.item.properties.images} class="product-image">
+                <Neos.Neos:NodeLink @if={props.renderNodeLinks} node={props.item} attributes.class="d-block">
+                    <Neos.Neos:ImageTag asset={props.item.properties.images[0]} allowUpScaling={true} allowCropping={true} width={props.imageWidth} height={props.imageHeight} attributes.class="img-fluid product-props.item-image" />
                 </Neos.Neos:NodeLink>
+                <Neos.Neos:ImageTag @if={!props.renderNodeLinks} asset={props.item.properties.images[0]} allowUpScaling={true} allowCropping={true} width={props.imageWidth} height={props.imageHeight} attributes.class="img-fluid product-props.item-image" />
             </div>
-            <div class="d-block product-item-title my-2">
-                {item.properties.title}
+            <div class="d-block product-props.item-title my-2">
+                {props.item.properties.title}
             </div>
-            <Neos.Neos:NodeLink node={item} attributes.class="btn btn-primary w-100">
+            <Neos.Fusion:Fragment @if={props.renderOptions}>
+                <NeosRulez.Shop:Component.Product.Afx.Options @context.node={props.item} @context.documentNode={props.item} />
+                <NeosRulez.Shop:Component.Product.Afx.Options.FreeStyleText @context.node={props.item} @context.documentNode={props.item} />
+            </Neos.Fusion:Fragment>
+            <Neos.Neos:NodeLink @if={props.renderNodeLinks} node={props.item} attributes.class="btn btn-primary w-100">
                 {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.product')}
             </Neos.Neos:NodeLink>
+            <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.SubItems @if={props.includeVariants} item={props.item} renderOptions={props.renderOptions} renderNodeLinks={props.renderNodeLinks} />
         </div>
     `
+    renderer.@process.options = ${String.replace(value, 'item[options]', ('item[item][' + item.identifier + '][options]'))}
+    renderer.@process.freeStyleText = ${String.replace(value, 'item[options2]', ('item[item][' + item.identifier + '][options2]'))}
 }
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) {

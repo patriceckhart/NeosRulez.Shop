@@ -241,6 +241,31 @@ class Cart
                         }
                     }
                 }
+
+                if(array_key_exists('item', $item)) {
+                    $combinedOptions = [];
+                    foreach ($item['item'] as $subItemKey => $subItem) {
+                        $itemNode = $context->getNodeByIdentifier($subItemKey);
+                        if($itemNode !== null) {
+                            if (array_key_exists('options', $subItem)) {
+                                foreach ($subItem['options'] as $option) {
+                                    $optionNode = $context->getNodeByIdentifier($option);
+                                    if ($optionNode !== null) {
+                                        $optionPrice = floatval(str_replace(',', '.', str_replace('.', '', $optionNode->getProperty('price'))));
+                                        $optionsNode = $optionNode->findParentNode();
+                                        $combinedOptions[] = ['name' => $itemNode->getProperty('title') . ': ' . $optionsNode->getProperty('title') . ': ' . $optionNode->getProperty('title'), 'price' => $optionPrice * (int)$item['quantity']];
+                                    }
+                                }
+                            }
+                            if (array_key_exists('options2', $subItem)) {
+                                foreach ($subItem['options2'] as $option2) {
+                                    $combinedOptions[] = ['name' => $itemNode->getProperty('title') . ': ' . $option2];
+                                }
+                            }
+                        }
+                    }
+                    $item['combined_options'] = $combinedOptions;
+                }
             }
         }
 

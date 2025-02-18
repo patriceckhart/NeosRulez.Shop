@@ -21,6 +21,8 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
         }
     }
 
+    isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
+
     renderer = afx`
         <NeosRulez.Shop:Component.CountrySelection />
         <div class="product_detail">
@@ -31,7 +33,9 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
                     </div>
                     <div class="col-md-6">
                         <NeosRulez.Shop:Component.Product.Afx.Content />
-                        <NeosRulez.Shop:Component.Product.Afx.Add />
+                        <Neos.Fusion:Fragment @if={!props.isCollection}>
+                            <NeosRulez.Shop:Component.Product.Afx.Add />
+                        </Neos.Fusion:Fragment>
                         <NeosRulez.Shop:Component.CartAlert />
                     </div>
                 </div>
@@ -205,6 +209,8 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Content.Price) < prototype(Neos.F
 
 prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Component) {
 
+    content = false
+
     @context.isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
 
     productCollection = NeosRulez.Shop:Class.ProductCollection {
@@ -243,6 +249,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Add) < prototype(Neos.Fusion:Comp
     renderer = afx`
         <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants @if={props.disableCartForm} />
         <Neos.Fusion.Form:Form @if.render={props.stock && !props.disableCartForm} attributes.id="product_form" form.target.action={isCollection ? 'addCustom' : 'add'} form.target.controller="Cart" form.target.package="NeosRulez.Shop" form.data.item={item} >
+            {props.content}
             <div class="row align-items-center add_to_cart">
                 <NeosRulez.Shop:Component.Product.Afx.Options.ProductVariants />
                 <NeosRulez.Shop:Component.Product.Afx.Options />

@@ -8,6 +8,15 @@
             <trans-unit id="properties.itemCollection" xml:space="preserve">
 				<source>Products for collection</source>
 			</trans-unit>
+            <trans-unit id="properties.includeVariants" xml:space="preserve">
+				<source>Include variants</source>
+			</trans-unit>
+            <trans-unit id="properties.renderOptions" xml:space="preserve">
+				<source>Show options</source>
+			</trans-unit>
+            <trans-unit id="properties.renderNodeLinks" xml:space="preserve">
+				<source>Show links to products</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

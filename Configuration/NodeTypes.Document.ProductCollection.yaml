@@ -15,3 +15,30 @@
           group: document
           editorOptions:
             nodeTypes: [ 'NeosRulez.Shop:Document.Product' ]
+    includeVariants:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: document
+          position: after itemCollection
+    renderOptions:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: document
+          position: after includeVariants
+    renderNodeLinks:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: document
+          position: after renderOptions
