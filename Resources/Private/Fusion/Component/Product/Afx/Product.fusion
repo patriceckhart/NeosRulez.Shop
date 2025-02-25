@@ -72,7 +72,8 @@ prototype(NeosRulez.Shop:Component.Product.Afx.ParentNodeCollection) < prototype
         }
         entryTags {
             1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.nodeTypeTag('Neos.Neos:Content', node)}
+            2 = ${Neos.Caching.descendantOfTag(q(node).closest('main').get(0))}
+            3 = ${Neos.Caching.descendantOfTag(q(node).parent().get(0))}
         }
     }
 }
