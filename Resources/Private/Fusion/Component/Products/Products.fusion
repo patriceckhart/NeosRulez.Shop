@@ -49,21 +49,21 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
             <Neos.Neos:NodeLink node={item.node} attributes.class="d-block product-item-link">
                 <div class="row">
                     <div class="col-12">
-                        <Neos.Fusion:Loop @if.render={item.node.properties.images && Array.length(item.node.properties.images) > 0} items={item.node.properties.images} itemName="asset" itemKey="assetKey">
-                            <Neos.Neos:ImageTag @if.render={assetKey == 0 && !props.useImageSourceSet} asset={asset} allowUpScaling="true" allowCropping={props.cropImage ? true : false} width="400" height={props.cropImage ? 280 : false} attributes.class="img-fluid product-item-image" async={true} />
-                            <NeosRulez.Bootstrap:Component.ImageTag @if.render={assetKey == 0 && props.useImageSourceSet} image={asset} width="400" height={props.cropImage ? 280 : false} allowCropping={props.cropImage ? true : false} allowUpScaling={true} async={true} />
-                        </Neos.Fusion:Loop>
+                        <Neos.Fusion:Fragment @if.render={q(item.node).property('images') && Array.length(q(item.node).property('images')) > 0}>
+                            <Neos.Neos:ImageTag @if.render={!props.useImageSourceSet} asset={q(item.node).property('images')[0]} allowUpScaling={true} allowCropping={props.cropImage ? true : false} width="400" height={props.cropImage ? 280 : false} attributes.class="img-fluid product-item-image" async={true} />
+                            <NeosRulez.Bootstrap:Component.ImageTag @if.render={props.useImageSourceSet} image={q(item.node).property('images')[0]} width="400" height={props.cropImage ? 280 : false} allowCropping={props.cropImage ? true : false} allowUpScaling={true} async={true} />
+                        </Neos.Fusion:Fragment>
                         <div class="d-block mt-2 product-item-title">
-                            {item.node.properties.title}
+                            {q(item.node).property('title')}
                         </div>
                     </div>
                 </div>
                 <div class="row align-items-end">
                     <div class="col-5">
-                        <small class="product-item-articlenumber">Art.Nr.: {item.node.properties.article_number}</small>
+                        <small class="product-item-articlenumber">Art.Nr.: {q(item.node).property('article_number')}</small>
                     </div>
                     <div class="col-7 text-end product-item-price">
-                        € {item.node.properties.price}
+                        € {q(item.node).property('price')}
                     </div>
                 </div>
             </Neos.Neos:NodeLink>
