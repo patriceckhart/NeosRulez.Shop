@@ -9,7 +9,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items) 
     renderer = afx`
         <NeosRulez.Shop:Component.Product.Afx.Add>
             <div @if={q(node).property('itemCollection')} class="d-block my-4 product-item-collection">
-                <h5>{node.properties.title} {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.itemCollection')}</h5>
+                <h5>{q(node).property('title')} {I18n.translate('NeosRulez.Shop:NodeTypes.Component.ProductCollection:content.itemCollection')}</h5>
                 <div class="row">
                     <Neos.Fusion:Loop items={q(node).property('itemCollection')} >
                         <NeosRulez.Shop:Component.Product.Afx.Content.ProductCollection.Items.Item includeVariants={q(node).property('includeVariants')} renderOptions={q(node).property('renderOptions')} renderNodeLinks={q(node).property('renderNodeLinks')} item={item} />
