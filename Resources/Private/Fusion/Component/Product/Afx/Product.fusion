@@ -20,6 +20,7 @@ prototype(NeosRulez.Shop:Component.Product.Afx) < prototype(Neos.Fusion:Componen
             renderer.editable.condition = false
         }
     }
+    parent.@if.condition = ${this.parentNode && !this.contentNodes ? true : false}
 
     isCollection = ${node.nodeType.name == 'NeosRulez.Shop:Document.ProductCollection' ? true : false}
 
