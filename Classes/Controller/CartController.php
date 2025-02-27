@@ -259,16 +259,19 @@ class CartController extends ActionController
                 $this->orderRepository->update($order);
                 $this->persistenceManager->persistAll();
 
-                $args = $this->cart->arguments;
-
-                if($this->settings['Mail']['debugMode']) {
-                    return $this->mailService->execute($args);
-                } else {
-                    if (!$this->settings['debugMode']) {
-                        $this->stockService->execute();
-                        $this->cart->refreshCoupons();
-                        $this->mailService->execute($args);
-                    }
+//                $args = $this->cart->arguments;
+//                if($this->settings['Mail']['debugMode']) {
+//                    return $this->mailService->execute($args);
+//                } else {
+//                    if (!$this->settings['debugMode']) {
+//                        $this->stockService->execute();
+//                        $this->cart->refreshCoupons();
+//                        $this->mailService->execute($args);
+//                    }
+//                }
+                if(!$this->settings['Mail']['debugMode']) {
+                    $this->stockService->execute();
+                    $this->cart->refreshCoupons();
                 }
             }
 
@@ -336,13 +339,12 @@ class CartController extends ActionController
 
         $this->cart->arguments = $args;
 
-        if($this->settings['Mail']['debugMode']) {
-            $this->stockService->execute();
-            $this->mailService->execute($args);
-            $this->cart->refreshCoupons();
-            $this->cart->deleteCart();
-            return $this->mailService->execute($args);
-        }
+//        if($this->settings['Mail']['debugMode']) {
+//            $this->stockService->execute();
+//            $this->cart->refreshCoupons();
+//            $this->cart->deleteCart();
+//            return $this->mailService->execute($args);
+//        }
 
         if (array_key_exists('render_redirect', $payment_data)) {
             if($payment_data['render_redirect']) {

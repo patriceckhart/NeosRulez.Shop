@@ -7,3 +7,10 @@
 #      afterPayment:
 #        customfinisher2:
 #          class: NeosRulez\Shop\Service\Finisher\CustomFinisher
+
+NeosRulez:
+  Shop:
+    Finisher:
+      afterPayment:
+        defaultInvoiceFinisher:
+          class: NeosRulez\Shop\Service\MailService
