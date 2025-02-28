@@ -15,12 +15,13 @@ class InvoiceRepository extends Repository {
         $next = new \DateTime();
 
         if($fiscalYearStart == '') {
-            $fiscalYearStart = new \DateTime();
+            $fiscalYearStart = '01-01';
         }
 
         if($fiscalYearEnd == '') {
-            $fiscalYearEnd = new \DateTime();
-            $fiscalYearEnd = $fiscalYearEnd->modify('+1 year');
+//            $fiscalYearEnd = new \DateTime();
+//            $fiscalYearEnd = $fiscalYearEnd->modify('+1 year');
+            $fiscalYearEnd = '12-31';
         }
 
         $fiscalYearStartNew = $now->format('Y') . '-' . (is_string($fiscalYearStart) ? $fiscalYearStart : $fiscalYearStart->format('m-d'));
