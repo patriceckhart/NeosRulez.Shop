@@ -35,7 +35,7 @@ class FinisherService {
     }
 
     /**
-     * @param array $args
+     * @param mixed $args
      * @return void
      */
     public function initAfterOrderFinishers($args) {
@@ -53,7 +53,7 @@ class FinisherService {
     }
 
     /**
-     * @param array $args
+     * @param mixed $args
      * @return void
      */
     public function initAfterPaymentFinishers($args) {

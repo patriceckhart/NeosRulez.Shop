@@ -62,10 +62,13 @@ class MailService {
     }
 
     /**
-     * @param array $args
+     * @param mixed $args
      * @return void
      */
     public function execute($args) {
+        if(is_string($args)) {
+            $args = json_decode($args, true);
+        }
         $variables['args'] = $args;
         $variables['items'] = $this->cart->cart();
         $variables['payment_service'] = $this->paymentService->getPaymentByIdentifier($args['payment']);
@@ -84,13 +87,17 @@ class MailService {
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'].' '.$args['lastname']], $args);
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], $valid_recipient, $args);
                 if($send_invoice) {
-                    $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, $valid_recipient);
+                    if($this->invoiceRepository->countByOrdernumber($args['order_number']) === 0) {
+                        $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, $valid_recipient);
+                    }
                 }
             } else {
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'].' '.$args['lastname']], $args);
                 $this->send($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [$args['cart_variables']['recipient_mail'] => $args['cart_variables']['recipient_mail']], $args);
                 if($send_invoice) {
-                    $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, [$args['cart_variables']['recipient_mail'] => $args['cart_variables']['recipient_mail']]);
+                    if($this->invoiceRepository->countByOrdernumber($args['order_number']) === 0) {
+                        $this->sendInvoice($variables, $args['cart_variables']['order_subject'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $args['email']) => $args['firstname'] . ' ' . $args['lastname']], $args, true, [$args['cart_variables']['recipient_mail'] => $args['cart_variables']['recipient_mail']]);
+                    }
                 }
             }
         }

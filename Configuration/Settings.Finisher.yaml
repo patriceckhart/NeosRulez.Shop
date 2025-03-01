@@ -11,6 +11,6 @@
 NeosRulez:
   Shop:
     Finisher:
-      afterPayment:
-        defaultInvoiceFinisher:
+      afterOrder:
+        defaultMailSendingFinisher:
           class: NeosRulez\Shop\Service\MailService

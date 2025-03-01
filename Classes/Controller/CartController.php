@@ -280,7 +280,7 @@ class CartController extends ActionController
             $this->view->assign('cart', json_decode($order->getCart(), true));
             $this->view->assign('summary', json_decode($order->getSummary(), true));
         }
-        $this->cart->deleteCart();
+//        $this->cart->deleteCart();
         $this->persistenceManager->persistAll();
     }
 
@@ -331,7 +331,7 @@ class CartController extends ActionController
         $args['success_uri'] = $success_page;
         $args['failure_uri'] = $failure_page;
 
-        $this->finisherService->initAfterOrderFinishers($args);
+//        $this->finisherService->initAfterOrderFinishers($args);
 
         $payment_data = $this->paymentService->getPaymentByIdentifier($args['payment']);
         $payment_url = $this->paymentService->initPayment($args);

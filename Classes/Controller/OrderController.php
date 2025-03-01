@@ -129,12 +129,12 @@ class OrderController extends ActionController
      */
     public function paidAction($order)
     {
-        $this->finisherService->initAfterPaymentFinishers($order);
         $paid_status = $order->getPaid();
         if($paid_status == 1) {
             $order->setPaid(0);
         } else {
             $order->setPaid(1);
+            $this->finisherService->initAfterPaymentFinishers($order->getInvoicedata());
         }
         $this->orderRepository->update($order);
         $this->persistenceManager->persistAll();
