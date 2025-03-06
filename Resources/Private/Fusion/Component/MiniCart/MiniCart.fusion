@@ -1,6 +1,6 @@
 prototype(NeosRulez.Shop:Component.MiniCart) < prototype(Neos.Fusion:Component) {
     cart = NeosRulez.Shop:Fusion.Cart
-    cartPage = ${node.properties.cartPage}
+    cartPage = ${q(node).property('cartPage')}
 
     renderer = afx`
         <NeosRulez.Shop:Component.MiniCart.CartItemHeader @if.render={props.cart} />

@@ -15,7 +15,7 @@ prototype(NeosRulez.Shop:Component.Product) < prototype(Neos.Neos:Content) {
 
     array_min_quantity = ${this.product_min_quantity ? String.toInteger(this.product_min_quantity) : 0}
 
-    stockManagement = ${documentNode.properties.stockManagement ? documentNode.properties.stockLevel : false}
+    stockManagement = ${q(documentNode).property('stockManagement') ? q(documentNode).property('stockLevel') : false}
 
     max_quantity = ${this.stockManagement ? Array.range(this.product_max_quantity, this.stockManagement, 1) : (this.product_max_quantity ? Array.range(this.array_min_quantity, this.product_max_quantity, 1) : Array.range(this.array_min_quantity, Configuration.setting('NeosRulez.Shop.Product.max_quantity'), 1))}
 

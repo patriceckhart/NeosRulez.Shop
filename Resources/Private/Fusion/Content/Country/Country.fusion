@@ -1,10 +1,10 @@
 prototype(NeosRulez.Shop:Content.Country) < prototype(Neos.Neos:ContentComponent) {
 
-    taxValue = ${node.properties.taxValue}
+    taxValue = ${q(node).property('taxValue')}
 
     countries = NeosRulez.CountryDataSource:Class.Countries {
         include = Neos.Fusion:Loop {
-            items = ${node.properties.countries}
+            items = ${q(node).property('countries')}
             itemName = 'country'
             iterationName = 'iterator'
             itemRenderer = ${country + (iterator.isLast ? '' : ',')}

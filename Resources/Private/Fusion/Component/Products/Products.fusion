@@ -10,6 +10,9 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
     startingPoint.@if.condition = ${q(node).property('startingPoint') ? true : false}
     products = ${this.startingPoint ? this.startingPoint : this.selection}
 
+    @context.startingPointNode = ${q(node).property('startingPoint')}
+    @context.selectionNodes = ${q(node).property('selection')}
+
     renderer = afx`
         <NeosRulez.Shop:Component.AbstractContent>
             <div @if.render={props.products && Array.length(props.products) > 0} class="products filtered">
@@ -32,9 +35,9 @@ prototype(NeosRulez.Shop:Content.Products) < prototype(Neos.Neos:ContentComponen
             3 = 'documentNode'
         }
         entryTags {
-            1 = ${Neos.Caching.nodeTypeTag('NeosRulez.Shop:Document.Product', node)}
-            2 = ${Neos.Caching.nodeTypeTag('NeosRulez.Category:Document.Category', node)}
-            3 = ${Neos.Caching.nodeTag(node)}
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTag(selectionNodes)}
+            3 = ${Neos.Caching.descendantOfTag(startingPointNode)}
         }
     }
 }

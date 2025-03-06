@@ -53,7 +53,7 @@ prototype(NeosRulez.Shop:Component.CategoryNavigation.Navigation.Item) < prototy
     renderer = afx`
         <li class={props.liClassName} >
             <Neos.Neos:NodeLink node={item.node} attributes.class={props.aClassName + (documentNode.identifier == item.node.identifier ? ' active' : '')} >
-                {item.node.properties.title} {props.products.count ? ('(' + props.products.count + ')') : false}
+                {q(item.node).property('title')} {props.products.count ? ('(' + props.products.count + ')') : false}
             </Neos.Neos:NodeLink>
             <NeosRulez.Shop:Component.CategoryNavigation.Navigation @if.render={item.subItems} categories={item.subItems} className="nav-sub-items" />
         </li>
@@ -91,7 +91,7 @@ prototype(NeosRulez.Shop:Component.CategoryNavigation.Products.Product) < protot
     renderer = afx`
         <div class="col-md-4">
             <div class="category-nav-product-item">
-                <a @if.render={!props.isMain} href={props.documentNodeUri + '/detail/' + item.properties.uriPathSegment} class="category-nav-product-item-link">
+                <a @if.render={!props.isMain} href={props.documentNodeUri + '/detail/' + q(item).property('uriPathSegment')} class="category-nav-product-item-link">
                     <NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body showArticleNumber={props.showArticleNumber} imageWidth={props.imageWidth} imageHeight={props.imageHeight} />
                 </a>
                 <Neos.Neos:NodeLink @if.render={props.isMain} node={item} attributes.class="category-nav-product-item-link">
@@ -106,18 +106,18 @@ prototype(NeosRulez.Shop:Component.CategoryNavigation.Products.Product.Body) < p
 
     renderer = afx`
         <div class="category-nav-product-item-top">
-            <div @if.render={item.properties.images} class="category-nav-product-item-image">
-                <Neos.Neos:ImageTag asset={item.properties.images[0]} attributes.class="img-fluid" width={props.imageWidth} allowUpScaling={true} attributes.alt={item.properties.title} attributes.title={item.properties.title} async={true} />
+            <div @if.render={q(item).property('images')} class="category-nav-product-item-image">
+                <Neos.Neos:ImageTag asset={q(item).property('images')[0]} attributes.class="img-fluid" width={props.imageWidth} allowUpScaling={true} attributes.alt={q(item).property('title')} attributes.title={q(item).property('title')} async={true} />
             </div>
         </div>
         <div class="category-nav-product-item-bottom">
             <div class="category-nav-product-item-title">
-                {item.properties.title}
+                {q(item).property('title')}
             </div>
             <div class="row align-items-end mt-2">
                 <div @if.render={props.showArticleNumber} class="col-md-4">
                     <small class="category-nav-product-item-articlenumber">
-                        {item.properties.article_number}
+                        {q(item).property('article_number')}
                     </small>
                 </div>
                 <div class={props.showArticleNumber ? 'col-md-8 text-end' : 'col-12'} >
@@ -148,7 +148,7 @@ prototype(NeosRulez.Category:Document.Category) {
                     uriPathSegment = ${request.arguments.product}
                 }
                 content {
-                    @process.productTitle = ${(product ? product.item.properties.title + ' - ' : '') + value}
+                    @process.productTitle = ${(product ? q(product.item).property('title') + ' - ' : '') + value}
                 }
                 @cache {
                     mode = 'dynamic'
