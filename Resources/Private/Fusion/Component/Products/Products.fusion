@@ -47,8 +47,15 @@ prototype(NeosRulez.Shop:Content.Products.Item) < prototype(Neos.Fusion:Componen
     cropImage = ${q(node).property('cropImage')}
     useImageSourceSet = ${Configuration.setting('NeosRulez.Shop.useImageSourceSet')}
 
+    categoryString = Neos.Fusion:Loop {
+        items = ${q(item.node).property('categories')}
+        itemName = 'category'
+        itemRenderer = ${' category-' + category.identifier}
+        @if.condition = ${q(item.node).property('categories') && Array.length(q(item.node).property('categories')) > 0}
+    }
+
     renderer = afx`
-        <div class={'col-md-4 mix' + (q(item.node).property('categories')[0].identifier ? ' category-' + q(item.node).property('categories')[0].identifier : '')}>
+        <div class={'col-md-4 mix' + (props.categoryString)}>
             <Neos.Neos:NodeLink node={item.node} attributes.class="d-block product-item-link">
                 <div class="row">
                     <div class="col-12">
