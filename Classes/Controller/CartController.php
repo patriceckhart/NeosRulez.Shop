@@ -72,7 +72,6 @@ class CartController extends ActionController
      */
     protected $authenticationManager;
 
-
     /**
      * @param array $item
      * @return void
@@ -112,10 +111,13 @@ class CartController extends ActionController
     /**
      * @param string $code
      * @param string $return
+     * @param bool $allowMultiple
      * @return void
      */
-    public function validateCouponAction($code, $return) {
-        $this->cart->deleteCoupons();
+    public function validateCouponAction($code, $return, bool $allowMultiple = false) {
+        if(!$allowMultiple) {
+            $this->cart->deleteCoupons();
+        }
         $context = $this->contextFactory->create();
         $coupons = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Coupon]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
         if($coupons) {
@@ -126,31 +128,31 @@ class CartController extends ActionController
                         if(intval($props['redeemed']) < intval($props['quantity'])) {
                             $carttotal = $this->cart->getCartTotal();
                             if($carttotal >= floatval(str_replace(',', '.', $props['min_cart_value']))) {
-                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual']);
+                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], $allowMultiple);
                             } else {
-                                $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false);
+                                $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, $allowMultiple);
                             }
                         }
                     } else {
                         $carttotal = $this->cart->getCartTotal();
                         if($carttotal >= floatval(str_replace(',', '.', $props['min_cart_value']))) {
                             if(array_key_exists('value', (array) $props)) {
-                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual']);
+                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], false, $allowMultiple);
                             } else {
                                 if(array_key_exists('isShippingCoupon', (array) $props)) {
                                     if($props['isShippingCoupon'] === true) {
-                                        $this->cart->applyCoupon($props['title'], '0', $props['percentual'], true);
+                                        $this->cart->applyCoupon($props['title'], '0', $props['percentual'], true, $allowMultiple);
                                     }
                                 }
                             }
                         } else {
-                            $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false);
+                            $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, $allowMultiple);
                         }
                     }
                 }
             }
         } else {
-            $this->cart->applyCoupon('NaN', '0', false);
+            $this->cart->applyCoupon('NaN', '0', false, false, $allowMultiple);
         }
         $this->redirectToUri($return);
     }
@@ -167,10 +169,16 @@ class CartController extends ActionController
 
     /**
      * @param string $return
+     * @param int|null $coupon
+     * @param bool $deleteOne
      * @return void
      */
-    public function deleteCouponAction($return) {
-        $this->cart->deleteCoupons();
+    public function deleteCouponAction($return, int|null $coupon = null, bool $deleteOne = false) {
+        if($deleteOne && $coupon !== null) {
+            $this->cart->deleteCoupon($coupon);
+        } else {
+            $this->cart->deleteCoupons();
+        }
         $this->redirectToUri($return);
     }
 

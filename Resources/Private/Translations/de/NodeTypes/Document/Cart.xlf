@@ -65,6 +65,9 @@
             <trans-unit id="properties.mailFooterText" xml:space="preserve">
                 <source>E-Mail Footer Text</source>
             </trans-unit>
+            <trans-unit id="properties.allowMultipleCoupons" xml:space="preserve">
+                <source>Das Hinzufügen mehrerer Gutscheine erlauben</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

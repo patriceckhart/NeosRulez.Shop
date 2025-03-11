@@ -50,6 +50,9 @@ prototype(NeosRulez.Shop:Component.Cart) < prototype(Neos.Neos:Content) {
     successNode = ${q(site).find('[instanceof NeosRulez.Shop:Document.Payment.Success]').get()}
     failureNode = ${q(site).find('[instanceof NeosRulez.Shop:Document.Payment.Failure]').get()}
 
+    allowMultipleCoupons = ${q(documentNode).property('allowMultipleCoupons')}
+    multipleCoupons = NeosRulez.Shop:Component.MultipleCoupons
+
     @cache {
         mode = 'dynamic'
         entryIdentifier {

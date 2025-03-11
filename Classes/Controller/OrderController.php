@@ -1,6 +1,7 @@
 <?php
 namespace NeosRulez\Shop\Controller;
 
+use Neos\ContentRepository\Domain\Service\ContextFactory;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Eel\FlowQuery\FlowQuery;
@@ -26,7 +27,7 @@ class OrderController extends ActionController
 
     /**
      * @Flow\Inject
-     * @var Neos\ContentRepository\Domain\Service\ContextFactoryInterface
+     * @var ContextFactory
      */
     protected $contextFactory;
 

@@ -575,23 +575,56 @@ class Cart
         $total_shipping = $total_shipping + $customShipping + ($total_primary >= $free_from ? 0 : $graduatedShippingCosts);
 
         if($coupons) {
-            if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
-                if ($coupons[0]['percentual']) {
-                    $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
-                    $total_coupon = $total_coupon - $discount;
-                } else {
-                    if($coupons[0]['name'] != 'NaN_') {
-                        $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
-                    } else {
-                        $discount = 0;
+            if(is_array($coupons) && count($coupons) > 1) {
+
+                $discountSum = 0;
+
+                foreach ($coupons as $coupon) {
+
+                    if($coupon['name'] != 'NaN' || $coupon['name'] != 'NaN_') {
+                        if ($coupon['percentual']) {
+                            $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupon['value']));
+                            $discountSum = $discountSum + $discount;
+                            $total_coupon = $total_coupon - $discount;
+                        } else {
+                            if($coupon['name'] != 'NaN_') {
+                                $discount = floatval(str_replace(',', '.', $coupon['value']));
+                                $discountSum = $discountSum + $discount;
+                            } else {
+                                $discount = 0;
+                            }
+                            $total_coupon = $total_coupon - $discount;
+                        }
+                        if($coupon['isShippingCoupon'] === true) {
+                            $total_coupon = $total_coupon - $total_shipping;
+                            $total_shipping = 0;
+                            $tax_shipping = 0;
+                        }
                     }
-                    $total_coupon = $total_coupon - $discount;
+
                 }
-            }
-            if($coupons[0]['isShippingCoupon'] === true) {
-                $total_coupon = $total_coupon - $total_shipping;
-                $total_shipping = 0;
-                $tax_shipping = 0;
+
+                $discount = $discountSum;
+
+            } else {
+                if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
+                    if ($coupons[0]['percentual']) {
+                        $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
+                        $total_coupon = $total_coupon - $discount;
+                    } else {
+                        if($coupons[0]['name'] != 'NaN_') {
+                            $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
+                        } else {
+                            $discount = 0;
+                        }
+                        $total_coupon = $total_coupon - $discount;
+                    }
+                }
+                if($coupons[0]['isShippingCoupon'] === true) {
+                    $total_coupon = $total_coupon - $total_shipping;
+                    $total_shipping = 0;
+                    $tax_shipping = 0;
+                }
             }
         }
 
@@ -687,11 +720,16 @@ class Cart
      * @param float $value
      * @param bool $percentual
      * @param bool $isShippingCoupon
+     * @param bool $allowMultiple
      * @return void
      */
-    public function applyCoupon(string $name, float $value, bool $percentual, bool $isShippingCoupon = false): void
+    public function applyCoupon(string $name, float $value, bool $percentual, bool $isShippingCoupon = false, bool $allowMultiple = false): void
     {
-        $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
+        if(!$allowMultiple) {
+            $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
+        } else {
+            $this->coupons[] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
+        }
     }
 
     /**
@@ -704,6 +742,17 @@ class Cart
         for ($i = 0; $i < $coupons_count; $i++) {
             unset($this->coupons[$i]);
         }
+    }
+
+    /**
+     * @param int $coupon
+     * @return void
+     */
+    public function deleteCoupon(int $coupon): void
+    {
+        $coupons = $this->coupons;
+        unset($coupons[$coupon]);
+        $this->coupons = array_values($coupons);
     }
 
     /**
@@ -824,15 +873,15 @@ class Cart
     {
         $coupons = $this->coupons();
         $context = $this->contextFactory->create();
-        $all_coupons = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Coupon]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
-        foreach ($all_coupons as $coupon) {
-            $title = $coupon->getProperty('title');
-            if (array_key_exists(0, $coupons)) {
-                if (array_key_exists('name', $coupons[0])) {
-                    if($title==$coupons[0]['name']) {
-                        $redeemed = $coupon->getProperty('redeemed');
-                        $new_redeemed = intval($redeemed)+1;
-                        $coupon->setProperty('redeemed', $new_redeemed);
+        $couponNodes = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Coupon]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
+        foreach ($couponNodes as $couponNode) {
+            $title = $couponNode->getProperty('title');
+            foreach ($coupons as $coupon) {
+                if (array_key_exists('name', $coupon)) {
+                    if($title === $coupon['name']) {
+                        $redeemed = $couponNode->getProperty('redeemed');
+                        $newRedeemed = intval($redeemed) + 1;
+                        $couponNode->setProperty('redeemed', $newRedeemed);
                     }
                 }
             }

@@ -68,6 +68,9 @@
             <trans-unit id="content.freeShipping" xml:space="preserve">
                 <source>Free shipping</source>
             </trans-unit>
+            <trans-unit id="properties.allowMultipleCoupons" xml:space="preserve">
+                <source>Allow adding multiple coupons</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

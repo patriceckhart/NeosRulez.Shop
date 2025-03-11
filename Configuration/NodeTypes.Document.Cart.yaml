@@ -46,6 +46,14 @@
       ui:
         inspector:
           position: end
+    allowMultipleCoupons:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: document
+          position: end
     min_quantity:
       type: string
       defaultValue: ''
