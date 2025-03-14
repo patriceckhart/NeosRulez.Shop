@@ -182,6 +182,9 @@
 			<trans-unit id="min_weight13" xml:space="preserve">
 				<source>kg</source>
 			</trans-unit>
+            <trans-unit id="onlyForTheFollowingProducts" xml:space="preserve">
+				<source>Dieser Gutschein gilt nur für folgende Produkte</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

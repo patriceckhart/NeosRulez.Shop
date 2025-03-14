@@ -109,6 +109,19 @@ class CartController extends ActionController
     }
 
     /**
+     * @param array $nodes
+     * @return array
+     */
+    private function getNodeIdentifiers(array $nodes): array
+    {
+        $result = [];
+        foreach ($nodes as $node) {
+            $result[] = $node->getIdentifier();
+        }
+        return $result;
+    }
+
+    /**
      * @param string $code
      * @param string $return
      * @param bool $allowMultiple
@@ -128,25 +141,25 @@ class CartController extends ActionController
                         if(intval($props['redeemed']) < intval($props['quantity'])) {
                             $carttotal = $this->cart->getCartTotal();
                             if($carttotal >= floatval(str_replace(',', '.', $props['min_cart_value']))) {
-                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], $allowMultiple);
+                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], false, $allowMultiple, ($coupon->hasProperty('selection') ? $this->getNodeIdentifiers($coupon->getProperty('selection')) : []) );
                             } else {
-                                $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, $allowMultiple);
+                                $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, false, $allowMultiple, ($coupon->hasProperty('selection') ? $this->getNodeIdentifiers($coupon->getProperty('selection')) : []));
                             }
                         }
                     } else {
                         $carttotal = $this->cart->getCartTotal();
                         if($carttotal >= floatval(str_replace(',', '.', $props['min_cart_value']))) {
                             if(array_key_exists('value', (array) $props)) {
-                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], false, $allowMultiple);
+                                $this->cart->applyCoupon($props['title'], $props['value'], $props['percentual'], false, $allowMultiple, ($coupon->hasProperty('selection') ? $this->getNodeIdentifiers($coupon->getProperty('selection')) : []));
                             } else {
                                 if(array_key_exists('isShippingCoupon', (array) $props)) {
                                     if($props['isShippingCoupon'] === true) {
-                                        $this->cart->applyCoupon($props['title'], '0', $props['percentual'], true, $allowMultiple);
+                                        $this->cart->applyCoupon($props['title'], '0', $props['percentual'], true, $allowMultiple, ($coupon->hasProperty('selection') ? $this->getNodeIdentifiers($coupon->getProperty('selection')) : []));
                                     }
                                 }
                             }
                         } else {
-                            $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, $allowMultiple);
+                            $this->cart->applyCoupon('NaN_', floatval(str_replace(',', '.', $props['min_cart_value'])), false, false, $allowMultiple, ($coupon->hasProperty('selection') ? $this->getNodeIdentifiers($coupon->getProperty('selection')) : []));
                         }
                     }
                 }

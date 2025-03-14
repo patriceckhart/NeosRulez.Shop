@@ -32,6 +32,9 @@
             <trans-unit id="properties.isShippingCoupon" xml:space="preserve">
                 <source>Spedizione gratuita</source>
             </trans-unit>
+            <trans-unit id="properties.selection" xml:space="preserve">
+                <source>Limit to products</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

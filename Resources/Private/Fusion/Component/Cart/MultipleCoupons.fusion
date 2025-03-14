@@ -1,5 +1,7 @@
 prototype(NeosRulez.Shop:Component.MultipleCoupons) < prototype(Neos.Fusion:Component) {
 
+    allowMultipleCoupons = ${q(documentNode).property('allowMultipleCoupons')}
+
     nodeUri = Neos.Neos:NodeUri {
         node = ${node}
         absolute = true
@@ -7,7 +9,7 @@ prototype(NeosRulez.Shop:Component.MultipleCoupons) < prototype(Neos.Fusion:Comp
 
     renderer = afx`
         <NeosRulez.Shop:Component.MultipleCoupons.AppliedCoupons nodeUri={props.nodeUri} />
-        <NeosRulez.Shop:Component.MultipleCoupons.Form nodeUri={props.nodeUri} />
+        <NeosRulez.Shop:Component.MultipleCoupons.Form nodeUri={props.nodeUri} allowMultipleCoupons={props.allowMultipleCoupons} />
     `
 }
 
@@ -16,7 +18,7 @@ prototype(NeosRulez.Shop:Component.MultipleCoupons.Form) < prototype(Neos.Fusion
     renderer = afx`
         <Neos.Fusion.Form:Form attributes.id="validateCoupon" form.target.action="validateCoupon" form.target.controller="Cart" form.target.package="NeosRulez.Shop" >
             <Neos.Fusion.Form:Hidden field.name="return" field.value={props.nodeUri} />
-            <Neos.Fusion.Form:Hidden field.name="allowMultiple" field.value="1" />
+            <Neos.Fusion.Form:Hidden @if={props.allowMultipleCoupons} field.name="allowMultiple" field.value="1" />
             <div class="d-block mt-3 coupon">
                 <div class="mb-3">
                     <div class="d-block py-2 mb-2 border-bottom-strong font-weight-bold">
@@ -55,6 +57,18 @@ prototype(NeosRulez.Shop:Component.MultipleCoupons.AppliedCoupons) < prototype(N
                             <NeosRulez.Shop:Class.Currency float={coupon.value} decimalSeparator="," thousandsSeparator="." decimals="2" currencySign="€" />
                         </Neos.Fusion:Fragment>
                     </div>
+                    <div @if={coupon.products && Array.length(coupon.products) > 0} class="mb-3">
+                        <div class="alert alert-info" role="alert">
+                            <small>
+                                <strong>{I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:onlyForTheFollowingProducts')}:</strong>
+                            </small>
+                            <ul class="mb-0">
+                                <Neos.Fusion:Loop items={coupon.products} itemName="product">
+                                    <NeosRulez.Shop:Component.MultipleCoupons.AppliedCoupons.Product nodeIdentifier={product} />
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <Neos.Fusion.Form:Button attributes.class="btn btn-danger btn-block btn-sm w-100" attributes.type="submit" >
                             <i class="fas fa-times mr-2"></i> {I18n.translate('NeosRulez.Shop:NodeTypes.Component.Cart:remove_coupon')}
@@ -63,5 +77,17 @@ prototype(NeosRulez.Shop:Component.MultipleCoupons.AppliedCoupons) < prototype(N
                 </div>
             </Neos.Fusion.Form:Form>
         </Neos.Fusion:Loop>
+    `
+}
+
+prototype(NeosRulez.Shop:Component.MultipleCoupons.AppliedCoupons.Product) < prototype(Neos.Fusion:Component) {
+
+    products = ${q(site).find('#' + this.nodeIdentifier).get()}
+    product = ${this.products && Array.length(this.products) > 0 ? this.products[0] : false}
+
+    renderer = afx`
+        <li @if={props.product}>
+            <small>{q(props.product).property('title')}</small>
+        </li>
     `
 }

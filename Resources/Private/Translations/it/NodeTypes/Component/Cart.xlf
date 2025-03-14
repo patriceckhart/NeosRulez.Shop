@@ -182,6 +182,9 @@
 			<trans-unit id="min_weight13" xml:space="preserve">
 				<source>kg</source>
 			</trans-unit>
+            <trans-unit id="onlyForTheFollowingProducts" xml:space="preserve">
+				<source>This coupon is only valid for the following products</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

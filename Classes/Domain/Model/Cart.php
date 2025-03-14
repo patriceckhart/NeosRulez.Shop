@@ -404,6 +404,23 @@ class Cart
     }
 
     /**
+     * @param array $itemsInCoupon
+     * @param array $items
+     * @return bool
+     */
+    private function itemIsInSummary(array $itemsInCoupon, array $items): bool
+    {
+        foreach ($itemsInCoupon as $itemInCoupon) {
+            foreach ($items as $item) {
+                if($itemInCoupon === $item['node']) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return array
      */
     public function summary(): array
@@ -576,54 +593,48 @@ class Cart
 
         if($coupons) {
             if(is_array($coupons) && count($coupons) > 1) {
-
                 $discountSum = 0;
-
                 foreach ($coupons as $coupon) {
+                    if($coupon['name'] != 'NaN' && $coupon['name'] != 'NaN_') {
 
-                    if($coupon['name'] != 'NaN' || $coupon['name'] != 'NaN_') {
-                        if ($coupon['percentual']) {
-                            $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupon['value']));
-                            $discountSum = $discountSum + $discount;
-                            $total_coupon = $total_coupon - $discount;
-                        } else {
-                            if($coupon['name'] != 'NaN_') {
+                        if((count($coupon['products']) === 0) || $this->itemIsInSummary($coupon['products'], $summary)) {
+
+                            if ($coupon['percentual']) {
+                                $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupon['value']));
+                                $discountSum = $discountSum + $discount;
+                                $total_coupon = $total_coupon - $discount;
+                            } else {
                                 $discount = floatval(str_replace(',', '.', $coupon['value']));
                                 $discountSum = $discountSum + $discount;
-                            } else {
-                                $discount = 0;
+                                $total_coupon = $total_coupon - $discount;
                             }
+                            if ($coupon['isShippingCoupon'] === true) {
+                                $total_coupon = $total_coupon - $total_shipping;
+                                $total_shipping = 0;
+                                $tax_shipping = 0;
+                            }
+
+                        }
+
+                    }
+                }
+                $discount = $discountSum;
+            } else {
+                if((count($coupons[0]['products']) === 0) || $this->itemIsInSummary($coupons[0]['products'], $summary)) {
+                    if($coupons[0]['name'] != 'NaN' && $coupons[0]['name'] != 'NaN_') {
+                        if ($coupons[0]['percentual']) {
+                            $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
+                            $total_coupon = $total_coupon - $discount;
+                        } else {
+                            $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
                             $total_coupon = $total_coupon - $discount;
                         }
-                        if($coupon['isShippingCoupon'] === true) {
-                            $total_coupon = $total_coupon - $total_shipping;
-                            $total_shipping = 0;
-                            $tax_shipping = 0;
-                        }
                     }
-
-                }
-
-                $discount = $discountSum;
-
-            } else {
-                if($coupons[0]['name'] != 'NaN' || $coupons[0]['name'] != 'NaN_') {
-                    if ($coupons[0]['percentual']) {
-                        $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
-                        $total_coupon = $total_coupon - $discount;
-                    } else {
-                        if($coupons[0]['name'] != 'NaN_') {
-                            $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
-                        } else {
-                            $discount = 0;
-                        }
-                        $total_coupon = $total_coupon - $discount;
+                    if($coupons[0]['isShippingCoupon'] === true) {
+                        $total_coupon = $total_coupon - $total_shipping;
+                        $total_shipping = 0;
+                        $tax_shipping = 0;
                     }
-                }
-                if($coupons[0]['isShippingCoupon'] === true) {
-                    $total_coupon = $total_coupon - $total_shipping;
-                    $total_shipping = 0;
-                    $tax_shipping = 0;
                 }
             }
         }
@@ -721,14 +732,15 @@ class Cart
      * @param bool $percentual
      * @param bool $isShippingCoupon
      * @param bool $allowMultiple
+     * @param array $products
      * @return void
      */
-    public function applyCoupon(string $name, float $value, bool $percentual, bool $isShippingCoupon = false, bool $allowMultiple = false): void
+    public function applyCoupon(string $name, float $value, bool $percentual, bool $isShippingCoupon = false, bool $allowMultiple = false, array $products = []): void
     {
         if(!$allowMultiple) {
-            $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
+            $this->coupons[0] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon, 'products' => $products];
         } else {
-            $this->coupons[] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon];
+            $this->coupons[] = ['name' => $name, 'value' => $value, 'percentual' => $percentual, 'isShippingCoupon' => $isShippingCoupon, 'products' => $products];
         }
     }
 

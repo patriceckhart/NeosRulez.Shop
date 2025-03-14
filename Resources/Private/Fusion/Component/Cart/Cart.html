@@ -301,10 +301,15 @@
                                         <button type="submit" class="btn btn-primary btn-block w-100"><i class="fas fa-shopping-cart mr-2"></i> {f:translate(id: 'proceed_to_checkout', package: 'NeosRulez.Shop', source: 'NodeTypes/Component/Cart')}</button>
                                     </f:form>
                                 </div>
-                                <f:if condition="{allow_coupons} && !{allowMultipleCoupons}">
-                                    <f:render section="coupon" arguments="{_all}" />
-                                </f:if>
-                                <f:if condition="{allow_coupons} && {allowMultipleCoupons}">
+                                <f:comment>
+                                    <f:if condition="{allow_coupons} && !{allowMultipleCoupons}">
+                                        <f:render section="coupon" arguments="{_all}" />
+                                    </f:if>
+                                    <f:if condition="{allow_coupons} && {allowMultipleCoupons}">
+                                        <f:format.raw>{multipleCoupons}</f:format.raw>
+                                    </f:if>
+                                </f:comment>
+                                <f:if condition="{allow_coupons}">
                                     <f:format.raw>{multipleCoupons}</f:format.raw>
                                 </f:if>
                             </f:else>
