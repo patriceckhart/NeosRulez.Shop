@@ -66,6 +66,7 @@
 
                                 <f:if condition="{order.order.canceled}">
                                     <f:then>
+                                        <f:link.action class="neos-button neos-button-success" action="downloadInvoice" arguments="{json: order.invoicedata, canceled: 1}">Stornorechnung herunterladen</f:link.action>
                                         <f:link.action class="neos-button neos-button-success" action="cancel" arguments="{order: order.order}"><i class="fas fa-check-circle"></i></f:link.action>
                                     </f:then>
                                     <f:else>

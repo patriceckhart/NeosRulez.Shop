@@ -119,7 +119,7 @@
 </f:if>
 <div class="neos-footer">
     <f:if condition="{order.summary}">
-        <f:link.action class="neos-button neos-button-primary" action="downloadInvoice" arguments="{json: order.invoicedata}">Rechnung herunterladen</f:link.action>
+        <f:link.action class="neos-button neos-button-primary" action="downloadInvoice" arguments="{json: order.invoicedata}">Rechnung <f:if condition="{invoice}"><f:then>herunterladen</f:then><f:else>generieren</f:else></f:if></f:link.action>
     </f:if>
     <f:link.action class="neos-button neos-button-primary" action="index">Zurück zur Übersicht</f:link.action>
 </div>

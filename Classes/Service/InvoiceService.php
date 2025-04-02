@@ -68,9 +68,10 @@ class InvoiceService {
      * @param array $variables
      * @param bool $create
      * @param bool $download
+     * @param bool $canceled
      * @return void
      */
-    public function createInvoice(array $variables, bool $create, bool $download = false) {
+    public function createInvoice(array $variables, bool $create, bool $download = false, bool $canceled = false) {
 
         $variables['args']['cart_variables']['taxcart'] = $this->settings['tax'];
         $prefix = $variables['args']['cart_variables']['invoice_number_prefix'];
@@ -87,6 +88,8 @@ class InvoiceService {
         if(!$start) {
             $start = 1;
         }
+
+        $variables['canceled'] = $canceled;
 
         if($create) {
             $invoice_number = $prefix . $this->invoiceRepository->countInvoices($start, $fiscalYearStart, $fiscalYearEnd);

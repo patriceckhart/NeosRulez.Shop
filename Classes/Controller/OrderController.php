@@ -119,6 +119,7 @@ class OrderController extends ActionController
         $cart = json_decode($order->getCart(), true);
         $this->view->assign('cart', $cart);
 
+        $this->view->assign('invoice', $this->invoiceRepository->findByOrdernumber($order->getOrdernumber())->getFirst());
         $this->view->assign('invoicedata', $invoicedata);
         $this->view->assign('payment', $payment_label);
         $this->view->assign('order', $order);
@@ -161,16 +162,17 @@ class OrderController extends ActionController
 
     /**
      * @param string $json
+     * @param bool $canceled
      * @return void
      */
-    public function downloadInvoiceAction(string $json):void
+    public function downloadInvoiceAction(string $json, bool $canceled = false):void
     {
         $invoiceData['args'] = (array) json_decode($json);
         $cartVariables = (array) json_decode($json)->cart_variables;
         $invoiceData['args']['cart_variables'] = $cartVariables;
         $invoiceData['items'] = json_decode($this->orderRepository->findByOrderNumber((int) $invoiceData['args']['order_number'])->getCart());
         $invoiceData['args']['summary'] = json_decode($this->orderRepository->findByOrderNumber((int) $invoiceData['args']['order_number'])->getSummary());
-        $this->invoiceService->createInvoice($invoiceData, false, true);
+        $this->invoiceService->createInvoice($invoiceData, false, true, $canceled);
     }
 
     /**

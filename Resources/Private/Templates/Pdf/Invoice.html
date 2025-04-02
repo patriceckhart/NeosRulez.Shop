@@ -25,7 +25,14 @@
 
         <div style="float:left; width:6.8in; margin-top:60px; margin-bottom:60px;">
             <div style="float:left; width:50%;">
-                <strong>Rechnung: {invoice_number}</strong>
+                <f:if condition="{canceled}">
+                    <f:then>
+                        <strong>STORNO: Rechnung: {invoice_number}</strong>
+                    </f:then>
+                    <f:else>
+                        <strong>Rechnung: {invoice_number}</strong>
+                    </f:else>
+                </f:if>
             </div>
             <div style="float:left; width:50%; text-align:right;">
                 <f:format.date format="d.m.Y">{invoice_date}</f:format.date>
