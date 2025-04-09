@@ -23,6 +23,9 @@
             <trans-unit id="properties.quantity" xml:space="preserve">
                 <source>Quantity</source>
             </trans-unit>
+            <trans-unit id="properties.weight" xml:space="preserve">
+                <source>Weight in kilograms</source>
+            </trans-unit>
             <trans-unit id="properties.operator" xml:space="preserve">
                 <source>Operator</source>
             </trans-unit>

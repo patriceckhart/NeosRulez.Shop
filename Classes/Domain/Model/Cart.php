@@ -498,14 +498,14 @@ class Cart
                                         if($graduatedShipping->hasProperty('rateOnlyOnce') && $graduatedShipping->getProperty('rateOnlyOnce')) {
                                             if (in_array($graduatedShipping->getIdentifier(), $rateOnlyOnce) === false) {
                                                 $rateOnlyOnce[] = $graduatedShipping->getIdentifier();
-                                                $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                                $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
                                             }
                                         } else if($graduatedShipping->hasProperty('rateCollected') && $graduatedShipping->getProperty('rateCollected')) {
                                             $graduatedShippingCosts = 0;
                                             $rateCollected[$graduatedShipping->getIdentifier()]['graduatedShipping'] = $graduatedShipping;
                                             $rateCollected[$graduatedShipping->getIdentifier()]['quantity'][] = $quantity;
                                         } else {
-                                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity);
+                                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
                                         }
                                     }
                                 }
@@ -654,37 +654,70 @@ class Cart
     /**
      * @param Node $graduatedShippingNode
      * @param int $quantity
+     * @param float|null $weight
      * @return float
      */
-    public function getGraduatedShipping(Node $graduatedShippingNode, int $quantity): float
+    public function getGraduatedShipping(Node $graduatedShippingNode, int $quantity, float|null $weight = null): float
     {
         $operator = $graduatedShippingNode->getProperty('operator');
         $price = $graduatedShippingNode->getProperty('price');
-        $fromQuantity = (int) $graduatedShippingNode->getProperty('quantity');
 
-        if($operator === '=') {
-            if($quantity === $fromQuantity) {
-                return $this->convertStringToFloat($price);
+        if($weight === null) {
+            $fromQuantity = (int)$graduatedShippingNode->getProperty('quantity');
+
+            if($operator === '=') {
+                if($quantity === $fromQuantity) {
+                    return $this->convertStringToFloat($price);
+                }
             }
-        }
-        if($operator === '>') {
-            if($quantity > $fromQuantity) {
-                return $this->convertStringToFloat($price);
+            if($operator === '>') {
+                if($quantity > $fromQuantity) {
+                    return $this->convertStringToFloat($price);
+                }
             }
-        }
-        if($operator === '<') {
-            if($quantity < $fromQuantity) {
-                return $this->convertStringToFloat($price);
+            if($operator === '<') {
+                if($quantity < $fromQuantity) {
+                    return $this->convertStringToFloat($price);
+                }
             }
-        }
-        if($operator === '>=') {
-            if($quantity >= $fromQuantity) {
-                return $this->convertStringToFloat($price);
+            if($operator === '>=') {
+                if($quantity >= $fromQuantity) {
+                    return $this->convertStringToFloat($price);
+                }
             }
-        }
-        if($operator === '<=') {
-            if($quantity <= $fromQuantity) {
-                return $this->convertStringToFloat($price);
+            if($operator === '<=') {
+                if($quantity <= $fromQuantity) {
+                    return $this->convertStringToFloat($price);
+                }
+            }
+        } else {
+            $fromWeight = (float)str_replace(',', '.', $graduatedShippingNode->getProperty('weight'));
+            $weight = $quantity * $weight;
+
+            if($operator === '=') {
+                if($weight === $fromWeight) {
+                    return $this->convertStringToFloat($price);
+                }
+            }
+            if($operator === '>') {
+                if($weight > $fromWeight) {
+                    return $this->convertStringToFloat($price);
+                }
+            }
+            if($operator === '<') {
+                if($weight < $fromWeight) {
+                    return $this->convertStringToFloat($price);
+                }
+            }
+            if($operator === '>=') {
+                if($weight >= $fromWeight) {
+                    return $this->convertStringToFloat($price);
+                }
+            }
+            if($operator === '<=') {
+                if($weight <= $fromWeight) {
+                    return $this->convertStringToFloat($price);
+                }
             }
         }
 
