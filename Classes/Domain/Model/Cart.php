@@ -490,10 +490,19 @@ class Cart
                     $productNode = $context->getNodeByIdentifier($item['node']);
                     $quantity = (float)$item['quantity'];
 
-                    $graduatedShippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping.Graduated]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
-                    foreach ($graduatedShippings as $graduatedShipping) {
-                        if ($graduatedShipping->hasProperty('applyToAllProducts') && $graduatedShipping->getProperty('applyToAllProducts')) {
-                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
+                    $availableShippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
+                    foreach ($availableShippings as $availableShipping) {
+                        $countries = $availableShipping->getProperty('countries');
+                        foreach ($countries as $country) {
+                            if ($country === $this->getCountry()) {
+                                $graduatedShippings = (new FlowQuery(array($availableShipping)))->find('[instanceof NeosRulez.Shop:Document.Shipping.Graduated]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
+                                foreach ($graduatedShippings as $graduatedShipping) {
+                                    if ($graduatedShipping->hasProperty('applyToAllProducts') && $graduatedShipping->getProperty('applyToAllProducts')) {
+                                        $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
+                                    }
+                                }
+                                break;
+                            }
                         }
                     }
 
