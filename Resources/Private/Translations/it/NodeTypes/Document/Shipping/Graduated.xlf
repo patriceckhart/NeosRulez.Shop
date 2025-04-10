@@ -33,7 +33,10 @@
                 <source>Rate only once in cart</source>
             </trans-unit>
             <trans-unit id="properties.rateCollected" xml:space="preserve">
-                <source>Expand to all items</source>
+                <source>Extend to every shopping cart product</source>
+            </trans-unit>
+            <trans-unit id="properties.applyToAllProducts" xml:space="preserve">
+                <source>Apply to all products</source>
             </trans-unit>
         </body>
     </file>

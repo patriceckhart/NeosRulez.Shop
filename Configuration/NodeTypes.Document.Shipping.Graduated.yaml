@@ -84,3 +84,11 @@
           hidden: 'ClientEval:node.properties.rateOnlyOnce ? true : false'
           group: graduated
           position: 5
+    applyToAllProducts:
+      type: boolean
+      ui:
+        label: i18n
+        reloadIfChanged: true
+        inspector:
+          group: graduated
+          position: 6

@@ -33,7 +33,10 @@
                 <source>Im Warenkorb nur einmal werten</source>
             </trans-unit>
             <trans-unit id="properties.rateCollected" xml:space="preserve">
-                <source>Auf alle Produkte ausweiten</source>
+                <source>Auf jedes Warenkorb Produkt ausweiten</source>
+            </trans-unit>
+            <trans-unit id="properties.applyToAllProducts" xml:space="preserve">
+                <source>Auf alle Produkte anwenden</source>
             </trans-unit>
         </body>
     </file>

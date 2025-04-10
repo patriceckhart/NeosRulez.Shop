@@ -489,6 +489,14 @@ class Cart
                 if (array_key_exists('node', $item)) {
                     $productNode = $context->getNodeByIdentifier($item['node']);
                     $quantity = (float)$item['quantity'];
+
+                    $graduatedShippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping.Graduated]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
+                    foreach ($graduatedShippings as $graduatedShipping) {
+                        if ($graduatedShipping->hasProperty('applyToAllProducts') && $graduatedShipping->getProperty('applyToAllProducts')) {
+                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
+                        }
+                    }
+
                     if ($productNode !== null && $productNode->hasProperty('graduatedShippings')) {
                         $graduatedShippings = $productNode->getProperty('graduatedShippings');
                         if (count($graduatedShippings) > 0) {
@@ -504,6 +512,7 @@ class Cart
                                             $graduatedShippingCosts = 0;
                                             $rateCollected[$graduatedShipping->getIdentifier()]['graduatedShipping'] = $graduatedShipping;
                                             $rateCollected[$graduatedShipping->getIdentifier()]['quantity'][] = $quantity;
+                                            $rateCollected[$graduatedShipping->getIdentifier()]['weight'][] = ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null);
                                         } else {
                                             $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
                                         }
@@ -525,10 +534,14 @@ class Cart
 
         foreach ($rateCollected as $rateCollectedItem) {
             $quantity = 0;
+            $allWeight = 0;
             foreach ($rateCollectedItem['quantity'] as $quantityItem) {
                 $quantity = $quantity + (int) $quantityItem;
             }
-            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($rateCollectedItem['graduatedShipping'], $quantity);
+            foreach ($rateCollectedItem['weight'] as $weightItem) {
+                $allWeight = $allWeight + (float) $weightItem;
+            }
+            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($rateCollectedItem['graduatedShipping'], $quantity, $allWeight);
         }
 
         $total_primary = $total_coupon;
