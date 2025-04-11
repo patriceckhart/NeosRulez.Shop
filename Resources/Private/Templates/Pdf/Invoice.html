@@ -149,13 +149,11 @@
             </div>
         </div>
 
-        <f:if condition="{args.payment}=='prepayment'">
-            <div style="float:left; width:6.8in; margin-top:20px;">
-                <div style="float:left; width:6.8in;">
-                    <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
-                </div>
+        <div style="float:left; width:6.8in; margin-top:20px;">
+            <div style="float:left; width:6.8in;">
+                <f:format.raw>{args.cart_variables.invoice_info_prepayment}</f:format.raw>
             </div>
-        </f:if>
+        </div>
 
         <f:if condition="{args.cart_variables.footer_text}">
             <div style="float:left; width:6.8in; margin-top:20px;">
