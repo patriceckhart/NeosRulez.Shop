@@ -49,26 +49,27 @@ class StockService
             if (array_key_exists('node', $item)) {
                 $nodeIdentifier = $item['node'];
                 $node = $context->getNodeByIdentifier($nodeIdentifier);
-                $rows = $connection->executeQuery('select * from neos_contentrepository_domain_model_nodedata where identifier="' . $node->getIdentifier() . '"')->fetchAllAssociative();
-                foreach ($rows as $row) {
-                    $dimensionNode = $this->persistenceManager->getObjectByIdentifier($row['persistence_object_identifier'], 'Neos\ContentRepository\Domain\Model\NodeData');
-                    if($dimensionNode !== null) {
-                        if($dimensionNode->hasProperty('stockLevel')) {
-                            $stockLevel = $dimensionNode->getProperty('stockLevel');
-                            $stockManagement = (int) $dimensionNode->getProperty('stockManagement');
-                            if($stockManagement) {
-                                $orderedQuantity = (int) $item['quantity'];
-                                $newQuantity = ($stockLevel - $orderedQuantity);
-                                $dimensionNode->setProperty('stockLevel', $newQuantity);
-                                if($newQuantity <= 0) {
-                                    $dimensionNode->setProperty('stock', false);
+                if($node !== null) {
+                    $rows = $connection->executeQuery('select * from neos_contentrepository_domain_model_nodedata where identifier="' . $node->getIdentifier() . '"')->fetchAllAssociative();
+                    foreach ($rows as $row) {
+                        $dimensionNode = $this->persistenceManager->getObjectByIdentifier($row['persistence_object_identifier'], 'Neos\ContentRepository\Domain\Model\NodeData');
+                        if($dimensionNode !== null) {
+                            if($dimensionNode->hasProperty('stockLevel')) {
+                                $stockLevel = $dimensionNode->getProperty('stockLevel');
+                                $stockManagement = (int) $dimensionNode->getProperty('stockManagement');
+                                if($stockManagement) {
+                                    $orderedQuantity = (int) $item['quantity'];
+                                    $newQuantity = ($stockLevel - $orderedQuantity);
+                                    $dimensionNode->setProperty('stockLevel', $newQuantity);
+                                    if($newQuantity <= 0) {
+                                        $dimensionNode->setProperty('stock', false);
+                                    }
+                                    $this->persistenceManager->persistAll();
                                 }
-                                $this->persistenceManager->persistAll();
                             }
                         }
                     }
                 }
-
             }
         }
     }
