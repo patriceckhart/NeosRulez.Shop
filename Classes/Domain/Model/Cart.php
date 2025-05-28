@@ -175,7 +175,8 @@ class Cart
             foreach ($item['options'] as $option) {
                 $option_node = $context->getNodeByIdentifier($option);
                 $option_price = floatval(str_replace(',', '.', str_replace('.', '', $option_node->getProperty('price'))));
-                $combined_options[] = ['name' => $option_node->getProperty('title'), 'price' => $option_price * $quantity];
+                $optionParentNode = $option_node->getParent();
+                $combined_options[] = ['name' => ($optionParentNode !== null ? ($optionParentNode->getProperty('title') . ': ') : '') . $option_node->getProperty('title'), 'price' => $option_price * $quantity];
 
                 $optionsT .= $option_node->getProperty('title');
                 $additional_price_gross = $additional_price_gross + $option_price;
