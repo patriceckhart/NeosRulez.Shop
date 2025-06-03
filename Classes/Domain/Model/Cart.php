@@ -461,12 +461,12 @@ class Cart
             if (array_key_exists(0, $shipping)) {
                 if (array_key_exists('price_kg', $shipping[0])) {
                     if($shipping[0]['price_kg']) {
-                        $weight = $weight + intval($item['weight']) * intval($item['quantity']);
+                        $weight = $weight + (float)str_replace(',', '.', $item['weight']) * intval($item['quantity']);
                         $pricekg = true;
                     }
                 }
             }
-            $itemweight = $itemweight + intval($item['weight']);
+            $itemweight = $itemweight + (float)str_replace(',', '.', $item['weight']);
             $itemweight = $itemweight * intval($item['quantity']);
 
             if(array_key_exists('freeShipping', $item)) {
