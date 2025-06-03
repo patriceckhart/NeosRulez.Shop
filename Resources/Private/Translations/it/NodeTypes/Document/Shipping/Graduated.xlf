@@ -38,6 +38,9 @@
             <trans-unit id="properties.applyToAllProducts" xml:space="preserve">
                 <source>Apply to all products</source>
             </trans-unit>
+            <trans-unit id="properties.applyToFullCartWeight" xml:space="preserve">
+                <source>Apply to total basket weight</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
