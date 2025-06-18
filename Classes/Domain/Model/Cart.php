@@ -559,6 +559,7 @@ class Cart
         }
 
         if ($calculateGraduatedShippingCosts) {
+            $graduatedShippingCostsItems = [];
             $availableShippings = (new FlowQuery(array($context->getCurrentSiteNode())))->find('[instanceof NeosRulez.Shop:Document.Shipping]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
             foreach ($availableShippings as $availableShipping) {
                 $countries = $availableShipping->getProperty('countries');
@@ -566,11 +567,14 @@ class Cart
                     if ($country === $this->getCountry()) {
                         $graduatedShippings = (new FlowQuery(array($availableShipping)))->find('[instanceof NeosRulez.Shop:Document.Shipping.Graduated]')->context(array('workspaceName' => 'live'))->sort('_index', 'ASC')->get();
                         foreach ($graduatedShippings as $graduatedShipping) {
-                            $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, 1, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && $itemweight ? (float)str_replace(',', '.', $itemweight) : null));
+                            $graduatedShippingCostsItems[] = $this->getGraduatedShipping($graduatedShipping, 1, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && $itemweight ? (float)str_replace(',', '.', $itemweight) : null));
                         }
                         break;
                     }
                 }
+            }
+            if(count($graduatedShippingCostsItems) > 0) {
+                $graduatedShippingCosts = $graduatedShippingCosts + max($graduatedShippingCostsItems);
             }
         }
 
