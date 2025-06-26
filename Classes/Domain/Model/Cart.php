@@ -511,6 +511,8 @@ class Cart
                         }
                     }
 
+
+
                     if ($productNode !== null && $productNode->hasProperty('graduatedShippings')) {
                         $graduatedShippings = $productNode->getProperty('graduatedShippings');
                         if (count($graduatedShippings) > 0) {
@@ -530,6 +532,7 @@ class Cart
                                         } else {
                                             $graduatedShippingCosts = $graduatedShippingCosts + $this->getGraduatedShipping($graduatedShipping, $quantity, ($graduatedShipping->hasProperty('weight') && $graduatedShipping->getProperty('weight') && array_key_exists('weight', $item) && $item['weight'] !== '' ? (float)str_replace(',', '.', $item['weight']) : null));
                                         }
+                                        $calculateGraduatedShippingCosts = false;
                                     }
                                 }
                             }
