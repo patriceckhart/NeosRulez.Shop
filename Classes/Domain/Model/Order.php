@@ -216,6 +216,52 @@ class Order
     }
 
     /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    protected $coupons = '';
+
+    /**
+     * @return string
+     */
+    public function getCoupons(): string
+    {
+        return $this->coupons;
+    }
+
+    /**
+     * @param string $coupons
+     * @return void
+     */
+    public function setCoupons(string $coupons): void
+    {
+        $this->coupons = $coupons;
+    }
+
+    /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    protected $siteNode = '';
+
+    /**
+     * @return string
+     */
+    public function getSiteNode(): string
+    {
+        return $this->siteNode;
+    }
+
+    /**
+     * @param string $siteNode
+     * @return void
+     */
+    public function setSiteNode(string $siteNode): void
+    {
+        $this->siteNode = $siteNode;
+    }
+
+    /**
      * @var \DateTime
      */
     protected $created;

@@ -12,5 +12,7 @@ NeosRulez:
   Shop:
     Finisher:
       afterOrder:
+        defaultOrderFinisher:
+          class: NeosRulez\Shop\Service\OrderService
         defaultMailSendingFinisher:
           class: NeosRulez\Shop\Service\MailService
