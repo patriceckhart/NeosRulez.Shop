@@ -245,9 +245,9 @@ class Order
     protected $siteNode = '';
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSiteNode(): string
+    public function getSiteNode(): string|null
     {
         return $this->siteNode;
     }
