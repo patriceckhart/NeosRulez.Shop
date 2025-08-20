@@ -222,9 +222,9 @@ class Order
     protected $coupons = '';
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoupons(): string
+    public function getCoupons(): string|null
     {
         return $this->coupons;
     }
