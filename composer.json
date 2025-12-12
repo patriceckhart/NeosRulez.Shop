@@ -19,7 +19,8 @@
         "neosrulez/folder": "^1.0",
         "neosrulez/category": "^1.0",
         "mpdf/mpdf": "^8.0",
-        "stripe/stripe-php": "^v12.5.0"
+        "stripe/stripe-php": "^v12.5.0",
+        "phpoffice/phpspreadsheet": "^2.0"
     },
     "autoload": {
         "psr-4": {
