@@ -422,6 +422,22 @@ class Cart
     }
 
     /**
+     * @param array $itemsInCoupon
+     * @param array $items
+     * @return float
+     */
+    private function getMatchingProductsSubtotal(array $itemsInCoupon, array $items): float
+    {
+        $subtotal = 0;
+        foreach ($items as $item) {
+            if(array_key_exists('node', $item) && in_array($item['node'], $itemsInCoupon)) {
+                $subtotal += $item['total'];
+            }
+        }
+        return $subtotal;
+    }
+
+    /**
      * @return array
      */
     public function summary(): array
@@ -646,11 +662,14 @@ class Cart
                 $discountSum = 0;
                 foreach ($coupons as $coupon) {
                     if($coupon['name'] != 'NaN' && $coupon['name'] != 'NaN_') {
-
-                        if((count($coupon['products']) === 0) || $this->itemIsInSummary($coupon['products'], $summary)) {
-
+                        $couponProducts = $coupon['products'];
+                        $hasProductRestriction = count($couponProducts) > 0;
+                        if(!$hasProductRestriction || $this->itemIsInSummary($couponProducts, $summary)) {
+                            $discountBase = $hasProductRestriction
+                                ? $this->getMatchingProductsSubtotal($couponProducts, $summary)
+                                : $total_coupon;
                             if ($coupon['percentual']) {
-                                $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupon['value']));
+                                $discount = ($discountBase / 100) * floatval(str_replace(',', '.', $coupon['value']));
                                 $discountSum = $discountSum + $discount;
                                 $total_coupon = $total_coupon - $discount;
                             } else {
@@ -670,10 +689,15 @@ class Cart
                 }
                 $discount = $discountSum;
             } else {
-                if((count($coupons[0]['products']) === 0) || $this->itemIsInSummary($coupons[0]['products'], $summary)) {
+                $couponProducts = $coupons[0]['products'];
+                $hasProductRestriction = count($couponProducts) > 0;
+                if(!$hasProductRestriction || $this->itemIsInSummary($couponProducts, $summary)) {
                     if($coupons[0]['name'] != 'NaN' && $coupons[0]['name'] != 'NaN_') {
+                        $discountBase = $hasProductRestriction
+                            ? $this->getMatchingProductsSubtotal($couponProducts, $summary)
+                            : $total_coupon;
                         if ($coupons[0]['percentual']) {
-                            $discount = $total_coupon / 100 * floatval(str_replace(',', '.', $coupons[0]['value']));
+                            $discount = ($discountBase / 100) * floatval(str_replace(',', '.', $coupons[0]['value']));
                             $total_coupon = $total_coupon - $discount;
                         } else {
                             $discount = floatval(str_replace(',', '.', $coupons[0]['value']));
