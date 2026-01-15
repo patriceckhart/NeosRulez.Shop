@@ -6,6 +6,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations;
+use NeosRulez\Shop\Service\ExportService;
 
 /**
  * @Flow\Scope("singleton")
@@ -48,6 +49,12 @@ class OrderController extends ActionController
      * @var \NeosRulez\Shop\Service\MailService
      */
     protected $mailService;
+
+    /**
+     * @Flow\Inject
+     * @var ExportService
+     */
+    protected $exportService;
 
     /**
      * @var array
@@ -189,6 +196,14 @@ class OrderController extends ActionController
 
         $this->mailService->send($variables, $variables['header'], [$this->settings['Mail']['senderMail'] => $this->settings['Mail']['senderMail']], [str_replace(' ', '', $variables['args']['email']) => $variables['args']['firstname'].' '.$variables['args']['lastname']], $variables['args']);
         $this->redirect('index');
+    }
+
+    /**
+     * @return void
+     */
+    public function exportAction(): void
+    {
+        $this->redirectToUri($this->exportService->exportOrders());
     }
 
 }
